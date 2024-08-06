@@ -1,0 +1,40 @@
+/*
+ *  Licensed to the Apache Software Foundation (ASF) under one
+ *  or more contributor license agreements.  See the NOTICE file
+ *  distributed with this work for additional information
+ *  regarding copyright ownership.  The ASF licenses this file
+ *  to you under the Apache License, Version 2.0 (the
+ *  "License"); you may not use this file except in compliance
+ *  with the License.  You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing,
+ *  software distributed under the License is distributed on an
+ *  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ *  KIND, either express or implied.  See the License for the
+ *  specific language governing permissions and limitations
+ *  under the License.
+ */
+plugins {
+    id "com.jfrog.artifactory"
+}
+
+if (sharedConfiguration.artifactory.username.present) {
+    artifactory {
+        contextUrl = sharedConfiguration.artifactory.context.getOrElse('https://groovy.jfrog.io')
+        publish {
+            repository {
+                repoKey = sharedConfiguration.artifactory.repoKey.getOrElse('libs-snapshot-local')
+                //The Artifactory repository key to publish to when using groovy.jfrog.io the credentials
+                // are for the artifactory instance. For local build we expect them to be found in
+                //~/.gradle/gradle.properties, otherwise to be set in the build server
+                username = sharedConfiguration.artifactory.username.get()
+                password = sharedConfiguration.artifactory.password.get()
+            }
+            defaults {
+                publications 'maven'
+            }
+        }
+    }
+}

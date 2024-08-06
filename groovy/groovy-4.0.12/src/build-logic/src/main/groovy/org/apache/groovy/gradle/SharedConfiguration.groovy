@@ -1,0 +1,177 @@
+/*
+ *  Licensed to the Apache Software Foundation (ASF) under one
+ *  or more contributor license agreements.  See the NOTICE file
+ *  distributed with this work for additional information
+ *  regarding copyright ownership.  The ASF licenses this file
+ *  to you under the Apache License, Version 2.0 (the
+ *  "License"); you may not use this file except in compliance
+ *  with the License.  You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing,
+ *  software distributed under the License is distributed on an
+ *  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ *  KIND, either express or implied.  See the License for the
+ *  specific language governing permissions and limitations
+ *  under the License.
+ */
+package org.apache.groovy.gradle
+
+import groovy.transform.CompileStatic
+import org.gradle.StartParameter
+import org.gradle.api.execution.TaskExecutionGraph
+import org.gradle.api.file.Directory
+import org.gradle.api.file.ProjectLayout
+import org.gradle.api.file.RegularFile
+import org.gradle.api.logging.Logger
+import org.gradle.api.model.ObjectFactory
+import org.gradle.api.provider.Property
+import org.gradle.api.provider.Provider
+import org.gradle.api.provider.ProviderFactory
+import org.gradle.api.tasks.Nested
+
+@CompileStatic
+class SharedConfiguration {
+    final Provider<String> groovyVersion
+    final Provider<Boolean> isReleaseVersion
+    final Provider<Date> buildDate
+    final Provider<String> groovyBundleVersion
+    final Provider<String> javacMaxMemory
+    final Provider<String> groovycMaxMemory
+    final Provider<String> javadocMaxMemory
+    final Provider<String> installationDirectory
+    final Provider<String> binaryCompatibilityBaselineVersion
+    final Provider<Boolean> hasCodeCoverage
+    final Provider<String> targetJavaVersion
+    final Provider<String> groovyTargetBytecodeVersion
+    final boolean isRunningOnCI
+
+    @Nested
+    final Artifactory artifactory
+
+    @Nested
+    final Signing signing
+
+    SharedConfiguration(ObjectFactory objects,
+                        ProjectLayout layout,
+                        ProviderFactory providers,
+                        File rootProjectDirectory,
+                        Logger logger,
+                        StartParameter startParameter
+    ) {
+        groovyVersion = providers.gradleProperty("groovyVersion")
+        groovyBundleVersion = providers.gradleProperty("groovyBundleVersion")
+        javacMaxMemory = providers.gradleProperty("javacMain_mx")
+        groovycMaxMemory = providers.gradleProperty("groovycMain_mx")
+        javadocMaxMemory = providers.gradleProperty("javaDoc_mx")
+        isReleaseVersion = groovyVersion.map { !it.toLowerCase().contains("snapshot") } as Provider<Boolean>
+        buildDate = isReleaseVersion.map { it ? new Date() : new Date(0) }
+        installationDirectory = providers.gradleProperty("groovy_installPath")
+                .orElse(providers.systemProperty("installDirectory"))
+        isRunningOnCI = detectCi(rootProjectDirectory, logger)
+        artifactory = new Artifactory(layout, providers, logger)
+        signing = new Signing(this, objects, providers)
+        binaryCompatibilityBaselineVersion = providers.gradleProperty("binaryCompatibilityBaseline")
+        hasCodeCoverage = providers.gradleProperty("coverage")
+                .map { Boolean.valueOf(it) }
+                .orElse(
+                        providers.provider { startParameter.taskNames.any { it =~ /jacoco/ } }
+                )
+                .orElse(false)
+        targetJavaVersion = providers.gradleProperty("targetJavaVersion")
+        groovyTargetBytecodeVersion = providers.gradleProperty("groovyTargetBytecodeVersion")
+        File javaHome = new File(providers.systemProperty('java.home').get())
+        String javaVersion = providers.systemProperty('java.version').get()
+        String userdir = providers.systemProperty('user.dir').get()
+        logger.lifecycle "Using Java from $javaHome (version ${javaVersion})"
+        logger.lifecycle "user.dir: ${userdir}"
+    }
+
+    private static boolean detectCi(File file, Logger logger) {
+        // home/runner/work is path for Github actions
+        def isCi = file.absolutePath =~ $/teamcity|jenkins|hudson|/home/runner/work/|travis/$
+        logger.lifecycle "Detected ${isCi ? 'Continuous Integration environment' : 'development environment'}"
+        isCi
+    }
+
+    static class Artifactory {
+        final Provider<String> username
+        final Provider<String> password
+        final Provider<String> context
+        final Provider<String> repoKey
+
+        Artifactory(ProjectLayout layout, ProviderFactory providers, Logger logger) {
+            def artifactoryProperties = providers.fileContents(artifactoryFile(providers, layout)).asText.map {
+                def props = new Properties()
+                props.load(new StringReader(it))
+                props
+            }
+            username = provider(providers, artifactoryProperties, "artifactoryUser", "artifactoryUser", "ARTIFACTORY_USER")
+            password = provider(providers, artifactoryProperties, "artifactoryPassword", "artifactoryPassword", "ARTIFACTORY_PASSWORD")
+            context = provider(providers, artifactoryProperties, "artifactoryContext", "artifactoryContext", "ARTIFACTORY_CONTEXT")
+            repoKey = provider(providers, artifactoryProperties, "artifactoryRepoKey", "artifactoryRepoKey", "ARTIFACTORY_REPO_KEY")
+            logger.lifecycle "ArtifactoryUser user: ${username.getOrElse("not defined")}"
+        }
+
+        private static Provider<RegularFile> artifactoryFile(ProviderFactory providers, ProjectLayout layout) {
+            providers.provider {
+                // try to read artifactory.properties
+                Directory base = layout.projectDirectory
+                RegularFile artifactoryFile = base.file('artifactory.properties')
+                while (!artifactoryFile.asFile.exists() && base.asFile.parent) {
+                    base = base.dir('..')
+                    artifactoryFile = base.file('artifactory.properties')
+                }
+                artifactoryFile
+            }
+        }
+
+        private static Provider<String> provider(ProviderFactory providers, Provider<Properties> properties, String propertyName, String gradlePropertyName, String envVarName) {
+            return providers.gradleProperty(gradlePropertyName)
+                    .orElse(providers.environmentVariable(envVarName))
+                    .orElse(properties.map { it.getProperty(propertyName) })
+        }
+    }
+
+    static class Signing {
+        private final SharedConfiguration config
+        final Property<String> keyId
+        final Property<String> secretKeyRingFile
+        final Property<String> password
+        final Provider<Boolean> useGpgCmd
+        final Provider<Boolean> forceSign
+        final Provider<Boolean> trySign
+
+        Signing(SharedConfiguration config, ObjectFactory objects, ProviderFactory providers) {
+            keyId = objects.property(String).convention(
+                    providers.gradleProperty("signing.keyId")
+            )
+            secretKeyRingFile = objects.property(String).convention(
+                    providers.gradleProperty("signing.secretKeyRingFile")
+            )
+            password = objects.property(String).convention(
+                    providers.gradleProperty("signing.password")
+            )
+            useGpgCmd = providers.gradleProperty("usegpg")
+                    .map { Boolean.valueOf(it) }.orElse(false)
+            forceSign = providers.gradleProperty("forceSign")
+                    .map { Boolean.valueOf(it) }.orElse(false)
+            trySign = providers.gradleProperty("trySign")
+                    .map { Boolean.valueOf(it) }.orElse(false)
+            this.config = config
+        }
+
+        boolean shouldSign(TaskExecutionGraph taskGraph) {
+            trySign.get() || (config.isReleaseVersion.get() &&
+                    (forceSign.get() || [':artifactoryPublish', ':publishAllPublicationsToApacheRepository'].any {
+                        taskGraph.hasTask(it)
+                    }))
+        }
+
+        boolean hasAllKeyDetails() {
+            return useGpgCmd.get() ||
+                    keyId.present && secretKeyRingFile.present && password.present
+        }
+    }
+}

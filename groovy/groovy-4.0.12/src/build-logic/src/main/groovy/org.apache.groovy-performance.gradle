@@ -1,0 +1,71 @@
+/*
+ *  Licensed to the Apache Software Foundation (ASF) under one
+ *  or more contributor license agreements.  See the NOTICE file
+ *  distributed with this work for additional information
+ *  regarding copyright ownership.  The ASF licenses this file
+ *  to you under the Apache License, Version 2.0 (the
+ *  "License"); you may not use this file except in compliance
+ *  with the License.  You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing,
+ *  software distributed under the License is distributed on an
+ *  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ *  KIND, either express or implied.  See the License for the
+ *  specific language governing permissions and limitations
+ *  under the License.
+ */
+
+import org.apache.groovy.gradle.PerformanceTestsExtension
+import org.apache.groovy.gradle.PerformanceTestSummary
+
+plugins {
+    id 'groovy'
+    id 'org.apache.groovy-common'
+    id 'org.apache.groovy-internal'
+    id 'me.champeau.jmh'
+}
+
+project.extensions.create("performanceTests", PerformanceTestsExtension, objects, tasks, configurations, dependencies, sourceSets)
+
+configurations {
+    stats
+    testImplementation.extendsFrom(stats)
+}
+
+repositories {
+    mavenCentral()
+    maven {
+        url 'https://repository.ow2.org/nexus/content/repositories/public/'
+    }
+}
+
+dependencies {
+    jmh project(":")
+    testImplementation project(":")
+    stats "org.apache.commons:commons-math3:${versions.commonsMath3}"
+}
+
+jmh {
+    jmhVersion = versions.jmh
+    if (project.hasProperty('benchInclude')) {
+        includes = ['.*' + project.benchInclude + '.*']
+    }
+    includeTests = true
+    duplicateClassesStrategy = DuplicatesStrategy.WARN
+}
+
+tasks.named('jmhClasses') {
+    dependsOn tasks.named('clean')
+}
+
+tasks.named('compileJmhGroovy') {
+    classpath += compileJmhJava.classpath
+}
+
+tasks.register("performanceTests", PerformanceTestSummary)
+
+sonarqube {
+    skipProject = true
+}

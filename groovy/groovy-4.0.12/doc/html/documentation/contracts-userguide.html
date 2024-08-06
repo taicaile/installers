@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.18">
+<title>Groovy Contracts – design by contract support for Groovy</title>
+<link rel="stylesheet" href="./assets/css/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.css">
+<link rel="stylesheet" href="assets/css/view-example.css">
+<script src='assets/js/jquery-min-2.1.1.js'></script>
+<script src='assets/js/view-example.js'></script></head>
+<body class="book toc2 toc-left">
+<div id="header">
+<h1>Groovy Contracts – design by contract support for Groovy</h1>
+<div class="details">
+<span id="revnumber">version 4.0.12</span>
+</div>
+<div id="toc" class="toc2">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#_applying_invariant_requires_and_ensures">1. Applying @Invariant, @Requires and @Ensures</a></li>
+<li><a href="#_more_features">2. More Features</a></li>
+<li><a href="#_the_stack_example">3. The Stack Example</a></li>
+</ul>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>This module provides contract annotations that support the specification of class-invariants,
+pre- and post-conditions on Groovy classes and interfaces.
+Special support is provided so that post-conditions may refer to the old value of variables
+or to the result value associated with calling a method.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_applying_invariant_requires_and_ensures"><a class="anchor" href="#_applying_invariant_requires_and_ensures"></a><a class="link" href="#_applying_invariant_requires_and_ensures">1. Applying @Invariant, @Requires and @Ensures</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>With GContracts in your class-path, contracts can be applied on a Groovy class or interface by using one of the assertions found in package org.gcontracts.annotations.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="groovy">package acme
+
+import groovy.contracts.*
+
+@Invariant({ speed() &gt;= 0 })
+class Rocket {
+    int speed = 0
+    boolean started = true
+
+    @Requires({ isStarted() })
+    @Ensures({ old.speed &lt; speed })
+    def accelerate(inc) { speed += inc }
+
+    def isStarted() { started }
+
+    def speed() { speed }
+}
+
+def r = new Rocket()
+r.accelerate(5)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_more_features"><a class="anchor" href="#_more_features"></a><a class="link" href="#_more_features">2. More Features</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>GContracts supports the following feature set:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>definition of class invariants, pre- and post-conditions via @Invariant, @Requires and @Ensures</p>
+</li>
+<li>
+<p>inheritance of class invariants, pre- and post-conditions of concrete predecessor classes</p>
+</li>
+<li>
+<p>inheritance of class invariants, pre- and post-conditions in implemented interfaces</p>
+</li>
+<li>
+<p>usage of old and result variable in post-condition assertions</p>
+</li>
+<li>
+<p>assertion injection in Plain Old Groovy Objects (POGOs)</p>
+</li>
+<li>
+<p>human-readable assertion messages, based on Groovy power asserts</p>
+</li>
+<li>
+<p>enabling contracts at package- or class-level with @AssertionsEnabled</p>
+</li>
+<li>
+<p>enable or disable contract checking with Java&#8217;s -ea and -da VM parameters</p>
+</li>
+<li>
+<p>annotation contracts: a way to reuse reappearing contract elements in a project domain model</p>
+</li>
+<li>
+<p>detection of circular assertion method calls</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_the_stack_example"><a class="anchor" href="#_the_stack_example"></a><a class="link" href="#_the_stack_example">3. The Stack Example</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Currently, Groovy contracts supports 3 annotations: @Invariant, @Requires and @Ensures – all of them work
+as annotations with closures, where closures allow you to specify arbitrary code pieces as annotation parameters:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="groovy">@Grab(group='org.apache.groovy', module='groovy-contracts', version='4.0.0')
+import groovy.contracts.*
+
+@Invariant({ elements != null })
+class Stack&lt;T&gt; {
+
+    List&lt;T&gt; elements
+
+    @Ensures({ is_empty() })
+    def Stack()  {
+        elements = []
+    }
+
+    @Requires({ preElements?.size() &gt; 0 })
+    @Ensures({ !is_empty() })
+    def Stack(List&lt;T&gt; preElements)  {
+        elements = preElements
+    }
+
+    boolean is_empty()  {
+        elements.isEmpty()
+    }
+
+    @Requires({ !is_empty() })
+    T last_item()  {
+        elements.get(count() - 1)
+    }
+
+    def count() {
+        elements.size()
+    }
+
+    @Ensures({ result == true ? count() &gt; 0 : count() &gt;= 0  })
+    boolean has(T item)  {
+        elements.contains(item)
+    }
+
+    @Ensures({ last_item() == item })
+    def push(T item)  {
+       elements.add(item)
+    }
+
+    @Requires({ !is_empty() })
+    @Ensures({ last_item() == item })
+    def replace(T item)  {
+        remove()
+        elements.add(item)
+    }
+
+    @Requires({ !is_empty() })
+    @Ensures({ result != null })
+    T remove()  {
+        elements.remove(count() - 1)
+    }
+
+    String toString() { elements.toString() }
+}
+
+def stack = new Stack&lt;Integer&gt;()</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The example above specifies a class-invariant and methods with pre- and post-conditions.
+Note, that preconditions may reference method arguments and post-conditions have access
+to the method’s result with the result variable and old instance variables values with old.</p>
+</div>
+<div class="paragraph">
+<p>Indeed, Groovy AST transformations change these assertion annotations into Java assertion
+statements (can be turned on and off with a JVM param) and inject them at appropriate places,
+e.g. class-invariants are used to check an object&#8217;s state before and after each method call.</p>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Version 4.0.12<br>
+Last updated 2023-05-05 15:43:18 +1000
+</div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/run_prettify.min.js"></script>
+</body>
+</html>

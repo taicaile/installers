@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+<!-- creator-debugger.qdoc -->
+  <title>Debug Mode Views | Qt Creator Manual</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");
+    // loading style sheet breaks anchors that were jumped to before
+    // so force jumping to anchor again
+    setTimeout(function() {
+        var anchor = location.hash;
+        // need to jump to different anchor first (e.g. none)
+        location.hash = "#";
+        setTimeout(function() {
+            location.hash = anchor;
+        }, 0);
+    }, 0);
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+    <div class="main">
+    <div class="main-rounded">
+        <div class="navigationbar">
+        <ul>
+<li><a href="index.html" translate="no">Qt Creator Manual</a></li>
+<li><a href="creator-overview.html" translate="no">Developing with Qt Creator</a></li>
+<li><a href="creator-debugging.html" translate="no">Debugging</a></li>
+<li>Debug Mode Views</li>
+<li id="buildversion"><a href="index.html" translate="no">Qt Creator Manual 13.0.1</a></li>
+    </ul>
+    </div>
+</div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+  <link rel="prev" href="creator-debugger-operating-modes.html" />
+  <link rel="next" href="creator-stack-view.html" />
+<p class="naviNextPrevious headerNavi">
+<a class="prevPage" href="creator-debugger-operating-modes.html">Launching the Debugger</a>
+<span class="naviSeparator">  &#9702;  </span>
+<a class="nextPage" href="creator-stack-view.html">Viewing Call Stack Trace</a>
+</p>
+<div class="sidebar">
+<div class="toc">
+<h3 id="toc">Contents</h3>
+<ul>
+<li class="level1"><a href="#managing-debug-views">Managing Debug Views</a></li>
+<li class="level1"><a href="#customizing-debug-views">Customizing Debug Views</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">Debug Mode Views</h1>
+<!-- $$$creator-debug-mode.html-description -->
+<div class="descr" id="details">
+<p>In the <b translate="no">Debug</b> mode, you can inspect the state of your application while debugging.</p>
+<p class="centerAlign"><img src="images/qtcreator-debugger-views.webp" alt="{Debug mode views while debugging}" /></p><p>You can interact with the debugger in many ways:</p>
+<ul>
+<li>Interrupt running applications.</li>
+<li>Set breakpoints.</li>
+<li>Step through an application line-by-line or instruction-by-instruction.</li>
+<li>Examine the contents of the call stack.</li>
+<li>Examine and modify contents of local and global variables.</li>
+<li>Examine and modify registers and memory contents of the debugged application.</li>
+<li>Examine the list of loaded shared libraries.</li>
+<li>Disassemble sections of code.</li>
+</ul>
+<p>The following table summarizes the <b translate="no">Debug</b> mode views with links to more information.</p>
+<div class="table"><table class="generic">
+ <thead><tr class="qt-style"><th >View</th><th >Purpose</th><th >Learn More</th></tr></thead>
+<tr valign="top" class="odd"><td >Stack</td><td >Examine the nested function calls leading to the current position as a call stack trace.</td><td ><a href="creator-stack-view.html" translate="no">Viewing Call Stack Trace</a></td></tr>
+<tr valign="top" class="even"><td >Breakpoint Preset<p>Breakpoints</p>
+</td><td >Set <i>breakpoints</i> with conditions to make the application stop in a controlled way. A <i>watchpoint</i> stops the application when the value of an expression changes.</td><td ><a href="creator-breakpoints-view.html" translate="no">Setting Breakpoints</a></td></tr>
+<tr valign="top" class="odd"><td >Threads</td><td >Switch between threads.</td><td ><a href="creator-threads-view.html" translate="no">Viewing Threads</a></td></tr>
+<tr valign="top" class="even"><td >Modules</td><td >View information about modules included in the application.</td><td ><a href="creator-modules-view.html" translate="no">Viewing Modules</a></td></tr>
+<tr valign="top" class="odd"><td >Source Files</td><td >View a list of source files included in the project.</td><td ><a href="creator-source-files-view.html" translate="no">Viewing Source Files</a></td></tr>
+<tr valign="top" class="even"><td >Locals</td><td >View information about the parameters of the function in the topmost stack frame and local variables.</td><td ><a href="creator-locals-view.html" translate="no">Local Variables and Function Parameters</a></td></tr>
+<tr valign="top" class="odd"><td >Expressions</td><td >Compute values of arithmetic expressions or function calls.</td><td ><a href="creator-expressions-view.html" translate="no">Evaluating Expressions</a></td></tr>
+<tr valign="top" class="even"><td >Registers</td><td >View the current state of the CPU registers to examine the application at the machine level.</td><td ><a href="creator-registers-view.html" translate="no">Viewing and Editing Register State</a></td></tr>
+<tr valign="top" class="odd"><td >Peripheral Registers</td><td >View the current state of peripheral registers.</td><td ><a href="creator-peripheral-registers-view.html" translate="no">Peripheral Registers</a></td></tr>
+<tr valign="top" class="even"><td >Global Debugger Log<p>Debugger Log</p>
+</td><td >View debug output to find out why the debugger does not work.<p>The log view acts as a console, so you can send the contents of the line under the text cursor in the log directly to the native debugger.</p>
+</td><td ><a href="creator-troubleshooting-debugging.html" translate="no">Troubleshooting Debugger</a><p><a href="creator-debugger-log-view.html" translate="no">Debugger Log</a></p>
+</td></tr>
+<tr valign="top" class="odd"><td >Disassembler</td><td >View disassembled code for the current function.</td><td ><a href="creator-disassembler-view.html" translate="no">Viewing Disassembled Code</a></td></tr>
+<tr valign="top" class="even"><td >Editor</td><td >Open the current source file in the text editor for changing it.</td><td ><a href="creator-coding-navigating.html" translate="no">Edit Mode</a></td></tr>
+</table></div>
+<div class="admonition note">
+<p><b>Note: </b>The <b translate="no">Views</b> menu shows some views only while you are debugging.</p>
+</div>
+<h2 id="managing-debug-views">Managing Debug Views</h2>
+<p>When you are not debugging, the <b translate="no">Debug</b> mode shows the <b translate="no">Debugger Preset</b> perspective:</p>
+<p class="centerAlign"><img src="images/qtcreator-debugger-views-initial.webp" alt="{Initial Debug mode views}" /></p><p>During debugging, the mode shows the views that you usually need to debug C++ or QML applications. To show other views or to hide views, select <b translate="no">Views</b>.</p>
+<p>You can drag the views in Qt Creator to new positions on the screen. Qt Creator saves the size and position of views as a perspective for future sessions. Select <b translate="no">View</b> &gt; <b translate="no">Views</b> &gt; <b translate="no">Reset to Default Layout</b> to reset the views to their original sizes and positions.</p>
+<p>To show and hide columns in views, toggle <b translate="no">Show Column</b> in the context menu.</p>
+<h2 id="customizing-debug-views">Customizing Debug Views</h2>
+<p>To change the appearance and behavior of the debug views, set preferences in <a href="creator-how-to-find-preferences.html" translate="no">Preferences</a> &gt; <b translate="no">Debugger</b> &gt; <b translate="no">General</b>.</p>
+<p class="centerAlign"><img src="images/qtcreator-debugger-general-options.png" alt="{General tab in Debugger preferences}" /></p><p>For example, you can:</p>
+<ul>
+<li>Use alternating row colors in debug views.</li>
+<li>Adopt font size changes from the main editor.</li>
+<li>Show tooltips in the main editor while you are debugging.</li>
+<li>Close temporary source and memory views and switch to the previously used Qt Creator mode when the debugger exits.</li>
+<li>Bring Qt Creator to the foreground when the debugged application is interrupted.</li>
+</ul>
+<p>For more information, see <a href="creator-debugger-preferences.html" translate="no">Debugger Preferences</a>.</p>
+</div>
+<!-- @@@creator-debug-mode.html -->
+<p class="naviNextPrevious footerNavi">
+<a class="prevPage" href="creator-debugger-operating-modes.html">Launching the Debugger</a>
+<span class="naviSeparator">  &#9702;  </span>
+<a class="nextPage" href="creator-stack-view.html">Viewing Call Stack Trace</a>
+</p>
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2024 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

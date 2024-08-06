@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+<!-- qtquick-modules-with-plugins.qdoc -->
+  <meta name="description" content="Using C++ plugins to expose custom components to Qt Quick applications.">
+  <title>Using QML Modules with Plugins | Qt Creator Manual</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");
+    // loading style sheet breaks anchors that were jumped to before
+    // so force jumping to anchor again
+    setTimeout(function() {
+        var anchor = location.hash;
+        // need to jump to different anchor first (e.g. none)
+        location.hash = "#";
+        setTimeout(function() {
+            location.hash = anchor;
+        }, 0);
+    }, 0);
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+    <div class="main">
+    <div class="main-rounded">
+        <div class="navigationbar">
+        <ul>
+<li><a href="index.html" translate="no">Qt Creator Manual</a></li>
+<li>Using QML Modules with Plugins</li>
+<li id="buildversion"><a href="index.html" translate="no">Qt Creator Manual 13.0.1</a></li>
+    </ul>
+    </div>
+</div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+  <link rel="prev" href="creator-reference.html" />
+<p class="naviNextPrevious headerNavi">
+<a class="prevPage" href="creator-reference.html">Reference</a>
+</p>
+<div class="sidebar">
+<div class="toc">
+<h3 id="toc">Contents</h3>
+<ul>
+<li class="level1"><a href="#developing-with-qt-6-1-or-earlier">Developing with Qt 6.1 or Earlier</a></li>
+<li class="level2"><a href="#generating-type-description-files">Generating Type Description Files</a></li>
+<li class="level2"><a href="#dumping-plugins-automatically">Dumping Plugins Automatically</a></li>
+<li class="level1"><a href="#importing-qml-modules">Importing QML Modules</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">Using QML Modules with Plugins</h1>
+<!-- $$$creator-qml-modules-with-plugins.html-description -->
+<div class="descr" id="details">
+<p>QML modules may use C++ plugins to expose components defined in C++ to Qt Quick applications.</p>
+<p>To create a QML module:</p>
+<ol class="1" type="1"><li>Create custom components and place all the <code translate="no">.qml</code> files in a directory dedicated to your module. For example, <code translate="no">imports\asset_imports</code>.</li>
+<li>For Qt Quick UI Prototype projects (.qmlproject), specify the path to the directory that has the module in the .qmlproject file of the application where you want to use the module as a value of the <code translate="no">importPaths</code> variable. For example, <code translate="no">importPaths: [ &quot;imports&quot;, &quot;asset_imports&quot; ]</code>.</li>
+<li>Create a <code translate="no">qmldir</code> file for your module and place it in the module directory. For more information, see Module Definition qmldir Files.</li>
+<li>Create a directory named <code translate="no">designer</code> in your module directory.</li>
+<li>Create a <code translate="no">.metainfo</code> file for your module and place it in the <code translate="no">designer</code> directory. Use a metainfo file delivered with Qt, such as <code translate="no">qtquickcontrols2.metainfo</code>, as an example.</li>
+<li>Import the module into the project, as instructed in <a href="creator-qml-modules-with-plugins.html#importing-qml-modules" translate="no">Importing QML Modules</a>.</li>
+</ol>
+<div class="admonition note">
+<p><b>Note: </b>If Qt Creator cannot find the new QML module, build the project and then go to <b translate="no">Tools</b> &gt; <b translate="no">QML/JS</b> &gt; <b translate="no">Reset Code Model</b> to reset the code model.</p>
+</div>
+<h2 id="developing-with-qt-6-1-or-earlier">Developing with Qt 6.1 or Earlier</h2>
+<p>Since Qt 6.2, CMake generates the <code translate="no">qmltypes</code> and <code translate="no">qmldir</code> files automatically.</p>
+<h3 id="generating-type-description-files">Generating Type Description Files</h3>
+<p>When registering QML types, make sure that the QML module has a <code translate="no">plugins.qmltypes</code> file. Ideally, it should be located in the same directory as the <code translate="no">qmldir</code> file. The <code translate="no">qmltypes</code> file has a description of the components exported by the module's plugins and is loaded by Qt Creator when the module is imported.</p>
+<p>For more information, see Type Description Files.</p>
+<h3 id="dumping-plugins-automatically">Dumping Plugins Automatically</h3>
+<p>If a module with plugins lacks the <code translate="no">qmltypes</code> file, Qt Creator tries to generate a temporary file itself by running the <code translate="no">qmldump</code> program in the background. However, this automatic dumping is a fallback mechanism with many points of failure and you cannot rely upon it.</p>
+<h2 id="importing-qml-modules">Importing QML Modules</h2>
+<p>By default, Qt Creator will look in the QML import path of Qt for QML modules.</p>
+<p>If you use qmake and your application adds additional import paths that Qt Creator should use, specify them using <code translate="no">QML_IMPORT_PATH</code> in the <code translate="no">.pro</code> file of your application: <code translate="no">QML_IMPORT_PATH += path/to/module</code>.</p>
+<p>If you use CMake, add the following command to the CMakeLists.txt file to set the QML import path:</p>
+<pre class="cpp" translate="no">
+ set(QML_IMPORT_PATH ${CMAKE_SOURCE_DIR}<span class="operator">/</span>qml ${CMAKE_BINARY_DIR}<span class="operator">/</span>imports CACHE STRING <span class="string">&quot;&quot;</span> FORCE)
+</pre>
+<p>The import path affects all the targets built by the CMake project.</p>
+</div>
+<p><b>See also </b><a href="creator-reference-js-and-qml-error-codes.html#resetting-the-code-model" translate="no">Resetting the Code Model</a>.</p>
+<!-- @@@creator-qml-modules-with-plugins.html -->
+<p class="naviNextPrevious footerNavi">
+<a class="prevPage" href="creator-reference.html">Reference</a>
+</p>
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2024 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

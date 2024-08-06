@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+<!-- qtcreator-module.qdoc -->
+  <title>Qt Creator Functions | Extending Qt Creator Manual</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");
+    // loading style sheet breaks anchors that were jumped to before
+    // so force jumping to anchor again
+    setTimeout(function() {
+        var anchor = location.hash;
+        // need to jump to different anchor first (e.g. none)
+        location.hash = "#";
+        setTimeout(function() {
+            location.hash = anchor;
+        }, 0);
+    }, 0);
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+    <div class="main">
+    <div class="main-rounded">
+        <div class="navigationbar">
+        <ul>
+<li><a href="index.html" translate="no">Extending Qt Creator Manual</a></li>
+<li>Qt Creator Functions</li>
+<li id="buildversion"><a href="index.html" translate="no">Extending Qt Creator Manual 13.0.1</a></li>
+    </ul>
+    </div>
+</div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+<div class="sidebar"><div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">Qt Creator Functions</h1>
+<!-- $$$functions.html-description -->
+<div class="descr" id="details">
+<p>This topic lists the documented Qt Creator functions. For information about the functions that have not been documented, please inspect the source code.</p>
+<p  class="centerAlign functionIndex" translate="no"><b><a href="#a">A</a>&nbsp;<a href="#b">B</a>&nbsp;<a href="#c">C</a>&nbsp;<a href="#d">D</a>&nbsp;<a href="#e">E</a>&nbsp;<a href="#f">F</a>&nbsp;<a href="#g">G</a>&nbsp;<a href="#h">H</a>&nbsp;<a href="#i">I</a>&nbsp;<a href="#j">J</a>&nbsp;<a href="#k">K</a>&nbsp;<a href="#l">L</a>&nbsp;<a href="#m">M</a>&nbsp;<a href="#n">N</a>&nbsp;<a href="#o">O</a>&nbsp;<a href="#p">P</a>&nbsp;<a href="#q">Q</a>&nbsp;<a href="#r">R</a>&nbsp;<a href="#s">S</a>&nbsp;<a href="#t">T</a>&nbsp;<a href="#u">U</a>&nbsp;<a href="#v">V</a>&nbsp;<a href="#w">W</a>&nbsp;<a href="#x">X</a>&nbsp;<a href="#y">Y</a>&nbsp;<a href="#z">Z</a>&nbsp;</b></p>
+<ul translate="no">
+<li id="a">aboutToReload: <a href="core-idocument.html#aboutToReload">Core::IDocument</a></li>
+<li>aboutToSave: <a href="core-editormanager.html#aboutToSave">Core::EditorManager</a> <a href="core-idocument.html#aboutToSave">Core::IDocument</a></li>
+<li>aboutToShutdown: <a href="extensionsystem-iplugin.html#aboutToShutdown">ExtensionSystem::IPlugin</a></li>
+<li>action: <a href="core-command.html#action">Core::Command</a></li>
+<li>actionContainer: <a href="core-actionmanager.html#actionContainer">Core::ActionManager</a></li>
+<li>actionId: <a href="core-ilocatorfilter.html#actionId">Core::ILocatorFilter</a></li>
+<li>activateEditor: <a href="core-editormanager.html#activateEditor">Core::EditorManager</a></li>
+<li>activateEditorForDocument: <a href="core-editormanager.html#activateEditorForDocument">Core::EditorManager</a></li>
+<li>activateEditorForEntry: <a href="core-editormanager.html#activateEditorForEntry">Core::EditorManager</a></li>
+<li>activateMode: <a href="core-modemanager.html#activateMode">Core::ModeManager</a></li>
+<li>activated: <a href="core-searchresult.html#activated">Core::SearchResult</a></li>
+<li>activationSequence: <a href="core-inavigationwidgetfactory.html#activationSequence">Core::INavigationWidgetFactory</a></li>
+<li>activeStateChanged: <a href="core-command.html#activeStateChanged">Core::Command</a></li>
+<li>activeStorage: <a href="tasking-storage.html#activeStorage">Tasking::Storage</a></li>
+<li>add: <a href="aggregation-aggregate.html#add">Aggregation::Aggregate</a> <a href="core-context.html#add-1">Core::Context</a></li>
+<li>addAction: <a href="core-actioncontainer.html#addAction">Core::ActionContainer</a> <a href="core-modemanager.html#addAction">Core::ModeManager</a></li>
+<li>addAdditionalContext: <a href="core-icore.html#addAdditionalContext">Core::ICore</a></li>
+<li>addArgument: <a href="extensionsystem-pluginspec.html#addArgument">ExtensionSystem::PluginSpec</a></li>
+<li>addCloseEditorListener: <a href="core-editormanager.html#addCloseEditorListener">Core::EditorManager</a></li>
+<li>addContextObject: <a href="core-icore.html#addContextObject">Core::ICore</a></li>
+<li>addCurrentPositionToNavigationHistory: <a href="core-editormanager.html#addCurrentPositionToNavigationHistory">Core::EditorManager</a></li>
+<li>addDocument: <a href="core-documentmanager.html#addDocument">Core::DocumentManager</a></li>
+<li>addDocuments: <a href="core-documentmanager.html#addDocuments">Core::DocumentManager</a></li>
+<li>addItem: <a href="layouting-layoutitem.html#addItem">Layouting::LayoutItem</a></li>
+<li>addItems: <a href="layouting-layoutitem.html#addItems">Layouting::LayoutItem</a></li>
+<li>addMacroExpanderProvider: <a href="utils-variablechooser.html#addMacroExpanderProvider">Utils::VariableChooser</a></li>
+<li>addMenu: <a href="core-actioncontainer.html#addMenu-1">Core::ActionContainer</a></li>
+<li>addMimeType: <a href="core-ieditorfactory.html#addMimeType">Core::IEditorFactory</a></li>
+<li>addNativeDirAndOpenWithActions: <a href="core-editormanager.html#addNativeDirAndOpenWithActions">Core::EditorManager</a></li>
+<li>addObject: <a href="extensionsystem-pluginmanager.html#addObject">ExtensionSystem::PluginManager</a></li>
+<li>addPath: <a href="utils-qrccache.html#addPath">Utils::QrcCache</a></li>
+<li>addPinEditorActions: <a href="core-editormanager.html#addPinEditorActions">Core::EditorManager</a></li>
+<li>addPreCloseListener: <a href="core-icore.html#addPreCloseListener">Core::ICore</a></li>
+<li>addResult: <a href="core-searchresult.html#addResult">Core::SearchResult</a></li>
+<li>addResults: <a href="core-searchresult.html#addResults">Core::SearchResult</a></li>
+<li>addRow: <a href="layouting-layoutitem.html#addRow">Layouting::LayoutItem</a></li>
+<li>addSaveAndCloseEditorActions: <a href="core-editormanager.html#addSaveAndCloseEditorActions">Core::EditorManager</a></li>
+<li>addSeparator: <a href="core-actioncontainer.html#addSeparator-1">Core::ActionContainer</a></li>
+<li>addSupportedWidget: <a href="utils-variablechooser.html#addSupportedWidget">Utils::VariableChooser</a></li>
+<li>addTask: <a href="core-progressmanager.html#addTask-1">Core::ProgressManager</a></li>
+<li>addTestCreator: <a href="extensionsystem-iplugin.html#addTestCreator">ExtensionSystem::IPlugin</a></li>
+<li>addTimedTask: <a href="core-progressmanager.html#addTimedTask">Core::ProgressManager</a></li>
+<li>addToLayout: <a href="utils-baseaspect.html#addToLayout">Utils::BaseAspect</a> <a href="utils-boolaspect.html#addToLayout">Utils::BoolAspect</a> <a href="utils-doubleaspect.html#addToLayout">Utils::DoubleAspect</a> <a href="utils-integeraspect.html#addToLayout">Utils::IntegerAspect</a> <a href="utils-multiselectionaspect.html#addToLayout">Utils::MultiSelectionAspect</a> <a href="utils-selectionaspect.html#addToLayout">Utils::SelectionAspect</a> <a href="utils-stringlistaspect.html#addToLayout">Utils::StringListAspect</a> <a href="utils-textdisplay.html#addToLayout">Utils::TextDisplay</a></li>
+<li>addToRecentFiles: <a href="core-documentmanager.html#addToRecentFiles">Core::DocumentManager</a></li>
+<li>addToolTipsToMenu: <a href="utils.html#addToolTipsToMenu">Utils</a></li>
+<li>additionalReplaceWidget: <a href="core-searchresult.html#additionalReplaceWidget">Core::SearchResult</a></li>
+<li>additionalSummaryText: <a href="utils-detailswidget.html#additionalSummaryText-prop">Utils::DetailsWidget</a></li>
+<li>additionalToolTip: <a href="utils-elidinglabel.html#additionalToolTip-prop">Utils::ElidingLabel</a></li>
+<li>additionalToolTipSeparator: <a href="utils-elidinglabel.html#additionalToolTipSeparator-prop">Utils::ElidingLabel</a></li>
+<li>adopt: <a href="core-actionbuilder.html#adopt">Core::ActionBuilder</a></li>
+<li>allEditorFactories: <a href="core-ieditorfactory.html#allEditorFactories">Core::IEditorFactory</a></li>
+<li>allFindFilters: <a href="core-ifindfilter.html#allFindFilters">Core::IFindFilter</a></li>
+<li>allObjects: <a href="extensionsystem-pluginmanager.html#allObjects">ExtensionSystem::PluginManager</a></li>
+<li>allOptionsPages: <a href="core-ioptionspage.html#allOptionsPages">Core::IOptionsPage</a></li>
+<li>allTasksFinished: <a href="core-progressmanager.html#allTasksFinished">Core::ProgressManager</a></li>
+<li>allowDirectories: <a href="utils-filenamevalidatinglineedit.html#allowDirectories-prop">Utils::FileNameValidatingLineEdit</a></li>
+<li>appendGroup: <a href="core-actioncontainer.html#appendGroup">Core::ActionContainer</a></li>
+<li>apply: <a href="core-ioptionspage.html#apply">Core::IOptionsPage</a> <a href="core-ioptionspagewidget.html#apply">Core::IOptionsPageWidget</a> <a href="utils-baseaspect.html#apply">Utils::BaseAspect</a></li>
+<li>argumentDescriptions: <a href="extensionsystem-pluginspec.html#argumentDescriptions">ExtensionSystem::PluginSpec</a></li>
+<li>arguments: <a href="extensionsystem-pluginmanager.html#arguments">ExtensionSystem::PluginManager</a> <a href="extensionsystem-pluginspec.html#arguments">ExtensionSystem::PluginSpec</a></li>
+<li>argumentsForRestart: <a href="extensionsystem-pluginmanager.html#argumentsForRestart">ExtensionSystem::PluginManager</a></li>
+<li>askForRestart: <a href="core-icore.html#askForRestart">Core::ICore</a></li>
+<li>aspect: <a href="utils-aspectcontainer.html#aspect-1">Utils::AspectContainer</a></li>
+<li>asyncCount: <a href="tasking-tasktree.html#asyncCount">Tasking::TaskTree</a></li>
+<li>asyncCountChanged: <a href="tasking-tasktree.html#asyncCountChanged">Tasking::TaskTree</a></li>
+<li>asynchronousShutdownFinished: <a href="extensionsystem-iplugin.html#asynchronousShutdownFinished">ExtensionSystem::IPlugin</a></li>
+<li>at: <a href="core-context.html#at">Core::Context</a></li>
+<li>attachTo: <a href="layouting-layoutitem.html#attachTo">Layouting::LayoutItem</a></li>
+<li>augmentActionWithShortcutToolTip: <a href="core-command.html#augmentActionWithShortcutToolTip">Core::Command</a></li>
+<li>autoSaved: <a href="core-editormanager.html#autoSaved">Core::EditorManager</a></li>
+<li id="b">baseDirectory: <a href="utils-pathchooser.html#baseDirectory-prop">Utils::PathChooser</a></li>
+<li>baseName: <a href="utils-filepath.html#baseName">Utils::FilePath</a></li>
+<li>begin: <a href="core-context.html#begin">Core::Context</a></li>
+<li>buildFileName: <a href="core-basefilewizardfactory.html#buildFileName">Core::BaseFileWizardFactory</a></li>
+<li id="c">cacheResourcePath: <a href="core-icore.html#cacheResourcePath">Core::ICore</a></li>
+<li>calcRelativePath: <a href="utils-filepath.html#calcRelativePath">Utils::FilePath</a></li>
+<li>canFocus: <a href="core-ioutputpane.html#canFocus">Core::IOutputPane</a></li>
+<li>canNavigate: <a href="core-ioutputpane.html#canNavigate">Core::IOutputPane</a></li>
+<li>canNext: <a href="core-ioutputpane.html#canNext">Core::IOutputPane</a></li>
+<li>canPrevious: <a href="core-ioutputpane.html#canPrevious">Core::IOutputPane</a></li>
+<li>cancel: <a href="tasking-tasktree.html#cancel">Tasking::TaskTree</a> <a href="utils-baseaspect.html#cancel">Utils::BaseAspect</a></li>
+<li>cancelTasks: <a href="core-progressmanager.html#cancelTasks">Core::ProgressManager</a></li>
+<li>canceled: <a href="core-futureprogress.html#canceled">Core::FutureProgress</a> <a href="core-searchresult.html#canceled">Core::SearchResult</a></li>
+<li>canonicalPath: <a href="utils-filepath.html#canonicalPath">Utils::FilePath</a></li>
+<li>caseSensitivity: <a href="core-ilocatorfilter.html#caseSensitivity">Core::ILocatorFilter</a> <a href="utils-filepath.html#caseSensitivity">Utils::FilePath</a></li>
+<li>category: <a href="core-ioptionspage.html#category">Core::IOptionsPage</a> <a href="core-iwizardfactory.html#category">Core::IWizardFactory</a> <a href="extensionsystem-pluginspec.html#category">ExtensionSystem::PluginSpec</a></li>
+<li>categoryIconPath: <a href="core-ioptionspage.html#categoryIconPath">Core::IOptionsPage</a></li>
+<li>changed: <a href="aggregation-aggregate.html#changed">Aggregation::Aggregate</a> <a href="core-idocument.html#changed">Core::IDocument</a> <a href="core-ifindsupport.html#changed">Core::IFindSupport</a></li>
+<li>checkPermissions: <a href="core-idocument.html#checkPermissions">Core::IDocument</a></li>
+<li>chopped: <a href="utils-filepath.html#chopped">Utils::FilePath</a></li>
+<li>cleanPath: <a href="utils-filepath.html#cleanPath">Utils::FilePath</a></li>
+<li>clear: <a href="core-actioncontainer.html#clear">Core::ActionContainer</a> <a href="utils-filepath.html#clear">Utils::FilePath</a> <a href="utils-qrccache.html#clear">Utils::QrcCache</a></li>
+<li>clearContents: <a href="core-ioutputpane.html#clearContents">Core::IOutputPane</a> <a href="core-searchresultwindow.html#clearContents">Core::SearchResultWindow</a></li>
+<li>clearFindScope: <a href="core-basetextfind.html#clearFindScope">Core::BaseTextFind</a> <a href="core-ifindsupport.html#clearFindScope">Core::IFindSupport</a></li>
+<li>clearHighlights: <a href="core-basetextfind.html#clearHighlights">Core::BaseTextFind</a> <a href="core-ifindsupport.html#clearHighlights">Core::IFindSupport</a></li>
+<li>clearRecentFiles: <a href="core-documentmanager.html#clearRecentFiles">Core::DocumentManager</a></li>
+<li>clearUniqueId: <a href="core-editormanager.html#clearUniqueId">Core::EditorManager</a></li>
+<li>clicked: <a href="core-futureprogress.html#clicked">Core::FutureProgress</a></li>
+<li>closeAllDocuments: <a href="core-editormanager.html#closeAllDocuments">Core::EditorManager</a></li>
+<li>closeAllEditors: <a href="core-editormanager.html#closeAllEditors">Core::EditorManager</a></li>
+<li>closeDocuments: <a href="core-editormanager.html#closeDocuments-1">Core::EditorManager</a></li>
+<li>closeEditors: <a href="core-editormanager.html#closeEditors">Core::EditorManager</a></li>
+<li>closeOtherDocuments: <a href="core-editormanager.html#closeOtherDocuments-1">Core::EditorManager</a></li>
+<li>collectFilesAtPath: <a href="utils-qrcparser.html#collectFilesAtPath">Utils::QrcParser</a></li>
+<li>collectFilesInPath: <a href="utils-qrcparser.html#collectFilesInPath">Utils::QrcParser</a></li>
+<li>collectResourceFilesForSourceFile: <a href="utils-qrcparser.html#collectResourceFilesForSourceFile">Utils::QrcParser</a></li>
+<li>command: <a href="core-actionmanager.html#command">Core::ActionManager</a></li>
+<li>commandAdded: <a href="core-actionmanager.html#commandAdded">Core::ActionManager</a></li>
+<li>commandListChanged: <a href="core-actionmanager.html#commandListChanged">Core::ActionManager</a></li>
+<li>commandVersionArguments: <a href="utils-pathchooser.html#commandVersionArguments-prop">Utils::PathChooser</a></li>
+<li>commands: <a href="core-actionmanager.html#commands">Core::ActionManager</a></li>
+<li>compatVersion: <a href="extensionsystem-pluginspec.html#compatVersion">ExtensionSystem::PluginSpec</a></li>
+<li>completeBaseName: <a href="utils-filepath.html#completeBaseName">Utils::FilePath</a></li>
+<li>completeSuffix: <a href="utils-filepath.html#completeSuffix">Utils::FilePath</a></li>
+<li>completedFindString: <a href="core-basetextfind.html#completedFindString">Core::BaseTextFind</a> <a href="core-ifindsupport.html#completedFindString">Core::IFindSupport</a></li>
+<li>completionLengthThreshold: <a href="utils-completingtextedit.html#completionLengthThreshold-prop">Utils::CompletingTextEdit</a></li>
+<li>component: <a href="aggregation-aggregate.html#component">Aggregation::Aggregate</a></li>
+<li>components: <a href="aggregation-aggregate.html#components">Aggregation::Aggregate</a></li>
+<li>confirmSessionDelete: <a href="core-sessionmanager.html#confirmSessionDelete">Core::SessionManager</a></li>
+<li>contains: <a href="core-context.html#contains">Core::Context</a> <a href="utils-filepath.html#contains">Utils::FilePath</a></li>
+<li>contents: <a href="core-idocument.html#contents">Core::IDocument</a></li>
+<li>contentsChanged: <a href="core-idocument.html#contentsChanged">Core::IDocument</a></li>
+<li>context: <a href="core-command.html#context">Core::Command</a> <a href="core-icontext.html#context">Core::IContext</a></li>
+<li>contextAboutToChange: <a href="core-icore.html#contextAboutToChange">Core::ICore</a></li>
+<li>contextChanged: <a href="core-icore.html#contextChanged">Core::ICore</a></li>
+<li>contextHelp: <a href="core-icontext.html#contextHelp">Core::IContext</a></li>
+<li>contextObject: <a href="core-icore.html#contextObject">Core::ICore</a></li>
+<li>copyIfDifferent: <a href="utils-fileutils.html#copyIfDifferent">Utils::FileUtils</a></li>
+<li>copyright: <a href="extensionsystem-pluginspec.html#copyright">ExtensionSystem::PluginSpec</a></li>
+<li>coreAboutToClose: <a href="core-icore.html#coreAboutToClose">Core::ICore</a></li>
+<li>coreAboutToOpen: <a href="core-icore.html#coreAboutToOpen">Core::ICore</a></li>
+<li>coreOpened: <a href="core-icore.html#coreOpened">Core::ICore</a></li>
+<li>count: <a href="core-searchresult.html#count">Core::SearchResult</a></li>
+<li>countChanged: <a href="core-searchresult.html#countChanged">Core::SearchResult</a></li>
+<li>create: <a href="core-basefilewizardfactory.html#create">Core::BaseFileWizardFactory</a></li>
+<li>createActionWithShortcutToolTip: <a href="core-command.html#createActionWithShortcutToolTip">Core::Command</a></li>
+<li>createCommand: <a href="core-actionmanager.html#createCommand">Core::ActionManager</a></li>
+<li>createConfigWidget: <a href="core-ifindfilter.html#createConfigWidget">Core::IFindFilter</a></li>
+<li>createDir: <a href="utils-filepath.html#createDir">Utils::FilePath</a></li>
+<li>createEditor: <a href="core-ieditorfactory.html#createEditor">Core::IEditorFactory</a></li>
+<li>createMenu: <a href="core-actionmanager.html#createMenu">Core::ActionManager</a></li>
+<li>createMenuBar: <a href="core-actionmanager.html#createMenuBar">Core::ActionManager</a></li>
+<li>createRegExp: <a href="core-ilocatorfilter.html#createRegExp">Core::ILocatorFilter</a></li>
+<li>createRequest: <a href="utils-networkaccessmanager.html#createRequest">Utils::NetworkAccessManager</a></li>
+<li>createSession: <a href="core-sessionmanager.html#createSession">Core::SessionManager</a></li>
+<li>createToolButtonWithShortcutToolTip: <a href="core-command.html#createToolButtonWithShortcutToolTip">Core::Command</a></li>
+<li>createTouchBar: <a href="core-actionmanager.html#createTouchBar">Core::ActionManager</a></li>
+<li>createWidget: <a href="core-inavigationwidgetfactory.html#createWidget">Core::INavigationWidgetFactory</a></li>
+<li>currentColumn: <a href="core-ieditor.html#currentColumn">Core::IEditor</a></li>
+<li>currentContextObject: <a href="core-icore.html#currentContextObject">Core::ICore</a></li>
+<li>currentContextWidget: <a href="core-icore.html#currentContextWidget">Core::ICore</a></li>
+<li>currentDocument: <a href="core-editormanager.html#currentDocument">Core::EditorManager</a></li>
+<li>currentDocumentStateChanged: <a href="core-editormanager.html#currentDocumentStateChanged">Core::EditorManager</a></li>
+<li>currentEditor: <a href="core-editormanager.html#currentEditor">Core::EditorManager</a></li>
+<li>currentEditorAboutToChange: <a href="core-editormanager.html#currentEditorAboutToChange">Core::EditorManager</a></li>
+<li>currentEditorChanged: <a href="core-editormanager.html#currentEditorChanged">Core::EditorManager</a></li>
+<li>currentFindString: <a href="core-basetextfind.html#currentFindString">Core::BaseTextFind</a> <a href="core-ifindsupport.html#currentFindString">Core::IFindSupport</a></li>
+<li>currentLine: <a href="core-ieditor.html#currentLine">Core::IEditor</a></li>
+<li>currentMode: <a href="core-modemanager.html#currentMode">Core::ModeManager</a></li>
+<li>currentModeAboutToChange: <a href="core-modemanager.html#currentModeAboutToChange">Core::ModeManager</a></li>
+<li>currentModeChanged: <a href="core-modemanager.html#currentModeChanged">Core::ModeManager</a></li>
+<li>currentModeId: <a href="core-modemanager.html#currentModeId">Core::ModeManager</a></li>
+<li>currentPlugin: <a href="extensionsystem-pluginview.html#currentPlugin">ExtensionSystem::PluginView</a></li>
+<li>currentPluginChanged: <a href="extensionsystem-pluginview.html#currentPluginChanged">ExtensionSystem::PluginView</a></li>
+<li>cutForwardNavigationHistory: <a href="core-editormanager.html#cutForwardNavigationHistory">Core::EditorManager</a></li>
+<li id="d">decode: <a href="utils-textfileformat.html#decode-1">Utils::TextFileFormat</a></li>
+<li>decodingErrorSample: <a href="utils-textfileformat.html#decodingErrorSample">Utils::TextFileFormat</a></li>
+<li>defaultEditorFactories: <a href="core-ieditorfactory.html#defaultEditorFactories">Core::IEditorFactory</a></li>
+<li>defaultKeySequences: <a href="core-command.html#defaultKeySequences">Core::Command</a></li>
+<li>defaultLineEnding: <a href="core-editormanager.html#defaultLineEnding">Core::EditorManager</a></li>
+<li>defaultLocationForNewFiles: <a href="core-documentmanager.html#defaultLocationForNewFiles">Core::DocumentManager</a></li>
+<li>defaultShortcut: <a href="core-ifindfilter.html#defaultShortcut">Core::IFindFilter</a></li>
+<li>defaultTextCodec: <a href="core-editormanager.html#defaultTextCodec">Core::EditorManager</a></li>
+<li>defineFindScope: <a href="core-basetextfind.html#defineFindScope">Core::BaseTextFind</a> <a href="core-ifindsupport.html#defineFindScope">Core::IFindSupport</a></li>
+<li>delayedInitialize: <a href="extensionsystem-iplugin.html#delayedInitialize">ExtensionSystem::IPlugin</a></li>
+<li>deleteSession: <a href="core-sessionmanager.html#deleteSession">Core::SessionManager</a></li>
+<li>dependencies: <a href="extensionsystem-pluginspec.html#dependencies">ExtensionSystem::PluginSpec</a></li>
+<li>dependencySpecs: <a href="extensionsystem-pluginspec.html#dependencySpecs">ExtensionSystem::PluginSpec</a></li>
+<li>description: <a href="core-command.html#description">Core::Command</a> <a href="core-ilocatorfilter.html#description">Core::ILocatorFilter</a> <a href="core-iwizardfactory.html#description">Core::IWizardFactory</a> <a href="extensionsystem-pluginspec.html#description">ExtensionSystem::PluginSpec</a> <a href="utils-projectintropage.html#description-prop">Utils::ProjectIntroPage</a></li>
+<li>descriptionForFindFlags: <a href="core-ifindfilter.html#descriptionForFindFlags">Core::IFindFilter</a></li>
+<li>detect: <a href="utils-textfileformat.html#detect">Utils::TextFileFormat</a></li>
+<li>dialogParent: <a href="core-icore.html#dialogParent">Core::ICore</a></li>
+<li>displayCategory: <a href="core-ioptionspage.html#displayCategory">Core::IOptionsPage</a> <a href="core-iwizardfactory.html#displayCategory">Core::IWizardFactory</a></li>
+<li>displayName: <a href="core-idocument.html#displayName">Core::IDocument</a> <a href="core-ieditorfactory.html#displayName">Core::IEditorFactory</a> <a href="core-ifindfilter.html#displayName">Core::IFindFilter</a> <a href="core-ilocatorfilter.html#displayName">Core::ILocatorFilter</a> <a href="core-imode.html#displayName-prop">Core::IMode</a> <a href="core-inavigationwidgetfactory.html#displayName">Core::INavigationWidgetFactory</a> <a href="core-ioptionspage.html#displayName">Core::IOptionsPage</a> <a href="core-ioutputpane.html#displayName">Core::IOutputPane</a> <a href="core-iwizardfactory.html#displayName">Core::IWizardFactory</a> <a href="utils-baseaspect.html#displayName">Utils::BaseAspect</a> <a href="utils-filepath.html#displayName">Utils::FilePath</a></li>
+<li>displayNameChanged: <a href="core-ifindfilter.html#displayNameChanged">Core::IFindFilter</a></li>
+<li>document: <a href="core-ieditor.html#document">Core::IEditor</a></li>
+<li>documentClosed: <a href="core-editormanager.html#documentClosed">Core::EditorManager</a></li>
+<li>documentOpened: <a href="core-editormanager.html#documentOpened">Core::EditorManager</a></li>
+<li>documentStateChanged: <a href="core-editormanager.html#documentStateChanged">Core::EditorManager</a></li>
+<li>done: <a href="tasking-taskinterface.html#done">Tasking::TaskInterface</a> <a href="tasking-tasktree.html#done">Tasking::TaskTree</a></li>
+<li>duplicate: <a href="core-ieditor.html#duplicate">Core::IEditor</a></li>
+<li>duplicateSupported: <a href="core-ieditor.html#duplicateSupported">Core::IEditor</a></li>
+<li id="e">editorAboutToClose: <a href="core-editormanager.html#editorAboutToClose">Core::EditorManager</a></li>
+<li>editorOpened: <a href="core-editormanager.html#editorOpened">Core::EditorManager</a></li>
+<li>editorsClosed: <a href="core-editormanager.html#editorsClosed">Core::EditorManager</a></li>
+<li>elideMode: <a href="utils-elidinglabel.html#elideMode-prop">Utils::ElidingLabel</a></li>
+<li>emptyText: <a href="utils-action.html#emptyText-prop">Utils::Action</a></li>
+<li>enabledChanged: <a href="core-ifindfilter.html#enabledChanged">Core::IFindFilter</a></li>
+<li>enabledStateChanged: <a href="core-imode.html#enabled-prop">Core::IMode</a></li>
+<li>enablingMode: <a href="utils-action.html#enablingMode-prop">Utils::Action</a></li>
+<li>end: <a href="core-context.html#end">Core::Context</a></li>
+<li>endsWith: <a href="utils-filepath.html#endsWith">Utils::FilePath</a></li>
+<li>ensureWritableDir: <a href="utils-filepath.html#ensureWritableDir">Utils::FilePath</a></li>
+<li>errorMessages: <a href="utils-qrcparser.html#errorMessages">Utils::QrcParser</a></li>
+<li>errorString: <a href="extensionsystem-pluginspec.html#errorString">ExtensionSystem::PluginSpec</a></li>
+<li>execMenuAtWidget: <a href="utils.html#execMenuAtWidget">Utils</a></li>
+<li>exists: <a href="utils-filepath.html#exists">Utils::FilePath</a></li>
+<li>expand: <a href="utils-macroexpander.html#expand">Utils::MacroExpander</a></li>
+<li>expectFileChange: <a href="core-documentmanager.html#expectFileChange">Core::DocumentManager</a></li>
+<li>expectedKind: <a href="utils-pathchooser.html#expectedKind">Utils::PathChooser</a></li>
+<li>extensionsInitialized: <a href="extensionsystem-iplugin.html#extensionsInitialized">ExtensionSystem::IPlugin</a></li>
+<li id="f">fallbackSaveAsFileName: <a href="core-idocument.html#fallbackSaveAsFileName">Core::IDocument</a></li>
+<li>fallbackSaveAsPath: <a href="core-idocument.html#fallbackSaveAsPath">Core::IDocument</a></li>
+<li>falseText: <a href="utils-textfieldcheckbox.html#falseText-prop">Utils::TextFieldCheckBox</a></li>
+<li>fileDialogInitialDirectory: <a href="core-documentmanager.html#fileDialogInitialDirectory">Core::DocumentManager</a></li>
+<li>fileDialogLastVisitedDirectory: <a href="core-documentmanager.html#fileDialogLastVisitedDirectory">Core::DocumentManager</a></li>
+<li>fileDialogTitle: <a href="utils-pathlisteditor.html#fileDialogTitle-prop">Utils::PathListEditor</a></li>
+<li>fileName: <a href="utils-filewizardpage.html#fileName-prop">Utils::FileWizardPage</a></li>
+<li>filePath: <a href="core-idocument.html#filePath">Core::IDocument</a> <a href="extensionsystem-pluginspec.html#filePath">ExtensionSystem::PluginSpec</a> <a href="utils-pathchooser.html#filePath-prop">Utils::PathChooser</a> <a href="utils-projectintropage.html#filePath-prop">Utils::ProjectIntroPage</a></li>
+<li>filePathChanged: <a href="core-idocument.html#filePathChanged">Core::IDocument</a></li>
+<li>filePathKey: <a href="core-documentmanager.html#filePathKey">Core::DocumentManager</a></li>
+<li>filePathsGenerator: <a href="core-locatorfilecache.html#filePathsGenerator">Core::LocatorFileCache</a></li>
+<li>findAll: <a href="core-ifindfilter.html#findAll">Core::IFindFilter</a></li>
+<li>findFile: <a href="utils-fileinprojectfinder.html#findFile">Utils::FileInProjectFinder</a></li>
+<li>findIncremental: <a href="core-basetextfind.html#findIncremental">Core::BaseTextFind</a> <a href="core-ifindsupport.html#findIncremental">Core::IFindSupport</a></li>
+<li>findScopeChanged: <a href="core-basetextfind.html#findScopeChanged">Core::BaseTextFind</a></li>
+<li>findStep: <a href="core-basetextfind.html#findStep">Core::BaseTextFind</a> <a href="core-ifindsupport.html#findStep">Core::IFindSupport</a></li>
+<li>finish: <a href="core-ioptionspage.html#finish">Core::IOptionsPage</a> <a href="core-ioptionspagewidget.html#finish">Core::IOptionsPageWidget</a></li>
+<li>finishSearch: <a href="core-searchresult.html#finishSearch">Core::SearchResult</a></li>
+<li>finished: <a href="core-futureprogress.html#finished">Core::FutureProgress</a></li>
+<li>firstFileAtPath: <a href="utils-qrcparser.html#firstFileAtPath">Utils::QrcParser</a></li>
+<li>flash: <a href="core-ioutputpane.html#flash">Core::IOutputPane</a></li>
+<li>flashButton: <a href="core-ioutputpane.html#flashButton">Core::IOutputPane</a></li>
+<li>forceFirstCapitalLetter: <a href="utils-filenamevalidatinglineedit.html#forceFirstCapitalLetter-prop">Utils::FileNameValidatingLineEdit</a></li>
+<li>forceSubProject: <a href="utils-projectintropage.html#forceSubProject-prop">Utils::ProjectIntroPage</a></li>
+<li>format: <a href="core-basetextdocument.html#format">Core::BaseTextDocument</a></li>
+<li>formatContents: <a href="core-idocument.html#formatContents">Core::IDocument</a></li>
+<li>formatOptions: <a href="extensionsystem-pluginmanager.html#formatOptions">ExtensionSystem::PluginManager</a></li>
+<li>formatPluginOptions: <a href="extensionsystem-pluginmanager.html#formatPluginOptions">ExtensionSystem::PluginManager</a></li>
+<li>formatPluginVersions: <a href="extensionsystem-pluginmanager.html#formatPluginVersions">ExtensionSystem::PluginManager</a></li>
+<li>fromFileInfo: <a href="utils-filepath.html#fromFileInfo">Utils::FilePath</a></li>
+<li>fromMap: <a href="utils-baseaspect.html#fromMap">Utils::BaseAspect</a> <a href="utils-filepathaspect.html#fromMap">Utils::FilePathAspect</a> <a href="utils-stringaspect.html#fromMap">Utils::StringAspect</a></li>
+<li>fromSetting: <a href="utils-id.html#fromSetting">Utils::Id</a></li>
+<li>fromString: <a href="utils-filepath.html#fromString">Utils::FilePath</a></li>
+<li>fromStringWithExtension: <a href="utils-filepath.html#fromStringWithExtension">Utils::FilePath</a></li>
+<li>fromUrl: <a href="utils-filepath.html#fromUrl">Utils::FilePath</a></li>
+<li>fromUserInput: <a href="utils-filepath.html#fromUserInput">Utils::FilePath</a></li>
+<li>fromUtf8: <a href="utils-filepath.html#fromUtf8">Utils::FilePath</a></li>
+<li>fromVariant: <a href="utils-filepath.html#fromVariant">Utils::FilePath</a></li>
+<li>future: <a href="core-futureprogress.html#future">Core::FutureProgress</a></li>
+<li id="g">generateFiles: <a href="core-basefilewizardfactory.html#generateFiles">Core::BaseFileWizardFactory</a></li>
+<li>getObject: <a href="extensionsystem-pluginmanager.html#getObject-1">ExtensionSystem::PluginManager</a></li>
+<li>getObjectByName: <a href="extensionsystem-pluginmanager.html#getObjectByName">ExtensionSystem::PluginManager</a></li>
+<li>getOpenFileNames: <a href="core-documentmanager.html#getOpenFileNames">Core::DocumentManager</a></li>
+<li>getOpenFilePaths: <a href="core-editormanager.html#getOpenFilePaths">Core::EditorManager</a></li>
+<li>getSaveAsFileName: <a href="core-documentmanager.html#getSaveAsFileName">Core::DocumentManager</a></li>
+<li>globalMacroExpander: <a href="utils.html#globalMacroExpander">Utils</a></li>
+<li>globalSettings: <a href="extensionsystem-pluginmanager.html#globalSettings">ExtensionSystem::PluginManager</a></li>
+<li>goBackInNavigationHistory: <a href="core-editormanager.html#goBackInNavigationHistory">Core::EditorManager</a></li>
+<li>goForwardInNavigationHistory: <a href="core-editormanager.html#goForwardInNavigationHistory">Core::EditorManager</a></li>
+<li>goToNext: <a href="core-ioutputpane.html#goToNext">Core::IOutputPane</a></li>
+<li>goToPrev: <a href="core-ioutputpane.html#goToPrev">Core::IOutputPane</a></li>
+<li>gotoLine: <a href="core-ieditor.html#gotoLine">Core::IEditor</a></li>
+<li>gotoOtherSplit: <a href="core-editormanager.html#gotoOtherSplit">Core::EditorManager</a></li>
+<li id="h">hasAttribute: <a href="core-command.html#hasAttribute">Core::Command</a></li>
+<li>hasDirAtPath: <a href="utils-qrcparser.html#hasDirAtPath">Utils::QrcParser</a></li>
+<li>hasError: <a href="core-futureprogress.html#hasError">Core::FutureProgress</a> <a href="extensionsystem-pluginmanager.html#hasError">ExtensionSystem::PluginManager</a> <a href="extensionsystem-pluginspec.html#hasError">ExtensionSystem::PluginSpec</a></li>
+<li>hasFocus: <a href="core-ioutputpane.html#hasFocus">Core::IOutputPane</a></li>
+<li>hasSuppressedQuestions: <a href="utils-checkablemessagebox.html#hasSuppressedQuestions">Utils::CheckableMessageBox</a></li>
+<li>hide: <a href="core-ioutputpane.html#hide">Core::IOutputPane</a> <a href="spinnersolution-spinner.html#hide">SpinnerSolution::Spinner</a></li>
+<li>hidePage: <a href="core-ioutputpane.html#hidePage">Core::IOutputPane</a></li>
+<li>highlightAll: <a href="core-basetextfind.html#highlightAll">Core::BaseTextFind</a> <a href="core-ifindsupport.html#highlightAll">Core::IFindSupport</a></li>
+<li>highlightAllRequested: <a href="core-basetextfind.html#highlightAllRequested">Core::BaseTextFind</a></li>
+<li>highlightInfo: <a href="core-ilocatorfilter.html#highlightInfo">Core::ILocatorFilter</a></li>
+<li id="i">icon: <a href="core-imode.html#icon-prop">Core::IMode</a> <a href="core-iwizardfactory.html#icon">Core::IWizardFactory</a></li>
+<li>id: <a href="core-idocument.html#id">Core::IDocument</a> <a href="core-ieditorfactory.html#id">Core::IEditorFactory</a> <a href="core-ifindfilter.html#id">Core::IFindFilter</a> <a href="core-ilocatorfilter.html#id">Core::ILocatorFilter</a> <a href="core-imode.html#id-prop">Core::IMode</a> <a href="core-inavigationwidgetfactory.html#id">Core::INavigationWidgetFactory</a> <a href="core-ioptionspage.html#id">Core::IOptionsPage</a> <a href="core-ioutputpane.html#id">Core::IOutputPane</a> <a href="core-iwizardfactory.html#id">Core::IWizardFactory</a></li>
+<li>indexOf: <a href="core-context.html#indexOf">Core::Context</a></li>
+<li>indicatorSize: <a href="utils-progressindicatorpainter.html#indicatorSize">Utils::ProgressIndicatorPainter</a></li>
+<li>infoBar: <a href="core-icore.html#infoBar">Core::ICore</a> <a href="core-idocument.html#infoBar">Core::IDocument</a></li>
+<li>initialize: <a href="extensionsystem-iplugin.html#initialize-1">ExtensionSystem::IPlugin</a></li>
+<li>insertGroup: <a href="core-actioncontainer.html#insertGroup">Core::ActionContainer</a></li>
+<li>insertLocation: <a href="core-actioncontainer.html#insertLocation">Core::ActionContainer</a></li>
+<li>installerResourcePath: <a href="core-icore.html#installerResourcePath">Core::ICore</a></li>
+<li>instance: <a href="core-actionmanager.html#instance">Core::ActionManager</a> <a href="core-editormanager.html#instance">Core::EditorManager</a> <a href="core-icore.html#instance">Core::ICore</a> <a href="core-modemanager.html#instance">Core::ModeManager</a> <a href="core-progressmanager.html#instance">Core::ProgressManager</a> <a href="core-searchresultwindow.html#instance">Core::SearchResultWindow</a> <a href="extensionsystem-pluginmanager.html#instance">ExtensionSystem::PluginManager</a> <a href="utils-networkaccessmanager.html#instance">Utils::NetworkAccessManager</a></li>
+<li>interpolateExponential: <a href="utils-mathutils.html#interpolateExponential">Utils::MathUtils</a></li>
+<li>interpolateLinear: <a href="utils-mathutils.html#interpolateLinear">Utils::MathUtils</a></li>
+<li>interpolateTangential: <a href="utils-mathutils.html#interpolateTangential">Utils::MathUtils</a></li>
+<li>invalidate: <a href="core-locatorfilecache.html#invalidate">Core::LocatorFileCache</a></li>
+<li>invoke: <a href="extensionsystem.html#invoke-3">ExtensionSystem</a></li>
+<li>isActive: <a href="core-command.html#isActive">Core::Command</a></li>
+<li>isAutoSaveFile: <a href="core-editormanager.html#isAutoSaveFile">Core::EditorManager</a></li>
+<li>isAutomaticProgressCreationEnabled: <a href="utils-wizard.html#automaticProgressCreationEnabled-prop">Utils::Wizard</a></li>
+<li>isAvailableForHostPlatform: <a href="extensionsystem-pluginspec.html#isAvailableForHostPlatform">ExtensionSystem::PluginSpec</a></li>
+<li>isChecked: <a href="utils-detailswidget.html#checked-prop">Utils::DetailsWidget</a></li>
+<li>isChildOf: <a href="utils-filepath.html#isChildOf">Utils::FilePath</a></li>
+<li>isConfigurable: <a href="core-ilocatorfilter.html#isConfigurable">Core::ILocatorFilter</a></li>
+<li>isDeprecated: <a href="extensionsystem-pluginspec.html#isDeprecated">ExtensionSystem::PluginSpec</a></li>
+<li>isDesignModePreferred: <a href="core-ieditor.html#isDesignModePreferred">Core::IEditor</a></li>
+<li>isEffectivelyEnabled: <a href="extensionsystem-pluginspec.html#isEffectivelyEnabled">ExtensionSystem::PluginSpec</a></li>
+<li>isEmpty: <a href="core-context.html#isEmpty">Core::Context</a> <a href="utils-filepath.html#isEmpty">Utils::FilePath</a></li>
+<li>isEnabled: <a href="core-ifindfilter.html#isEnabled">Core::IFindFilter</a> <a href="core-ilocatorfilter.html#isEnabled">Core::ILocatorFilter</a> <a href="core-imode.html#enabled-prop">Core::IMode</a></li>
+<li>isEnabledByDefault: <a href="extensionsystem-pluginspec.html#isEnabledByDefault">ExtensionSystem::PluginSpec</a></li>
+<li>isEnabledBySettings: <a href="extensionsystem-pluginspec.html#isEnabledBySettings">ExtensionSystem::PluginSpec</a></li>
+<li>isEnabledIndirectly: <a href="extensionsystem-pluginspec.html#isEnabledIndirectly">ExtensionSystem::PluginSpec</a></li>
+<li>isExecutableFile: <a href="utils-filepath.html#isExecutableFile">Utils::FilePath</a></li>
+<li>isExperimental: <a href="extensionsystem-pluginspec.html#isExperimental">ExtensionSystem::PluginSpec</a></li>
+<li>isFileReadOnly: <a href="core-idocument.html#isFileReadOnly">Core::IDocument</a></li>
+<li>isForceDisabled: <a href="extensionsystem-pluginspec.html#isForceDisabled">ExtensionSystem::PluginSpec</a></li>
+<li>isForceEnabled: <a href="extensionsystem-pluginspec.html#isForceEnabled">ExtensionSystem::PluginSpec</a></li>
+<li>isHidden: <a href="core-ilocatorfilter.html#isHidden">Core::ILocatorFilter</a></li>
+<li>isIncludedByDefault: <a href="core-ilocatorfilter.html#isIncludedByDefault">Core::ILocatorFilter</a></li>
+<li>isModified: <a href="core-idocument.html#isModified">Core::IDocument</a></li>
+<li>isNewItemDialogRunning: <a href="core-icore.html#isNewItemDialogRunning">Core::ICore</a></li>
+<li>isNewerThan: <a href="utils-filepath.html#isNewerThan">Utils::FilePath</a></li>
+<li>isOldSetting: <a href="core-ilocatorfilter.html#isOldSetting">Core::ILocatorFilter</a></li>
+<li>isPresentationModeEnabled: <a href="core-actionmanager.html#isPresentationModeEnabled">Core::ActionManager</a></li>
+<li>isReadOnly: <a href="utils-pathchooser.html#readOnly-prop">Utils::PathChooser</a></li>
+<li>isRelativePath: <a href="utils-filepath.html#isRelativePath">Utils::FilePath</a></li>
+<li>isReplaceSupported: <a href="core-ifindfilter.html#isReplaceSupported">Core::IFindFilter</a></li>
+<li>isRequired: <a href="extensionsystem-pluginspec.html#isRequired">ExtensionSystem::PluginSpec</a></li>
+<li>isRunning: <a href="tasking-tasktree.html#isRunning">Tasking::TaskTree</a></li>
+<li>isSaveAsAllowed: <a href="core-idocument.html#isSaveAsAllowed">Core::IDocument</a></li>
+<li>isScriptable: <a href="core-command.html#isScriptable">Core::Command</a></li>
+<li>isSoftLoadable: <a href="extensionsystem-pluginspec.html#isSoftLoadable">ExtensionSystem::PluginSpec</a></li>
+<li>isSuspendAllowed: <a href="core-idocument.html#isSuspendAllowed">Core::IDocument</a></li>
+<li>isTemporary: <a href="core-idocument.html#isTemporary">Core::IDocument</a></li>
+<li>isValid: <a href="core-ifindfilter.html#isValid">Core::IFindFilter</a> <a href="utils-qrcparser.html#isValid">Utils::QrcParser</a></li>
+<li>isVisible: <a href="spinnersolution-spinner.html#isVisible">SpinnerSolution::Spinner</a></li>
+<li>isWritableDir: <a href="utils-filepath.html#isWritableDir">Utils::FilePath</a></li>
+<li>isWritableFile: <a href="utils-filepath.html#isWritableFile">Utils::FilePath</a></li>
+<li>iterateDirectory: <a href="utils-filepath.html#iterateDirectory">Utils::FilePath</a></li>
+<li id="j">joinStrings: <a href="utils.html#joinStrings">Utils</a></li>
+<li id="k">keySequence: <a href="core-command.html#keySequence">Core::Command</a></li>
+<li>keySequenceChanged: <a href="core-command.html#keySequenceChanged">Core::Command</a></li>
+<li>keySequences: <a href="core-command.html#keySequences">Core::Command</a></li>
+<li>keywords: <a href="core-ioptionspage.html#keywords">Core::IOptionsPage</a></li>
+<li>kind: <a href="core-iwizardfactory.html#kind">Core::IWizardFactory</a></li>
+<li id="l">labelText: <a href="utils-baseaspect.html#labelText">Utils::BaseAspect</a></li>
+<li>languages: <a href="utils-qrcparser.html#languages">Utils::QrcParser</a></li>
+<li>lastSession: <a href="core-sessionmanager.html#lastSession">Core::SessionManager</a></li>
+<li>libexecPath: <a href="core-icore.html#libexecPath">Core::ICore</a></li>
+<li>license: <a href="extensionsystem-pluginspec.html#license">ExtensionSystem::PluginSpec</a></li>
+<li>loadPlugins: <a href="extensionsystem-pluginmanager.html#loadPlugins">ExtensionSystem::PluginManager</a></li>
+<li>loadQueue: <a href="extensionsystem-pluginmanager.html#loadQueue">ExtensionSystem::PluginManager</a></li>
+<li>location: <a href="extensionsystem-pluginspec.html#location">ExtensionSystem::PluginSpec</a></li>
+<li>longDescription: <a href="extensionsystem-pluginspec.html#longDescription">ExtensionSystem::PluginSpec</a></li>
+<li>lowerCaseFileName: <a href="utils-classnamevalidatinglineedit.html#lowerCaseFileName-prop">Utils::ClassNameValidatingLineEdit</a></li>
+<li id="m">mainWindow: <a href="core-icore.html#mainWindow">Core::ICore</a></li>
+<li>makeCheckable: <a href="utils-filepathaspect.html#makeCheckable">Utils::FilePathAspect</a> <a href="utils-stringaspect.html#makeCheckable">Utils::StringAspect</a></li>
+<li>matcher: <a href="core-locatorfilecache.html#matcher">Core::LocatorFileCache</a></li>
+<li>matches: <a href="core-ioptionspage.html#matches">Core::IOptionsPage</a></li>
+<li>maxTextFileSize: <a href="core-editormanager.html#maxTextFileSize">Core::EditorManager</a></li>
+<li>menu: <a href="core-actioncontainer.html#menu">Core::ActionContainer</a> <a href="core-imode.html#menu-prop">Core::IMode</a></li>
+<li>menuBar: <a href="core-actioncontainer.html#menuBar">Core::ActionContainer</a></li>
+<li>metaData: <a href="extensionsystem-pluginspec.html#metaData">ExtensionSystem::PluginSpec</a></li>
+<li>mimeType: <a href="core-idocument.html#mimeType">Core::IDocument</a></li>
+<li>mimeTypeChanged: <a href="core-idocument.html#mimeTypeChanged">Core::IDocument</a></li>
+<li>mimeTypes: <a href="core-ieditorfactory.html#mimeTypes">Core::IEditorFactory</a></li>
+<li>modifiedDocuments: <a href="core-documentmanager.html#modifiedDocuments">Core::DocumentManager</a></li>
+<li>msgConfigureDialogTitle: <a href="core-ilocatorfilter.html#msgConfigureDialogTitle">Core::ILocatorFilter</a></li>
+<li>msgDoNotAskAgain: <a href="utils-checkablemessagebox.html#msgDoNotAskAgain">Utils::CheckableMessageBox</a></li>
+<li>msgDoNotShowAgain: <a href="utils-checkablemessagebox.html#msgDoNotShowAgain">Utils::CheckableMessageBox</a></li>
+<li>msgIncludeByDefault: <a href="core-ilocatorfilter.html#msgIncludeByDefault">Core::ILocatorFilter</a></li>
+<li>msgIncludeByDefaultToolTip: <a href="core-ilocatorfilter.html#msgIncludeByDefaultToolTip">Core::ILocatorFilter</a></li>
+<li>msgPrefixLabel: <a href="core-ilocatorfilter.html#msgPrefixLabel">Core::ILocatorFilter</a></li>
+<li>msgPrefixToolTip: <a href="core-ilocatorfilter.html#msgPrefixToolTip">Core::ILocatorFilter</a></li>
+<li>msgShowOptionsDialog: <a href="core-icore.html#msgShowOptionsDialog">Core::ICore</a></li>
+<li>msgShowOptionsDialogToolTip: <a href="core-icore.html#msgShowOptionsDialogToolTip">Core::ICore</a></li>
+<li id="n">name: <a href="extensionsystem-pluginspec.html#name">ExtensionSystem::PluginSpec</a> <a href="utils-id.html#name">Utils::Id</a></li>
+<li>namespacesEnabled: <a href="utils-classnamevalidatinglineedit.html#namespacesEnabled-prop">Utils::ClassNameValidatingLineEdit</a></li>
+<li>nativePath: <a href="utils-filepath.html#nativePath">Utils::FilePath</a></li>
+<li>navigateStateChanged: <a href="core-ioutputpane.html#navigateStateChanged">Core::IOutputPane</a></li>
+<li>navigateStateUpdate: <a href="core-ioutputpane.html#navigateStateUpdate">Core::IOutputPane</a></li>
+<li>newItemDialog: <a href="core-icore.html#newItemDialog">Core::ICore</a></li>
+<li>normalizedQrcDirectoryPath: <a href="utils-qrcparser.html#normalizedQrcDirectoryPath">Utils::QrcParser</a></li>
+<li>normalizedQrcFilePath: <a href="utils-qrcparser.html#normalizedQrcFilePath">Utils::QrcParser</a></li>
+<li id="o">onAllDisabledBehavior: <a href="core-actioncontainer.html#onAllDisabledBehavior">Core::ActionContainer</a></li>
+<li>onGroupDone: <a href="tasking.html#onGroupDone">Tasking</a></li>
+<li>onGroupSetup: <a href="tasking.html#onGroupSetup">Tasking</a></li>
+<li>onStorageDone: <a href="tasking-tasktree.html#onStorageDone">Tasking::TaskTree</a></li>
+<li>onStorageSetup: <a href="tasking-tasktree.html#onStorageSetup">Tasking::TaskTree</a></li>
+<li>open: <a href="core-idocument.html#open">Core::IDocument</a></li>
+<li>openConfigDialog: <a href="core-ilocatorfilter.html#openConfigDialog-1">Core::ILocatorFilter</a></li>
+<li>openEditor: <a href="core-editormanager.html#openEditor">Core::EditorManager</a></li>
+<li>openEditorAt: <a href="core-editormanager.html#openEditorAt">Core::EditorManager</a></li>
+<li>openEditorAtSearchResult: <a href="core-editormanager.html#openEditorAtSearchResult">Core::EditorManager</a></li>
+<li>openEditorWithContents: <a href="core-editormanager.html#openEditorWithContents">Core::EditorManager</a></li>
+<li>openExternalEditor: <a href="core-editormanager.html#openExternalEditor">Core::EditorManager</a></li>
+<li>openNewSearchPanel: <a href="core-searchresultwindow.html#openNewSearchPanel">Core::SearchResultWindow</a></li>
+<li>operator(): <a href="utils-filepathaspect.html#operator-28-29">Utils::FilePathAspect</a></li>
+<li>operator*: <a href="tasking-storage.html#operator-2a">Tasking::Storage</a></li>
+<li>operator-&gt;: <a href="tasking-storage.html#operator--gt">Tasking::Storage</a></li>
+<li>outputWidget: <a href="core-ioutputpane.html#outputWidget">Core::IOutputPane</a></li>
+<li id="p">paint: <a href="utils-progressindicatorpainter.html#paint">Utils::ProgressIndicatorPainter</a></li>
+<li>parallelLimit: <a href="tasking.html#parallelLimit">Tasking</a></li>
+<li>parameterText: <a href="utils-action.html#parameterText-prop">Utils::Action</a></li>
+<li>parentAggregate: <a href="aggregation-aggregate.html#parentAggregate">Aggregation::Aggregate</a></li>
+<li>parentDir: <a href="utils-filepath.html#parentDir">Utils::FilePath</a></li>
+<li>parseFile: <a href="utils-qrcparser.html#parseFile">Utils::QrcParser</a></li>
+<li>parseOptions: <a href="extensionsystem-pluginmanager.html#parseOptions">ExtensionSystem::PluginManager</a></li>
+<li>parseQrcFile: <a href="utils-qrcparser.html#parseQrcFile">Utils::QrcParser</a></li>
+<li>parsedPath: <a href="utils-qrccache.html#parsedPath">Utils::QrcCache</a></li>
+<li>path: <a href="utils-filewizardpage.html#path-prop">Utils::FileWizardPage</a></li>
+<li>pathComponentSeparator: <a href="utils-filepath.html#pathComponentSeparator">Utils::FilePath</a></li>
+<li>pathList: <a href="utils-pathlisteditor.html#pathList-prop">Utils::PathListEditor</a></li>
+<li>pathListSeparator: <a href="utils-filepath.html#pathListSeparator">Utils::FilePath</a></li>
+<li>paused: <a href="core-searchresult.html#paused">Core::SearchResult</a></li>
+<li>pixmapForFindFlags: <a href="core-ifindfilter.html#pixmapForFindFlags">Core::IFindFilter</a></li>
+<li>platformSpecification: <a href="extensionsystem-pluginspec.html#platformSpecification">ExtensionSystem::PluginSpec</a></li>
+<li>plugin: <a href="extensionsystem-pluginspec.html#plugin">ExtensionSystem::PluginSpec</a></li>
+<li>pluginActivated: <a href="extensionsystem-pluginview.html#pluginActivated">ExtensionSystem::PluginView</a></li>
+<li>pluginIID: <a href="extensionsystem-pluginmanager.html#pluginIID">ExtensionSystem::PluginManager</a></li>
+<li>pluginPaths: <a href="extensionsystem-pluginmanager.html#pluginPaths">ExtensionSystem::PluginManager</a></li>
+<li>plugins: <a href="extensionsystem-pluginmanager.html#plugins">ExtensionSystem::PluginManager</a></li>
+<li>pluginsRequiredByPlugin: <a href="extensionsystem-pluginmanager.html#pluginsRequiredByPlugin">ExtensionSystem::PluginManager</a></li>
+<li>pluginsRequiringPlugin: <a href="extensionsystem-pluginmanager.html#pluginsRequiringPlugin">ExtensionSystem::PluginManager</a></li>
+<li>populateOpenWithMenu: <a href="core-editormanager.html#populateOpenWithMenu">Core::EditorManager</a></li>
+<li>popup: <a href="core-ioutputpane.html#popup">Core::IOutputPane</a> <a href="core-searchresult.html#popup">Core::SearchResult</a></li>
+<li>postGenerateFiles: <a href="core-basefilewizardfactory.html#postGenerateFiles">Core::BaseFileWizardFactory</a></li>
+<li>postGenerateOpenEditors: <a href="core-basefilewizardfactory.html#postGenerateOpenEditors">Core::BaseFileWizardFactory</a></li>
+<li>preferredDisplayName: <a href="core-idocument.html#preferredDisplayName">Core::IDocument</a></li>
+<li>preferredEditorFactories: <a href="core-ieditorfactory.html#preferredEditorFactories">Core::IEditorFactory</a></li>
+<li>preferredSuffix: <a href="core-basefilewizardfactory.html#preferredSuffix">Core::BaseFileWizardFactory</a></li>
+<li>prepend: <a href="core-context.html#prepend">Core::Context</a></li>
+<li>printer: <a href="core-icore.html#printer">Core::ICore</a></li>
+<li>priority: <a href="core-ilocatorfilter.html#priority">Core::ILocatorFilter</a> <a href="core-imode.html#priority-prop">Core::IMode</a> <a href="core-inavigationwidgetfactory.html#priority">Core::INavigationWidgetFactory</a></li>
+<li>priorityInStatusBar: <a href="core-ioutputpane.html#priorityInStatusBar">Core::IOutputPane</a></li>
+<li>processFilePaths: <a href="core-locatorfilecache.html#processFilePaths">Core::LocatorFileCache</a></li>
+<li>progressMaximum: <a href="tasking-tasktree.html#progressMaximum">Tasking::TaskTree</a></li>
+<li>progressValue: <a href="tasking-tasktree.html#progressValue">Tasking::TaskTree</a></li>
+<li>progressValueChanged: <a href="tasking-tasktree.html#progressValueChanged">Tasking::TaskTree</a></li>
+<li>projectName: <a href="utils-projectintropage.html#projectName-prop">Utils::ProjectIntroPage</a></li>
+<li>projectsDirectory: <a href="core-documentmanager.html#projectsDirectory">Core::DocumentManager</a></li>
+<li>promptDialogFilter: <a href="utils-pathchooser.html#promptDialogFilter-prop">Utils::PathChooser</a></li>
+<li>promptDialogTitle: <a href="utils-pathchooser.html#promptDialogTitle-prop">Utils::PathChooser</a></li>
+<li>promptOverwrite: <a href="core-basefilewizardfactory.html#promptOverwrite">Core::BaseFileWizardFactory</a></li>
+<li>provides: <a href="extensionsystem-pluginspec.html#provides">ExtensionSystem::PluginSpec</a></li>
+<li id="q">qrcDirectoryPathForQrcFilePath: <a href="utils-qrcparser.html#qrcDirectoryPathForQrcFilePath">Utils::QrcParser</a></li>
+<li>qtcEnvironmentVariable: <a href="utils.html#qtcEnvironmentVariable-1">Utils</a></li>
+<li>qtcEnvironmentVariableIntValue: <a href="utils.html#qtcEnvironmentVariableIntValue">Utils</a></li>
+<li>qtcEnvironmentVariableIsEmpty: <a href="utils.html#qtcEnvironmentVariableIsEmpty">Utils</a></li>
+<li>qtcEnvironmentVariableIsSet: <a href="utils.html#qtcEnvironmentVariableIsSet">Utils</a></li>
+<li>query: <a href="aggregation-aggregate.html#query">Aggregation::Aggregate</a></li>
+<li>query_all: <a href="aggregation-aggregate.html#query_all">Aggregation::Aggregate</a></li>
+<li id="r">raiseWindow: <a href="core-icore.html#raiseWindow">Core::ICore</a></li>
+<li>read: <a href="core-basetextdocument.html#read-1">Core::BaseTextDocument</a></li>
+<li>readFile: <a href="utils-textfileformat.html#readFile-1">Utils::TextFileFormat</a></li>
+<li>recentFiles: <a href="core-documentmanager.html#recentFiles">Core::DocumentManager</a></li>
+<li>refersToExecutableFile: <a href="utils-filepath.html#refersToExecutableFile">Utils::FilePath</a></li>
+<li>refreshRecipe: <a href="core-ilocatorfilter.html#refreshRecipe">Core::ILocatorFilter</a></li>
+<li>registerAction: <a href="core-actionmanager.html#registerAction">Core::ActionManager</a></li>
+<li>registerFileVariables: <a href="utils-macroexpander.html#registerFileVariables">Utils::MacroExpander</a></li>
+<li>registerIntVariable: <a href="utils-macroexpander.html#registerIntVariable">Utils::MacroExpander</a></li>
+<li>registerPrefix: <a href="utils-macroexpander.html#registerPrefix">Utils::MacroExpander</a></li>
+<li>registerVariable: <a href="utils-macroexpander.html#registerVariable">Utils::MacroExpander</a></li>
+<li>registerWindow: <a href="core-icore.html#registerWindow">Core::ICore</a></li>
+<li>relativeChildPath: <a href="utils-filepath.html#relativeChildPath">Utils::FilePath</a></li>
+<li>relativePathFrom: <a href="utils-filepath.html#relativePathFrom">Utils::FilePath</a></li>
+<li>reload: <a href="core-idocument.html#reload">Core::IDocument</a></li>
+<li>reloadBehavior: <a href="core-idocument.html#reloadBehavior">Core::IDocument</a></li>
+<li>reloadFinished: <a href="core-idocument.html#reloadFinished">Core::IDocument</a></li>
+<li>reloadSetting: <a href="core-editormanager.html#reloadSetting">Core::EditorManager</a></li>
+<li>remoteArguments: <a href="extensionsystem-pluginmanager.html#remoteArguments">ExtensionSystem::PluginManager</a></li>
+<li>remoteCommand: <a href="extensionsystem-iplugin.html#remoteCommand">ExtensionSystem::IPlugin</a></li>
+<li>remove: <a href="aggregation-aggregate.html#remove">Aggregation::Aggregate</a></li>
+<li>removeAdditionalContext: <a href="core-icore.html#removeAdditionalContext">Core::ICore</a></li>
+<li>removeAt: <a href="core-context.html#removeAt">Core::Context</a></li>
+<li>removeAttribute: <a href="core-command.html#removeAttribute">Core::Command</a></li>
+<li>removeContextObject: <a href="core-icore.html#removeContextObject">Core::ICore</a></li>
+<li>removeDocument: <a href="core-documentmanager.html#removeDocument">Core::DocumentManager</a></li>
+<li>removeObject: <a href="extensionsystem-pluginmanager.html#removeObject">ExtensionSystem::PluginManager</a></li>
+<li>removePath: <a href="utils-qrccache.html#removePath">Utils::QrcCache</a></li>
+<li>removeRecursively: <a href="utils-filepath.html#removeRecursively">Utils::FilePath</a></li>
+<li>renamedFile: <a href="core-documentmanager.html#renamedFile">Core::DocumentManager</a></li>
+<li>replace: <a href="core-basetextfind.html#replace">Core::BaseTextFind</a> <a href="core-ifindsupport.html#replace">Core::IFindSupport</a></li>
+<li>replaceAll: <a href="core-basetextfind.html#replaceAll">Core::BaseTextFind</a> <a href="core-ifindfilter.html#replaceAll">Core::IFindFilter</a> <a href="core-ifindsupport.html#replaceAll">Core::IFindSupport</a></li>
+<li>replaceButtonClicked: <a href="core-searchresult.html#replaceButtonClicked">Core::SearchResult</a></li>
+<li>replaceStep: <a href="core-basetextfind.html#replaceStep">Core::BaseTextFind</a> <a href="core-ifindsupport.html#replaceStep">Core::IFindSupport</a></li>
+<li>requiredExtensions: <a href="utils-filenamevalidatinglineedit.html#requiredExtensions-prop">Utils::FileNameValidatingLineEdit</a></li>
+<li>requiresAny: <a href="extensionsystem-pluginspec.html#requiresAny">ExtensionSystem::PluginSpec</a></li>
+<li>resetAllDoNotAskAgainQuestions: <a href="utils-checkablemessagebox.html#resetAllDoNotAskAgainQuestions">Utils::CheckableMessageBox</a></li>
+<li>resetIncrementalSearch: <a href="core-basetextfind.html#resetIncrementalSearch">Core::BaseTextFind</a> <a href="core-ifindsupport.html#resetIncrementalSearch">Core::IFindSupport</a></li>
+<li>resolvePath: <a href="utils-filepath.html#resolvePath-1">Utils::FilePath</a></li>
+<li>resolveSymlinks: <a href="utils-filepath.html#resolveSymlinks">Utils::FilePath</a></li>
+<li>resourcePath: <a href="core-icore.html#resourcePath">Core::ICore</a></li>
+<li>restart: <a href="core-icore.html#restart">Core::ICore</a> <a href="core-searchresult.html#restart">Core::SearchResult</a></li>
+<li>restoreSettings: <a href="core-inavigationwidgetfactory.html#restoreSettings">Core::INavigationWidgetFactory</a></li>
+<li>restoreState: <a href="core-ieditor.html#restoreState">Core::IEditor</a> <a href="core-ilocatorfilter.html#restoreState-1">Core::ILocatorFilter</a></li>
+<li>revertToSaved: <a href="core-editormanager.html#revertToSaved">Core::EditorManager</a></li>
+<li>runBlocking: <a href="tasking-tasktree.html#runBlocking-3">Tasking::TaskTree</a></li>
+<li>runWizard: <a href="core-iwizardfactory.html#runWizard">Core::IWizardFactory</a></li>
+<li id="s">save: <a href="core-idocument.html#save">Core::IDocument</a></li>
+<li>saveAllModifiedDocuments: <a href="core-documentmanager.html#saveAllModifiedDocuments">Core::DocumentManager</a></li>
+<li>saveAllModifiedDocumentsSilently: <a href="core-documentmanager.html#saveAllModifiedDocumentsSilently">Core::DocumentManager</a></li>
+<li>saveDocument: <a href="core-editormanager.html#saveDocument-1">Core::EditorManager</a></li>
+<li>saveDocumentAs: <a href="core-editormanager.html#saveDocumentAs">Core::EditorManager</a></li>
+<li>saveImpl: <a href="core-idocument.html#saveImpl">Core::IDocument</a></li>
+<li>saveModifiedDocument: <a href="core-documentmanager.html#saveModifiedDocument">Core::DocumentManager</a></li>
+<li>saveModifiedDocumentSilently: <a href="core-documentmanager.html#saveModifiedDocumentSilently">Core::DocumentManager</a></li>
+<li>saveModifiedDocuments: <a href="core-documentmanager.html#saveModifiedDocuments">Core::DocumentManager</a></li>
+<li>saveModifiedDocumentsSilently: <a href="core-documentmanager.html#saveModifiedDocumentsSilently">Core::DocumentManager</a></li>
+<li>saveSettings: <a href="core-inavigationwidgetfactory.html#saveSettings">Core::INavigationWidgetFactory</a></li>
+<li>saveSettingsRequested: <a href="core-icore.html#saveSettingsRequested">Core::ICore</a></li>
+<li>saveState: <a href="core-ieditor.html#saveState">Core::IEditor</a> <a href="core-ilocatorfilter.html#saveState-1">Core::ILocatorFilter</a></li>
+<li>saved: <a href="core-editormanager.html#saved">Core::EditorManager</a> <a href="core-idocument.html#saved">Core::IDocument</a></li>
+<li>searchAgainRequested: <a href="core-searchresult.html#searchAgainRequested">Core::SearchResult</a></li>
+<li>searchInDirectories: <a href="utils-filepath.html#searchInDirectories">Utils::FilePath</a></li>
+<li>selectAll: <a href="core-ifindsupport.html#selectAll">Core::IFindSupport</a></li>
+<li>serializedArguments: <a href="extensionsystem-pluginmanager.html#serializedArguments">ExtensionSystem::PluginManager</a></li>
+<li>setActivationSequence: <a href="core-inavigationwidgetfactory.html#setActivationSequence">Core::INavigationWidgetFactory</a></li>
+<li>setAdditionalReplaceWidget: <a href="core-searchresult.html#setAdditionalReplaceWidget">Core::SearchResult</a></li>
+<li>setAdditionalSummaryText: <a href="utils-detailswidget.html#additionalSummaryText-prop">Utils::DetailsWidget</a></li>
+<li>setAdditionalToolTip: <a href="utils-elidinglabel.html#additionalToolTip-prop">Utils::ElidingLabel</a></li>
+<li>setAdditionalToolTipSeparator: <a href="utils-elidinglabel.html#additionalToolTipSeparator-prop">Utils::ElidingLabel</a></li>
+<li>setAllowDirectories: <a href="utils-filenamevalidatinglineedit.html#allowDirectories-prop">Utils::FileNameValidatingLineEdit</a></li>
+<li>setApplicationLabel: <a href="core-progressmanager.html#setApplicationLabel">Core::ProgressManager</a></li>
+<li>setArguments: <a href="extensionsystem-pluginspec.html#setArguments">ExtensionSystem::PluginSpec</a></li>
+<li>setAttribute: <a href="core-command.html#setAttribute">Core::Command</a></li>
+<li>setAutoApply: <a href="utils-baseaspect.html#setAutoApply">Utils::BaseAspect</a></li>
+<li>setAutomaticProgressCreationEnabled: <a href="utils-wizard.html#automaticProgressCreationEnabled-prop">Utils::Wizard</a></li>
+<li>setBadgeNumber: <a href="core-ioutputpane.html#setBadgeNumber">Core::IOutputPane</a></li>
+<li>setBaseDirectory: <a href="utils-pathchooser.html#baseDirectory-prop">Utils::PathChooser</a></li>
+<li>setCategoryIconPath: <a href="core-ioptionspage.html#setCategoryIconPath">Core::IOptionsPage</a></li>
+<li>setChecked: <a href="utils-detailswidget.html#checked-prop">Utils::DetailsWidget</a></li>
+<li>setCommandVersionArguments: <a href="utils-pathchooser.html#commandVersionArguments-prop">Utils::PathChooser</a></li>
+<li>setCompletionLengthThreshold: <a href="utils-completingtextedit.html#completionLengthThreshold-prop">Utils::CompletingTextEdit</a></li>
+<li>setConfigurable: <a href="core-ilocatorfilter.html#setConfigurable">Core::ILocatorFilter</a></li>
+<li>setContents: <a href="core-idocument.html#setContents">Core::IDocument</a></li>
+<li>setContext: <a href="core-icontext.html#setContext">Core::IContext</a></li>
+<li>setContextHelp: <a href="core-icontext.html#setContextHelp">Core::IContext</a></li>
+<li>setDefaultIncludedByDefault: <a href="core-ilocatorfilter.html#setDefaultIncludedByDefault">Core::ILocatorFilter</a></li>
+<li>setDefaultKeySequence: <a href="core-command.html#setDefaultKeySequence">Core::Command</a></li>
+<li>setDefaultKeySequences: <a href="core-command.html#setDefaultKeySequences">Core::Command</a></li>
+<li>setDefaultLocationForNewFiles: <a href="core-documentmanager.html#setDefaultLocationForNewFiles">Core::DocumentManager</a></li>
+<li>setDefaultShortcutString: <a href="core-ilocatorfilter.html#setDefaultShortcutString">Core::ILocatorFilter</a></li>
+<li>setDescription: <a href="core-command.html#setDescription">Core::Command</a> <a href="core-ilocatorfilter.html#setDescription">Core::ILocatorFilter</a> <a href="utils-projectintropage.html#description-prop">Utils::ProjectIntroPage</a></li>
+<li>setDisplayFilter: <a href="utils-stringaspect.html#setDisplayFilter">Utils::StringAspect</a></li>
+<li>setDisplayName: <a href="core-ieditorfactory.html#setDisplayName">Core::IEditorFactory</a> <a href="core-ilocatorfilter.html#setDisplayName">Core::ILocatorFilter</a> <a href="core-imode.html#displayName-prop">Core::IMode</a> <a href="core-inavigationwidgetfactory.html#setDisplayName">Core::INavigationWidgetFactory</a> <a href="core-ioptionspage.html#setDisplayName">Core::IOptionsPage</a> <a href="core-ioutputpane.html#setDisplayName">Core::IOutputPane</a></li>
+<li>setDisplayStyle: <a href="utils-stringaspect.html#setDisplayStyle">Utils::StringAspect</a></li>
+<li>setDuplicateSupported: <a href="core-ieditor.html#setDuplicateSupported">Core::IEditor</a></li>
+<li>setEditorCreator: <a href="core-ieditorfactory.html#setEditorCreator">Core::IEditorFactory</a></li>
+<li>setElideMode: <a href="utils-elidinglabel.html#elideMode-prop">Utils::ElidingLabel</a> <a href="utils-stringaspect.html#setElideMode">Utils::StringAspect</a></li>
+<li>setEmptyText: <a href="utils-action.html#emptyText-prop">Utils::Action</a></li>
+<li>setEnabled: <a href="core-ilocatorfilter.html#setEnabled">Core::ILocatorFilter</a> <a href="core-imode.html#enabled-prop">Core::IMode</a></li>
+<li>setEnabledBySettings: <a href="extensionsystem-pluginspec.html#setEnabledBySettings">ExtensionSystem::PluginSpec</a></li>
+<li>setEnabler: <a href="utils-baseaspect.html#setEnabler">Utils::BaseAspect</a></li>
+<li>setEnablingMode: <a href="utils-action.html#enablingMode-prop">Utils::Action</a></li>
+<li>setExpectedKind: <a href="utils-filepathaspect.html#setExpectedKind">Utils::FilePathAspect</a> <a href="utils-pathchooser.html#setExpectedKind">Utils::PathChooser</a></li>
+<li>setFalseText: <a href="utils-textfieldcheckbox.html#falseText-prop">Utils::TextFieldCheckBox</a></li>
+<li>setFileDialogLastVisitedDirectory: <a href="core-documentmanager.html#setFileDialogLastVisitedDirectory">Core::DocumentManager</a></li>
+<li>setFileDialogTitle: <a href="utils-pathlisteditor.html#fileDialogTitle-prop">Utils::PathListEditor</a></li>
+<li>setFileName: <a href="utils-filewizardpage.html#fileName-prop">Utils::FileWizardPage</a></li>
+<li>setFilePath: <a href="core-idocument.html#setFilePath">Core::IDocument</a> <a href="utils-pathchooser.html#filePath-prop">Utils::PathChooser</a> <a href="utils-projectintropage.html#filePath-prop">Utils::ProjectIntroPage</a></li>
+<li>setFilePaths: <a href="core-locatorfilecache.html#setFilePaths">Core::LocatorFileCache</a></li>
+<li>setFilePathsGenerator: <a href="core-locatorfilecache.html#setFilePathsGenerator">Core::LocatorFileCache</a></li>
+<li>setFilter: <a href="extensionsystem-pluginview.html#setFilter">ExtensionSystem::PluginView</a></li>
+<li>setFocus: <a href="core-ioutputpane.html#setFocus">Core::IOutputPane</a></li>
+<li>setForceFirstCapitalLetter: <a href="utils-filenamevalidatinglineedit.html#forceFirstCapitalLetter-prop">Utils::FileNameValidatingLineEdit</a></li>
+<li>setForceSubProject: <a href="utils-projectintropage.html#forceSubProject-prop">Utils::ProjectIntroPage</a></li>
+<li>setGeneratorProvider: <a href="core-locatorfilecache.html#setGeneratorProvider">Core::LocatorFileCache</a></li>
+<li>setHidden: <a href="core-ilocatorfilter.html#setHidden">Core::ILocatorFilter</a></li>
+<li>setHistoryCompleter: <a href="utils-stringaspect.html#setHistoryCompleter">Utils::StringAspect</a></li>
+<li>setIcon: <a href="core-imode.html#icon-prop">Core::IMode</a></li>
+<li>setIconBadgeNumber: <a href="core-ioutputpane.html#setIconBadgeNumber">Core::IOutputPane</a></li>
+<li>setIconText: <a href="core-actionbuilder.html#setIconText">Core::ActionBuilder</a></li>
+<li>setIconType: <a href="utils-textdisplay.html#setIconType">Utils::TextDisplay</a></li>
+<li>setId: <a href="core-idocument.html#setId">Core::IDocument</a> <a href="core-ieditorfactory.html#setId">Core::IEditorFactory</a> <a href="core-ilocatorfilter.html#setId">Core::ILocatorFilter</a> <a href="core-imode.html#id-prop">Core::IMode</a> <a href="core-inavigationwidgetfactory.html#setId">Core::INavigationWidgetFactory</a> <a href="core-ioptionspage.html#setId">Core::IOptionsPage</a> <a href="core-ioutputpane.html#setId">Core::IOutputPane</a></li>
+<li>setIncludedByDefault: <a href="core-ilocatorfilter.html#setIncludedByDefault">Core::ILocatorFilter</a></li>
+<li>setIndicatorSize: <a href="utils-progressindicator.html#setIndicatorSize">Utils::ProgressIndicator</a> <a href="utils-progressindicatorpainter.html#setIndicatorSize">Utils::ProgressIndicatorPainter</a></li>
+<li>setInstallSettings: <a href="extensionsystem-pluginmanager.html#setInstallSettings">ExtensionSystem::PluginManager</a></li>
+<li>setLabelPixmap: <a href="utils-baseaspect.html#setLabelPixmap">Utils::BaseAspect</a></li>
+<li>setLabelText: <a href="utils-baseaspect.html#setLabelText">Utils::BaseAspect</a></li>
+<li>setLastEditLocation: <a href="core-editormanager.html#setLastEditLocation">Core::EditorManager</a></li>
+<li>setLowerCaseFileName: <a href="utils-classnamevalidatinglineedit.html#lowerCaseFileName-prop">Utils::ClassNameValidatingLineEdit</a></li>
+<li>setMenu: <a href="core-imode.html#menu-prop">Core::IMode</a></li>
+<li>setMimeType: <a href="core-idocument.html#setMimeType">Core::IDocument</a></li>
+<li>setMimeTypes: <a href="core-ieditorfactory.html#setMimeTypes">Core::IEditorFactory</a></li>
+<li>setNamespacesEnabled: <a href="utils-classnamevalidatinglineedit.html#namespacesEnabled-prop">Utils::ClassNameValidatingLineEdit</a></li>
+<li>setOnAllDisabledBehavior: <a href="core-actioncontainer.html#setOnAllDisabledBehavior">Core::ActionContainer</a></li>
+<li>setOnApply: <a href="core-ioptionspagewidget.html#setOnApply">Core::IOptionsPageWidget</a></li>
+<li>setOnFinish: <a href="core-ioptionspagewidget.html#setOnFinish">Core::IOptionsPageWidget</a></li>
+<li>setOptionalMenu: <a href="utils-optionpushbutton.html#setOptionalMenu">Utils::OptionPushButton</a></li>
+<li>setParameterText: <a href="utils-action.html#parameterText-prop">Utils::Action</a></li>
+<li>setPath: <a href="utils-filewizardpage.html#path-prop">Utils::FileWizardPage</a> <a href="utils-pathchooser.html#path-prop">Utils::PathChooser</a></li>
+<li>setPathList: <a href="utils-pathlisteditor.html#pathList-prop">Utils::PathListEditor</a></li>
+<li>setPlaceHolderText: <a href="utils-stringaspect.html#setPlaceHolderText">Utils::StringAspect</a></li>
+<li>setPluginIID: <a href="extensionsystem-pluginmanager.html#setPluginIID">ExtensionSystem::PluginManager</a></li>
+<li>setPluginPaths: <a href="extensionsystem-pluginmanager.html#setPluginPaths">ExtensionSystem::PluginManager</a></li>
+<li>setPreferredDisplayName: <a href="core-idocument.html#setPreferredDisplayName">Core::IDocument</a></li>
+<li>setPriority: <a href="core-ilocatorfilter.html#setPriority">Core::ILocatorFilter</a> <a href="core-imode.html#priority-prop">Core::IMode</a> <a href="core-inavigationwidgetfactory.html#setPriority">Core::INavigationWidgetFactory</a></li>
+<li>setPriorityInStatusBar: <a href="core-ioutputpane.html#setPriorityInStatusBar">Core::IOutputPane</a></li>
+<li>setProjectName: <a href="utils-projectintropage.html#projectName-prop">Utils::ProjectIntroPage</a></li>
+<li>setProjectsDirectory: <a href="core-documentmanager.html#setProjectsDirectory">Core::DocumentManager</a></li>
+<li>setPromptDialogFilter: <a href="utils-pathchooser.html#promptDialogFilter-prop">Utils::PathChooser</a></li>
+<li>setPromptDialogTitle: <a href="utils-pathchooser.html#promptDialogTitle-prop">Utils::PathChooser</a></li>
+<li>setReadOnly: <a href="utils-pathchooser.html#readOnly-prop">Utils::PathChooser</a></li>
+<li>setRecipe: <a href="tasking-tasktree.html#setRecipe">Tasking::TaskTree</a></li>
+<li>setReplaceEnabled: <a href="core-searchresult.html#setReplaceEnabled">Core::SearchResult</a></li>
+<li>setRequiredExtensions: <a href="utils-filenamevalidatinglineedit.html#requiredExtensions-prop">Utils::FileNameValidatingLineEdit</a></li>
+<li>setSearchAgainEnabled: <a href="core-searchresult.html#setSearchAgainEnabled">Core::SearchResult</a></li>
+<li>setSearchAgainSupported: <a href="core-searchresult.html#setSearchAgainSupported">Core::SearchResult</a></li>
+<li>setSettings: <a href="extensionsystem-pluginmanager.html#setSettings">ExtensionSystem::PluginManager</a></li>
+<li>setSettingsKey: <a href="utils-baseaspect.html#setSettingsKey-1">Utils::BaseAspect</a></li>
+<li>setShortcutString: <a href="core-ilocatorfilter.html#setShortcutString">Core::ILocatorFilter</a></li>
+<li>setSize: <a href="spinnersolution-spinner.html#setSize">SpinnerSolution::Spinner</a></li>
+<li>setState: <a href="utils-detailswidget.html#state-prop">Utils::DetailsWidget</a></li>
+<li>setSummaryText: <a href="utils-detailswidget.html#summaryText-prop">Utils::DetailsWidget</a></li>
+<li>setSuspendAllowed: <a href="core-idocument.html#setSuspendAllowed">Core::IDocument</a></li>
+<li>setTabWidth: <a href="core-searchresultwindow.html#setTabWidth">Core::SearchResultWindow</a></li>
+<li>setTemporary: <a href="core-idocument.html#setTemporary">Core::IDocument</a></li>
+<li>setText: <a href="core-actionbuilder.html#setText">Core::ActionBuilder</a> <a href="utils-textfieldcheckbox.html#compareText-prop">Utils::TextFieldCheckBox</a> <a href="utils-textfieldcombobox.html#indexText-prop">Utils::TextFieldComboBox</a></li>
+<li>setTextToReplace: <a href="core-searchresult.html#setTextToReplace">Core::SearchResult</a></li>
+<li>setTitle: <a href="core-futureprogress.html#setTitle">Core::FutureProgress</a></li>
+<li>setToolTip: <a href="utils-baseaspect.html#setToolTip">Utils::BaseAspect</a></li>
+<li>setTouchBarIcon: <a href="core-command.html#setTouchBarIcon">Core::Command</a></li>
+<li>setTouchBarText: <a href="core-command.html#setTouchBarText">Core::Command</a></li>
+<li>setTrueText: <a href="utils-textfieldcheckbox.html#trueText-prop">Utils::TextFieldCheckBox</a></li>
+<li>setUpdateCallback: <a href="utils-progressindicatorpainter.html#setUpdateCallback">Utils::ProgressIndicatorPainter</a></li>
+<li>setUseAsDefaultPath: <a href="utils-projectintropage.html#useAsDefaultPath-prop">Utils::ProjectIntroPage</a></li>
+<li>setUseCheckBox: <a href="utils-detailswidget.html#useCheckBox-prop">Utils::DetailsWidget</a></li>
+<li>setUseProjectsDirectory: <a href="core-documentmanager.html#setUseProjectsDirectory">Core::DocumentManager</a></li>
+<li>setUserData: <a href="core-searchresult.html#setUserData">Core::SearchResult</a></li>
+<li>setValue: <a href="core-sessionmanager.html#setValue">Core::SessionManager</a> <a href="utils-filepathaspect.html#setValue">Utils::FilePathAspect</a></li>
+<li>setVariantValue: <a href="utils-baseaspect.html#setVariantValue">Utils::BaseAspect</a></li>
+<li>setVisible: <a href="spinnersolution-spinner.html#setVisible">SpinnerSolution::Spinner</a> <a href="utils-baseaspect.html#setVisible">Utils::BaseAspect</a></li>
+<li>setWidget: <a href="core-futureprogress.html#setWidget">Core::FutureProgress</a> <a href="core-icontext.html#setWidget">Core::IContext</a></li>
+<li>setWidgetCreator: <a href="core-ioptionspage.html#setWidgetCreator">Core::IOptionsPage</a></li>
+<li>settings: <a href="core-icore.html#settings">Core::ICore</a> <a href="extensionsystem-pluginmanager.html#settings">ExtensionSystem::PluginManager</a></li>
+<li>settingsKey: <a href="utils-baseaspect.html#settingsKey">Utils::BaseAspect</a></li>
+<li>shortNativePath: <a href="utils-filepath.html#shortNativePath">Utils::FilePath</a></li>
+<li>shortcutString: <a href="core-ilocatorfilter.html#shortcutString">Core::ILocatorFilter</a></li>
+<li>shouldAutoSave: <a href="core-idocument.html#shouldAutoSave">Core::IDocument</a></li>
+<li>show: <a href="spinnersolution-spinner.html#show">SpinnerSolution::Spinner</a></li>
+<li>showNewItemDialog: <a href="core-icore.html#showNewItemDialog">Core::ICore</a></li>
+<li>showOptionsDialog: <a href="core-icore.html#showOptionsDialog-1">Core::ICore</a></li>
+<li>showPage: <a href="core-ioutputpane.html#showPage">Core::IOutputPane</a></li>
+<li>showSearchTermInput: <a href="core-ifindfilter.html#showSearchTermInput">Core::IFindFilter</a></li>
+<li>showWarningWithOptions: <a href="core-icore.html#showWarningWithOptions">Core::ICore</a></li>
+<li>showWrapIndicator: <a href="core-ifindsupport.html#showWrapIndicator">Core::IFindSupport</a></li>
+<li>shutdown: <a href="extensionsystem-pluginmanager.html#shutdown">ExtensionSystem::PluginManager</a></li>
+<li>size: <a href="core-context.html#size">Core::Context</a> <a href="utils-progressindicatorpainter.html#size">Utils::ProgressIndicatorPainter</a></li>
+<li>sizeHint: <a href="utils-progressindicator.html#sizeHint">Utils::ProgressIndicator</a></li>
+<li>skipOpeningBigTextFile: <a href="core-editormanager.html#skipOpeningBigTextFile">Core::EditorManager</a></li>
+<li>specForPlugin: <a href="extensionsystem-pluginmanager.html#specForPlugin">ExtensionSystem::PluginManager</a></li>
+<li>splitSideBySide: <a href="core-editormanager.html#splitSideBySide">Core::EditorManager</a></li>
+<li>start: <a href="tasking-taskinterface.html#start">Tasking::TaskInterface</a> <a href="tasking-tasktree.html#start">Tasking::TaskTree</a></li>
+<li>startAnimation: <a href="utils-progressindicatorpainter.html#startAnimation">Utils::ProgressIndicatorPainter</a></li>
+<li>startEditor: <a href="core-ieditorfactory.html#startEditor">Core::IEditorFactory</a></li>
+<li>startNewSearch: <a href="core-searchresultwindow.html#startNewSearch">Core::SearchResultWindow</a></li>
+<li>started: <a href="tasking-tasktree.html#started">Tasking::TaskTree</a></li>
+<li>startsWith: <a href="utils-filepath.html#startsWith">Utils::FilePath</a></li>
+<li>startsWithDriveLetter: <a href="utils-filepath.html#startsWithDriveLetter">Utils::FilePath</a></li>
+<li>startupSession: <a href="core-sessionmanager.html#startupSession">Core::SessionManager</a></li>
+<li>state: <a href="extensionsystem-pluginspec.html#state">ExtensionSystem::PluginSpec</a> <a href="utils-detailswidget.html#state-prop">Utils::DetailsWidget</a></li>
+<li>stopAnimation: <a href="utils-progressindicatorpainter.html#stopAnimation">Utils::ProgressIndicatorPainter</a></li>
+<li>stringWithAppendedShortcut: <a href="core-command.html#stringWithAppendedShortcut">Core::Command</a></li>
+<li>suffixAfter: <a href="utils-id.html#suffixAfter">Utils::Id</a></li>
+<li>suffixView: <a href="utils-filepath.html#suffixView">Utils::FilePath</a></li>
+<li>summaryText: <a href="utils-detailswidget.html#summaryText-prop">Utils::DetailsWidget</a></li>
+<li>supportedFindFlags: <a href="core-basetextfind.html#supportedFindFlags">Core::BaseTextFind</a> <a href="core-ifindfilter.html#supportedFindFlags">Core::IFindFilter</a> <a href="core-ifindsupport.html#supportedFindFlags">Core::IFindSupport</a></li>
+<li>supportsReplace: <a href="core-basetextfind.html#supportsReplace">Core::BaseTextFind</a> <a href="core-ifindsupport.html#supportsReplace">Core::IFindSupport</a></li>
+<li>supportsSelectAll: <a href="core-ifindsupport.html#supportsSelectAll">Core::IFindSupport</a></li>
+<li>symLinkTarget: <a href="utils-filepath.html#symLinkTarget">Utils::FilePath</a></li>
+<li>systemEnvironment: <a href="utils-environment.html#systemEnvironment">Utils::Environment</a></li>
+<li id="t">task: <a href="tasking-taskadapter.html#task-1">Tasking::TaskAdapter</a></li>
+<li>taskCount: <a href="tasking-tasktree.html#taskCount">Tasking::TaskTree</a></li>
+<li>taskStarted: <a href="core-progressmanager.html#taskStarted">Core::ProgressManager</a></li>
+<li>text: <a href="utils-textfieldcheckbox.html#compareText-prop">Utils::TextFieldCheckBox</a> <a href="utils-textfieldcombobox.html#indexText-prop">Utils::TextFieldComboBox</a></li>
+<li>textChanged: <a href="utils-pathchooser.html#path-prop">Utils::PathChooser</a></li>
+<li>textToReplace: <a href="core-searchresult.html#textToReplace">Core::SearchResult</a></li>
+<li>title: <a href="core-futureprogress.html#title">Core::FutureProgress</a></li>
+<li>toFSPathString: <a href="utils-filepath.html#toFSPathString">Utils::FilePath</a></li>
+<li>toFileInfo: <a href="utils-filepath.html#toFileInfo">Utils::FilePath</a></li>
+<li>toMap: <a href="utils-baseaspect.html#toMap">Utils::BaseAspect</a> <a href="utils-filepathaspect.html#toMap">Utils::FilePathAspect</a> <a href="utils-stringaspect.html#toMap">Utils::StringAspect</a></li>
+<li>toSetting: <a href="utils-id.html#toSetting">Utils::Id</a></li>
+<li>toString: <a href="utils-filepath.html#toString">Utils::FilePath</a> <a href="utils-id.html#toString">Utils::Id</a></li>
+<li>toUserOutput: <a href="utils-filepath.html#toUserOutput">Utils::FilePath</a></li>
+<li>toVariant: <a href="utils-filepath.html#toVariant">Utils::FilePath</a></li>
+<li>toggle: <a href="core-ioutputpane.html#toggle">Core::IOutputPane</a></li>
+<li>togglePage: <a href="core-ioutputpane.html#togglePage">Core::IOutputPane</a></li>
+<li>toolBar: <a href="core-ieditor.html#toolBar">Core::IEditor</a></li>
+<li>toolBarWidgets: <a href="core-ioutputpane.html#toolBarWidgets">Core::IOutputPane</a></li>
+<li>toolButtonWithAppendedShortcut: <a href="core-command.html#toolButtonWithAppendedShortcut-1">Core::Command</a></li>
+<li>touchBar: <a href="core-actioncontainer.html#touchBar">Core::ActionContainer</a></li>
+<li>touchBarIcon: <a href="core-command.html#touchBarIcon">Core::Command</a></li>
+<li>touchBarText: <a href="core-command.html#touchBarText">Core::Command</a></li>
+<li>trim: <a href="utils.html#trim">Utils</a></li>
+<li>trimBack: <a href="utils.html#trimBack">Utils</a></li>
+<li>trimFront: <a href="utils.html#trimFront">Utils</a></li>
+<li>trueText: <a href="utils-textfieldcheckbox.html#trueText-prop">Utils::TextFieldCheckBox</a></li>
+<li id="u">unexpectFileChange: <a href="core-documentmanager.html#unexpectFileChange">Core::DocumentManager</a></li>
+<li>unregisterAction: <a href="core-actionmanager.html#unregisterAction">Core::ActionManager</a></li>
+<li>update: <a href="extensionsystem-plugindetailsview.html#update">ExtensionSystem::PluginDetailsView</a> <a href="extensionsystem-pluginerrorview.html#update">ExtensionSystem::PluginErrorView</a></li>
+<li>updateAdditionalContexts: <a href="core-icore.html#updateAdditionalContexts">Core::ICore</a></li>
+<li>updatePath: <a href="utils-qrccache.html#updatePath">Utils::QrcCache</a></li>
+<li>url: <a href="extensionsystem-pluginspec.html#url">ExtensionSystem::PluginSpec</a></li>
+<li>useAsDefaultPath: <a href="utils-projectintropage.html#useAsDefaultPath-prop">Utils::ProjectIntroPage</a></li>
+<li>useCheckBox: <a href="utils-detailswidget.html#useCheckBox-prop">Utils::DetailsWidget</a></li>
+<li>useProjectsDirectory: <a href="core-documentmanager.html#useProjectsDirectory">Core::DocumentManager</a></li>
+<li>userData: <a href="core-searchresult.html#userData">Core::SearchResult</a></li>
+<li>userInterfaceLanguage: <a href="core-icore.html#userInterfaceLanguage">Core::ICore</a></li>
+<li>userResourcePath: <a href="core-icore.html#userResourcePath">Core::ICore</a></li>
+<li id="v">validChanged: <a href="core-ifindfilter.html#validChanged">Core::IFindFilter</a></li>
+<li>value: <a href="utils-macroexpander.html#value">Utils::MacroExpander</a></li>
+<li>variableDescription: <a href="utils-macroexpander.html#variableDescription">Utils::MacroExpander</a></li>
+<li>vendor: <a href="extensionsystem-pluginspec.html#vendor">ExtensionSystem::PluginSpec</a></li>
+<li>version: <a href="extensionsystem-pluginspec.html#version">ExtensionSystem::PluginSpec</a></li>
+<li>versionString: <a href="core-icore.html#versionString">Core::ICore</a></li>
+<li>visibilityChanged: <a href="core-ioutputpane.html#visibilityChanged">Core::IOutputPane</a> <a href="core-searchresult.html#visibilityChanged">Core::SearchResult</a></li>
+<li>visibleEditors: <a href="core-editormanager.html#visibleEditors">Core::EditorManager</a></li>
+<li>visibleVariables: <a href="utils-macroexpander.html#visibleVariables">Utils::MacroExpander</a></li>
+<li id="w">widget: <a href="core-futureprogress.html#widget">Core::FutureProgress</a> <a href="core-icontext.html#widget">Core::IContext</a> <a href="core-ioptionspage.html#widget">Core::IOptionsPage</a></li>
+<li>withLog: <a href="tasking-executableitem.html#withLog">Tasking::ExecutableItem</a></li>
+<li>withNewMappedPath: <a href="utils-filepath.html#withNewMappedPath">Utils::FilePath</a></li>
+<li>withNewPath: <a href="utils-filepath.html#withNewPath">Utils::FilePath</a></li>
+<li>withNumberAccelerator: <a href="core-actionmanager.html#withNumberAccelerator">Core::ActionManager</a></li>
+<li>withPrefix: <a href="utils-id.html#withPrefix">Utils::Id</a></li>
+<li>withSuffix: <a href="utils-id.html#withSuffix-2">Utils::Id</a></li>
+<li>withTildeHomePath: <a href="utils-filepath.html#withTildeHomePath">Utils::FilePath</a></li>
+<li>withTimeout: <a href="tasking-executableitem.html#withTimeout">Tasking::ExecutableItem</a></li>
+<li>workflowPolicy: <a href="tasking.html#workflowPolicy">Tasking</a></li>
+<li>write: <a href="core-basetextdocument.html#write-1">Core::BaseTextDocument</a></li>
+<li>writeDisrupting: <a href="core-messagemanager.html#writeDisrupting-1">Core::MessageManager</a></li>
+<li>writeFile: <a href="utils-textfileformat.html#writeFile">Utils::TextFileFormat</a></li>
+<li>writeFiles: <a href="core-basefilewizardfactory.html#writeFiles">Core::BaseFileWizardFactory</a></li>
+<li>writeFlashing: <a href="core-messagemanager.html#writeFlashing-1">Core::MessageManager</a></li>
+<li>writeSilently: <a href="core-messagemanager.html#writeSilently-1">Core::MessageManager</a></li>
+<li>writeToSettingsImmediatly: <a href="utils-baseaspect.html#writeToSettingsImmediatly">Utils::BaseAspect</a></li>
+<li id="x"></li><li id="y"></li><li id="z"></li></ul>
+</div>
+<!-- @@@functions.html -->
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2024 <span translate="no">The Qt Company Ltd.</span>
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br/>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the <span translate="no">Free Software Foundation</span>.<br/>    <span translate="no">Qt</span> and respective logos are <a href="https://doc.qt.io/qt/trademarks.html">    trademarks</a> of <span translate="no">The Qt Company Ltd.</span> in Finland and/or other countries
+   worldwide. All other trademarks are property of their respective owners. </p>
+</div>
+</body>
+</html>

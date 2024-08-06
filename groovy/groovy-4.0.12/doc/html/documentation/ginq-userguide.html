@@ -1,0 +1,2028 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.18">
+<title>Querying collections in SQL-like style</title>
+<link rel="stylesheet" href="./assets/css/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.css">
+<link rel="stylesheet" href="assets/css/view-example.css">
+<script src='assets/js/jquery-min-2.1.1.js'></script>
+<script src='assets/js/view-example.js'></script></head>
+<body class="book toc2 toc-left">
+<div id="header">
+<h1>Querying collections in SQL-like style</h1>
+<div class="details">
+<span id="revnumber">version 4.0.12</span>
+</div>
+<div id="toc" class="toc2">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#_ginq_a_k_a_groovy_integrated_query">1. GINQ a.k.a. Groovy-Integrated Query</a>
+<ul class="sectlevel2">
+<li><a href="#_ginq_syntax">1.1. GINQ Syntax</a>
+<ul class="sectlevel3">
+<li><a href="#_data_source">1.1.1. Data Source</a>
+<ul class="sectlevel4">
+<li><a href="#_iterable_data_source"><code>Iterable</code> Data Source</a></li>
+<li><a href="#_stream_data_source"><code>Stream</code> Data Source</a></li>
+<li><a href="#_array_data_source">Array Data Source</a></li>
+<li><a href="#_ginq_result_set_data_source">GINQ Result Set Data Source</a></li>
+</ul>
+</li>
+<li><a href="#_projection">1.1.2. Projection</a>
+<ul class="sectlevel4">
+<li><a href="#_distinct">Distinct</a></li>
+</ul>
+</li>
+<li><a href="#_filtering">1.1.3. Filtering</a>
+<ul class="sectlevel4">
+<li><a href="#_in">In</a></li>
+<li><a href="#_not_in">Not In</a></li>
+<li><a href="#_exists">Exists</a></li>
+<li><a href="#_not_exists">Not Exists</a></li>
+</ul>
+</li>
+<li><a href="#_joining">1.1.4. Joining</a></li>
+<li><a href="#_grouping">1.1.5. Grouping</a>
+<ul class="sectlevel4">
+<li><a href="#_aggregate_functions">Aggregate Functions</a></li>
+</ul>
+</li>
+<li><a href="#_sorting">1.1.6. Sorting</a></li>
+<li><a href="#_pagination">1.1.7. Pagination</a></li>
+<li><a href="#_nested_ginq">1.1.8. Nested GINQ</a>
+<ul class="sectlevel4">
+<li><a href="#_nested_ginq_in_from_clause">Nested GINQ in <code>from</code> clause</a></li>
+<li><a href="#_nested_ginq_in_where_clause">Nested GINQ in <code>where</code> clause</a></li>
+<li><a href="#_nested_ginq_in_select_clause">Nested GINQ in <code>select</code> clause</a></li>
+</ul>
+</li>
+<li><a href="#_window_functions">1.1.9. Window Functions</a>
+<ul class="sectlevel4">
+<li><a href="#_rownumber"><code>rowNumber</code></a></li>
+<li><a href="#_rank_denserank_percentrank_cumedist_and_ntile"><code>rank</code>, <code>denseRank</code>, <code>percentRank</code>, <code>cumeDist</code> and <code>ntile</code></a></li>
+<li><a href="#_lead_and_lag"><code>lead</code> and <code>lag</code></a></li>
+<li><a href="#_firstvalue_lastvalue_and_nthvalue"><code>firstValue</code>, <code>lastValue</code> and <code>nthValue</code></a></li>
+<li><a href="#_min_max_count_sum_avg_median_stdev_stdevp_var_varp_and_agg"><code>min</code>, <code>max</code>, <code>count</code>, <code>sum</code>, <code>avg</code>, <code>median</code>, <code>stdev</code>, <code>stdevp</code>, <code>var</code> ,<code>varp</code> and <code>agg</code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#_ginq_tips">1.2. GINQ Tips</a>
+<ul class="sectlevel3">
+<li><a href="#_row_number">1.2.1. Row Number</a></li>
+<li><a href="#_list_comprehension">1.2.2. List Comprehension</a></li>
+<li><a href="#_query_update">1.2.3. Query &amp; Update</a></li>
+<li><a href="#_alternative_for_with_clause">1.2.4. Alternative for <code>with</code> clause</a></li>
+<li><a href="#_alternative_for_case_when">1.2.5. Alternative for <code>case-when</code></a></li>
+<li><a href="#_query_json">1.2.6. Query JSON</a></li>
+<li><a href="#_parallel_querying">1.2.7. Parallel Querying</a></li>
+<li><a href="#_customize_ginq">1.2.8. Customize GINQ</a></li>
+<li><a href="#_optimize_ginq">1.2.9. Optimize GINQ</a></li>
+</ul>
+</li>
+<li><a href="#_ginq_examples">1.3. GINQ Examples</a>
+<ul class="sectlevel3">
+<li><a href="#_generate_multiplication_table">1.3.1. Generate Multiplication Table</a></li>
+<li><a href="#_more_examples">1.3.2. More examples</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Groovy&#8217;s <code>groovy-ginq</code> module provides a higher-level abstraction over collections.
+It could perform queries against in-memory collections of objects in SQL-like style.
+Also, querying XML, JSON, YAML, etc. could also be supported because they can be parsed into collections.
+As GORM and jOOQ are powerful enough to support querying DB, we will cover collections first.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_ginq_a_k_a_groovy_integrated_query"><a class="anchor" href="#_ginq_a_k_a_groovy_integrated_query"></a><a class="link" href="#_ginq_a_k_a_groovy_integrated_query">1. GINQ a.k.a. Groovy-Integrated Query</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>GINQ is a DSL for querying with SQL-like syntax, which consists of the following structure:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="sql">GQ, i.e. abbreviation for GINQ
+|__ from
+|   |__ &lt;data_source_alias&gt; in &lt;data_source&gt;
+|__ [join/innerjoin/leftjoin/rightjoin/fulljoin/crossjoin]*
+|   |__ &lt;data_source_alias&gt; in &lt;data_source&gt;
+|   |__ on &lt;condition&gt; ((&amp;&amp; | ||) &lt;condition&gt;)* (NOTE: `crossjoin` does not need `on` clause)
+|__ [where]
+|   |__ &lt;condition&gt; ((&amp;&amp; | ||) &lt;condition&gt;)*
+|__ [groupby]
+|   |__ &lt;expression&gt; [as &lt;alias&gt;] (, &lt;expression&gt; [as &lt;alias&gt;])*
+|   |__ [having]
+|       |__ &lt;condition&gt; ((&amp;&amp; | ||) &lt;condition&gt;)*
+|__ [orderby]
+|   |__ &lt;expression&gt; [in (asc|desc)] (, &lt;expression&gt; [in (asc|desc)])*
+|__ [limit]
+|   |__ [&lt;offset&gt;,] &lt;size&gt;
+|__ select
+    |__ &lt;expression&gt; [as &lt;alias&gt;] (, &lt;expression&gt; [as &lt;alias&gt;])*</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<code>[]</code> means the related clause is optional, <code>*</code> means zero or more times, and <code>+</code> means one or more times. Also, the clauses of GINQ are order sensitive,
+so the order of clauses should be kept as the above structure
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>As we could see, the simplest GINQ consists of a <code>from</code> clause and a <code>select</code> clause, which looks like:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="sql">from n in [0, 1, 2]
+select n</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<em>ONLY ONE</em> <code>from</code> clause is required in GINQ. Also, GINQ supports multiple data sources through <code>from</code> and the related joins.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>As a DSL, GINQ should be wrapped with the following block to be executed:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="groovy">GQ { /* GINQ CODE */ }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>For example,</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="groovy">def numbers = [0, 1, 2]
+assert [0, 1, 2] == GQ {
+    from n in numbers
+    select n
+}.toList()</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="groovy">import java.util.stream.Collectors
+
+def numbers = [0, 1, 2]
+assert '0#1#2' == GQ {
+    from n in numbers
+    select n
+}.stream()
+    .map(e -&gt; String.valueOf(e))
+    .collect(Collectors.joining('#'))</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>And it is strongly recommended to use <code>def</code> to define the variable for the result of GINQ execution,
+which is a <code>Queryable</code> instance that is lazy.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="groovy">def result = GQ {
+    /* GINQ CODE */
+}
+def stream = result.stream() // get the stream from GINQ result
+def list = result.toList() // get the list from GINQ result</code></pre>
+</div>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+Currently GINQ can not work well when STC is enabled.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Also, GINQ could be written in a method marked with <code>@GQ</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="groovy">@GQ
+def someGinqMethod() {
+    /* GINQ CODE */
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>For example,</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Mark the <code>ginq</code> method as a GINQ method with <code>@GQ</code> annotation:</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="groovy">@groovy.ginq.transform.GQ
+def ginq(list, b, e) {
+    from n in list
+    where b &lt; n &amp;&amp; n &lt; e
+    select n
+}
+
+assert [3, 4] == ginq([1, 2, 3, 4, 5, 6], 2, 5).toList()</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Specify the result type as <code>List</code>:</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="groovy">import groovy.ginq.transform.GQ
+
+@GQ(List)
+def ginq(b, e) {
+    from n in [1, 2, 3, 4, 5, 6]
+    where b &lt; n &amp;&amp; n &lt; e
+    select n
+}
+
+assert [3, 4] == ginq(2, 5)</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+GINQ supports many result types, e.g. <code>List</code>, <code>Set</code>, <code>Collection</code>, <code>Iterable</code>, <code>Iterator</code>, <code>java.util.stream.Stream</code> and array types.
+</td>
+</tr>
+</table>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Enable parallel querying:</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="groovy">import groovy.ginq.transform.GQ
+
+@GQ(parallel=true)
+def ginq(x) {
+    from n in [1, 2, 3]
+    where n &lt; x
+    select n
+}
+
+assert [1] == ginq(2).toList()</code></pre>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_ginq_syntax"><a class="anchor" href="#_ginq_syntax"></a><a class="link" href="#_ginq_syntax">1.1. GINQ Syntax</a></h3>
+<div class="sect3">
+<h4 id="_data_source"><a class="anchor" href="#_data_source"></a><a class="link" href="#_data_source">1.1.1. Data Source</a></h4>
+<div class="paragraph">
+<p>The data source for GINQ could be specified by <code>from</code> clause, which is equivalent to SQL&#8217;s <code>FROM</code>.
+Currently GINQ supports <code>Iterable</code>, <code>Stream</code>, array and GINQ result set as its data source:</p>
+</div>
+<div class="sect4">
+<h5 id="_iterable_data_source"><a class="anchor" href="#_iterable_data_source"></a><a class="link" href="#_iterable_data_source"><code>Iterable</code> Data Source</a></h5>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="sql">from n in [1, 2, 3] select n</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_stream_data_source"><a class="anchor" href="#_stream_data_source"></a><a class="link" href="#_stream_data_source"><code>Stream</code> Data Source</a></h5>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="sql">from n in [1, 2, 3].stream() select n</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_array_data_source"><a class="anchor" href="#_array_data_source"></a><a class="link" href="#_array_data_source">Array Data Source</a></h5>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="sql">from n in new int[] {1, 2, 3} select n</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_ginq_result_set_data_source"><a class="anchor" href="#_ginq_result_set_data_source"></a><a class="link" href="#_ginq_result_set_data_source">GINQ Result Set Data Source</a></h5>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="groovy">def vt = GQ {from m in [1, 2, 3] select m}
+assert [1, 2, 3] == GQ {
+    from n in vt select n
+}.toList()</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_projection"><a class="anchor" href="#_projection"></a><a class="link" href="#_projection">1.1.2. Projection</a></h4>
+<div class="paragraph">
+<p>The column names could be renamed with <code>as</code> clause:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="groovy">def result = GQ {
+    from n in [1, 2, 3]
+    select Math.pow(n, 2) as powerOfN
+}
+assert [[1, 1], [4, 4], [9, 9]] == result.stream().map(r -&gt; [r[0], r.powerOfN]).toList()</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The renamed column could be referenced by its new name, e.g. <code>r.powerOfN</code>.
+Also, it could be referenced by its index, e.g. <code>r[0]</code>
+</td>
+</tr>
+</table>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="groovy">assert [[1, 1], [2, 4], [3, 9]] == GQ {
+    from v in (
+        from n in [1, 2, 3]
+        select n, Math.pow(n, 2) as powerOfN
+    )
+    select v.n, v.powerOfN
+}.toList()</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<code>select P1, P2, &#8230;&#8203;, Pn</code> is a simplified syntax of <code>select new NamedRecord(P1, P2, &#8230;&#8203;, Pn)</code> when and only when <code>n</code> &gt;= 2.
+Also, <code>NamedRecord</code> instance will be created if <code>as</code> clause is used.
+The values stored in the <code>NamedRecord</code> could be referenced by their names.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Construct new objects as column values:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="groovy">@groovy.transform.EqualsAndHashCode
+class Person {
+    String name
+    Person(String name) {
+        this.name = name
+    }
+}
+def persons = [new Person('Daniel'), new Person('Paul'), new Person('Eric')]
+assert persons == GQ {
+    from n in ['Daniel', 'Paul', 'Eric']
+    select new Person(n)
+}.toList()</code></pre>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_distinct"><a class="anchor" href="#_distinct"></a><a class="link" href="#_distinct">Distinct</a></h5>
+<div class="paragraph">
+<p><code>distinct</code> is equivalent to SQL&#8217;s <code>DISTINCT</code></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="groovy">def result = GQ {
+    from n in [1, 2, 2, 3, 3, 3]
+    select distinct(n)
+}
+assert [1, 2, 3] == result.toList()</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="groovy">def result = GQ {
+    from n in [1, 2, 2, 3, 3, 3]
+    select distinct(n, n + 1)
+}
+assert [[1, 2], [2, 3], [3, 4]] == result.toList()</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_filtering"><a class="anchor" href="#_filtering"></a><a class="link" href="#_filtering">1.1.3. Filtering</a></h4>
+<div class="paragraph">
+<p><code>where</code> is equivalent to SQL&#8217;s <code>WHERE</code></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="sql">from n in [0, 1, 2, 3, 4, 5]
+where n &gt; 0 &amp;&amp; n &lt;= 3
+select n * 2</code></pre>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_in"><a class="anchor" href="#_in"></a><a class="link" href="#_in">In</a></h5>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="sql">from n in [0, 1, 2]
+where n in [1, 2]
+select n</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="sql">from n in [0, 1, 2]
+where n in (
+    from m in [1, 2]
+    select m
+)
+select n</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="groovy">import static groovy.lang.Tuple.tuple
+assert [0, 1] == GQ {
+    from n in [0, 1, 2]
+    where tuple(n, n + 1) in (
+        from m in [1, 2]
+        select m - 1, m
+    )
+    select n
+}.toList()</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_not_in"><a class="anchor" href="#_not_in"></a><a class="link" href="#_not_in">Not In</a></h5>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="sql">from n in [0, 1, 2]
+where n !in [1, 2]
+select n</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="sql">from n in [0, 1, 2]
+where n !in (
+    from m in [1, 2]
+    select m
+)
+select n</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="groovy">import static groovy.lang.Tuple.tuple
+assert [2] == GQ {
+    from n in [0, 1, 2]
+    where tuple(n, n + 1) !in (
+        from m in [1, 2]
+        select m - 1, m
+    )
+    select n
+}.toList()</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_exists"><a class="anchor" href="#_exists"></a><a class="link" href="#_exists">Exists</a></h5>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="sql">from n in [1, 2, 3]
+where (
+    from m in [2, 3]
+    where m == n
+    select m
+).exists()
+select n</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_not_exists"><a class="anchor" href="#_not_exists"></a><a class="link" href="#_not_exists">Not Exists</a></h5>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="sql">from n in [1, 2, 3]
+where !(
+    from m in [2, 3]
+    where m == n
+    select m
+).exists()
+select n</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_joining"><a class="anchor" href="#_joining"></a><a class="link" href="#_joining">1.1.4. Joining</a></h4>
+<div class="paragraph">
+<p>More data sources for GINQ could be specified by join clauses.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="sql">from n1 in [1, 2, 3]
+join n2 in [1, 3] on n1 == n2
+select n1, n2</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<code>join</code> is preferred over <code>innerjoin</code> and <code>innerhashjoin</code> as it has better readability,
+and it is smart enough to choose the correct concrete join(i.e. <code>innerjoin</code> or <code>innerhashjoin</code>) by its <code>on</code> clause.
+</td>
+</tr>
+</table>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="sql">from n1 in [1, 2, 3]
+innerjoin n2 in [1, 3] on n1 == n2
+select n1, n2</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="sql">from n1 in [1, 2, 3]
+leftjoin n2 in [2, 3, 4] on n1 == n2
+select n1, n2</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="sql">from n1 in [2, 3, 4]
+rightjoin n2 in [1, 2, 3] on n1 == n2
+select n1, n2</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="sql">from n1 in [1, 2, 3]
+fulljoin n2 in [2, 3, 4] on n1 == n2
+select n1, n2</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="sql">from n1 in [1, 2, 3]
+crossjoin n2 in [3, 4, 5]
+select n1, n2</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>hash join is especially efficient when data sources contain lots of objects</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="sql">from n1 in [1, 2, 3]
+innerhashjoin n2 in [1, 3] on n1 == n2
+select n1, n2</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="sql">from n1 in [1, 2, 3]
+lefthashjoin n2 in [2, 3, 4] on n1 == n2
+select n1, n2</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="sql">from n1 in [2, 3, 4]
+righthashjoin n2 in [1, 2, 3] on n1 == n2
+select n1, n2</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="sql">from n1 in [1, 2, 3]
+fullhashjoin n2 in [2, 3, 4] on n1 == n2
+select n1, n2</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Only binary expressions(<code>==</code>, <code>&amp;&amp;</code>) are allowed in the <code>on</code> clause of hash join
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_grouping"><a class="anchor" href="#_grouping"></a><a class="link" href="#_grouping">1.1.5. Grouping</a></h4>
+<div class="paragraph">
+<p><code>groupby</code> is equivalent to SQL&#8217;s <code>GROUP BY</code>, and <code>having</code> is equivalent to SQL&#8217;s <code>HAVING</code></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="sql">from n in [1, 1, 3, 3, 6, 6, 6]
+groupby n
+select n, count(n)</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="sql">from n in [1, 1, 3, 3, 6, 6, 6]
+groupby n
+having n &gt;= 3
+select n, count(n)</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="sql">from n in [1, 1, 3, 3, 6, 6, 6]
+groupby n
+having count() &lt; 3
+select n, count()</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The group columns could be renamed with <code>as</code> clause:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="sql">from s in ['ab', 'ac', 'bd', 'acd', 'bcd', 'bef']
+groupby s.size() as length, s[0] as firstChar
+select length, firstChar, max(s)</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="sql">from s in ['ab', 'ac', 'bd', 'acd', 'bcd', 'bef']
+groupby s.size() as length, s[0] as firstChar
+having length == 3 &amp;&amp; firstChar == 'b'
+select length, firstChar, max(s)</code></pre>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_aggregate_functions"><a class="anchor" href="#_aggregate_functions"></a><a class="link" href="#_aggregate_functions">Aggregate Functions</a></h5>
+<div class="paragraph">
+<p>GINQ provides some built-in aggregate functions:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Function</th>
+<th class="tableblock halign-left valign-top">Argument Type(s)</th>
+<th class="tableblock halign-left valign-top">Return Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">count()</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Long</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">number of rows, similar to <code>count(*)</code> in SQL</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">count(<em>expression</em>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">any</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Long</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">number of rows for which the value of <em>expression</em> is not <code>null</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">min(<em>expression</em>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Comparable</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">same as argument type</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">minimum value of expression across all non-null values</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">max(<em>expression</em>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Comparable</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">same as argument type</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">maximum value of expression across all non-null values</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">sum(<em>expression</em>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Number</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.math.BigDecimal</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">sum of expression across all non-null values</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">avg(<em>expression</em>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Number</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.math.BigDecimal</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">the average (arithmetic mean) of all non-null values</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">median(<em>expression</em>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Number</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.math.BigDecimal</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">value such that the number of non-null values above and below it is the same ("middle" value, not necessarily same as average or mean)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">stdev(<em>expression</em>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Number</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.math.BigDecimal</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">the statistical standard deviation of all non-null values</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">stdevp(<em>expression</em>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Number</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.math.BigDecimal</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">the statistical standard deviation for the population for all non-null values</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">var(<em>expression</em>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Number</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.math.BigDecimal</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">the statistical variance of all non-null values</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">varp(<em>expression</em>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Number</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.math.BigDecimal</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">the statistical variance for the population for all non-null values</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">agg(<em>expression</em>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">any</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">any</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">customizes the aggregation logic in <em>expression</em> and returns single value</p></td>
+</tr>
+</tbody>
+</table>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="sql">from n in [1, 1, 3, 3, 6, 6, 6]
+groupby n
+select n, count()</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="sql">from s in ['a', 'b', 'cd', 'ef']
+groupby s.size() as length
+select length, min(s)</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="sql">from s in ['a', 'b', 'cd', 'ef']
+groupby s.size() as length
+select length, max(s)</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="sql">from n in [1, 1, 3, 3, 6, 6, 6]
+groupby n
+select n, sum(n)</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="sql">from n in [1, 1, 3, 3, 6, 6, 6]
+groupby n
+select n, avg(n)</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="sql">from n in [1, 1, 3, 3, 6, 6, 6]
+groupby n
+select n, median(n)</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="sql">from n in [1, 1, 3, 3, 6, 6, 6]
+groupby n
+select n, agg(_g.stream().map(r -&gt; r.n).reduce(BigDecimal.ZERO, BigDecimal::add))</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<code>_g</code> is an implicit variable for <code>agg</code> aggregate function,
+it represents the grouped <code>Queryable</code> object and its record(e.g. <code>r</code>) could reference the data source by alias(e.g. <code>n</code>)
+</td>
+</tr>
+</table>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="sql">from fruit in ['Apple', 'Apricot', 'Banana', 'Cantaloupe']
+groupby fruit.substring(0, 1) as firstChar
+select firstChar, agg(_g.stream().map(r -&gt; r.fruit).toList()) as fruit_list</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Also, we could apply the aggregate functions for the whole GINQ result, i.e. no <code>groupby</code> clause is needed:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="groovy">assert [3] == GQ {
+    from n in [1, 2, 3]
+    select max(n)
+}.toList()</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="groovy">assert [[1, 3, 2, 2, 6, 3, 3, 6]] == GQ {
+    from n in [1, 2, 3]
+    select min(n), max(n), avg(n), median(n), sum(n), count(n), count(),
+            agg(_g.stream().map(r -&gt; r.n).reduce(BigDecimal.ZERO, BigDecimal::add))
+}.toList()</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="groovy">assert [0.816496580927726] == GQ {
+    from n in [1, 2, 3]
+    select stdev(n)
+}.toList()</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="groovy">assert [1] == GQ {
+    from n in [1, 2, 3]
+    select stdevp(n)
+}.toList()</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="groovy">assert [0.6666666666666667] == GQ {
+    from n in [1, 2, 3]
+    select var(n)
+}.toList()</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="groovy">assert [1] == GQ {
+    from n in [1, 2, 3]
+    select varp(n)
+}.toList()</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_sorting"><a class="anchor" href="#_sorting"></a><a class="link" href="#_sorting">1.1.6. Sorting</a></h4>
+<div class="paragraph">
+<p><code>orderby</code> is equivalent to SQL&#8217;s <code>ORDER BY</code></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="sql">from n in [1, 5, 2, 6]
+orderby n
+select n</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<code>in asc</code> is optional when sorting <code>in</code> ascending order
+</td>
+</tr>
+</table>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="sql">from n in [1, 5, 2, 6]
+orderby n in asc
+select n</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="sql">from n in [1, 5, 2, 6]
+orderby n in desc
+select n</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="sql">from s in ['a', 'b', 'ef', 'cd']
+orderby s.length() in desc, s in asc
+select s</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="sql">from s in ['a', 'b', 'ef', 'cd']
+orderby s.length() in desc, s
+select s</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="sql">from n in [1, null, 5, null, 2, 6]
+orderby n in asc(nullslast)
+select n</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<code>nullslast</code> is equivalent to SQL&#8217;s <code>NULLS LAST</code> and applied by default.
+<code>nullsfirst</code> is equivalent to SQL&#8217;s <code>NULLS FIRST</code>.
+</td>
+</tr>
+</table>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="sql">from n in [1, null, 5, null, 2, 6]
+orderby n in asc(nullsfirst)
+select n</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="sql">from n in [1, null, 5, null, 2, 6]
+orderby n in desc(nullslast)
+select n</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="sql">from n in [1, null, 5, null, 2, 6]
+orderby n in desc(nullsfirst)
+select n</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_pagination"><a class="anchor" href="#_pagination"></a><a class="link" href="#_pagination">1.1.7. Pagination</a></h4>
+<div class="paragraph">
+<p><code>limit</code> is similar to the <code>limit</code> clause of MySQL, which could specify the <code>offset</code>(first argument) and <code>size</code>(second argument) for paginating,
+or just specify the only one argument as <code>size</code></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="sql">from n in [1, 2, 3, 4, 5]
+limit 3
+select n</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="sql">from n in [1, 2, 3, 4, 5]
+limit 1, 3
+select n</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_nested_ginq"><a class="anchor" href="#_nested_ginq"></a><a class="link" href="#_nested_ginq">1.1.8. Nested GINQ</a></h4>
+<div class="sect4">
+<h5 id="_nested_ginq_in_from_clause"><a class="anchor" href="#_nested_ginq_in_from_clause"></a><a class="link" href="#_nested_ginq_in_from_clause">Nested GINQ in <code>from</code> clause</a></h5>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="sql">from v in (
+    from n in [1, 2, 3]
+    select n
+)
+select v</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_nested_ginq_in_where_clause"><a class="anchor" href="#_nested_ginq_in_where_clause"></a><a class="link" href="#_nested_ginq_in_where_clause">Nested GINQ in <code>where</code> clause</a></h5>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="sql">from n in [0, 1, 2]
+where n in (
+    from m in [1, 2]
+    select m
+)
+select n</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="sql">from n in [0, 1, 2]
+where (
+    from m in [1, 2]
+    where m == n
+    select m
+).exists()
+select n</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_nested_ginq_in_select_clause"><a class="anchor" href="#_nested_ginq_in_select_clause"></a><a class="link" href="#_nested_ginq_in_select_clause">Nested GINQ in <code>select</code> clause</a></h5>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="groovy">assert [null, 2, 3] == GQ {
+    from n in [1, 2, 3]
+    select (
+        from m in [2, 3, 4]
+        where m == n
+        limit 1
+        select m
+    )
+}.toList()</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+It&#8217;s recommended to use <code>limit 1</code> to restrict the count of sub-query result
+because <code>TooManyValuesException</code> will be thrown if more than one values returned
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>We could use <code>as</code> clause to name the sub-query result</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="groovy">assert [[1, null], [2, 2], [3, 3]] == GQ {
+    from n in [1, 2, 3]
+    select n, (
+        from m in [2, 3, 4]
+        where m == n
+        select m
+    ) as sqr
+}.toList()</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_window_functions"><a class="anchor" href="#_window_functions"></a><a class="link" href="#_window_functions">1.1.9. Window Functions</a></h4>
+<div class="paragraph">
+<p>Window can be defined by <code>partitionby</code>, <code>orderby</code>, <code>rows</code> and <code>range</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="sql">over(
+    [partitionby &lt;expression&gt; (, &lt;expression&gt;)*]
+    [orderby &lt;expression&gt; (, &lt;expression&gt;)*
+       [rows &lt;lower&gt;, &lt;upper&gt; | range &lt;lower&gt;, &lt;upper&gt;]]
+)</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>0</code> used as bound of <code>rows</code> and <code>range</code> clause is equivalent to SQL&#8217;s <code>CURRENT ROW</code>, and negative means <code>PRECEDING</code>, positive means <code>FOLLOWING</code></p>
+</li>
+<li>
+<p><code>null</code> used as the lower bound of <code>rows</code> and <code>range</code> clause is equivalent to SQL&#8217;s <code>UNBOUNDED PRECEDING</code></p>
+</li>
+<li>
+<p><code>null</code> used as the upper bound of <code>rows</code> and <code>range</code> clause is equivalent to SQL&#8217;s <code>UNBOUNDED FOLLOWING</code></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Also, GINQ provides some built-in window functions:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Function</th>
+<th class="tableblock halign-left valign-top">Argument Type(s)</th>
+<th class="tableblock halign-left valign-top">Return Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">rowNumber()</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Long</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">number of the current row within its partition, counting from <code>0</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">rank()</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Long</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">rank of the current row with gaps</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">denseRank()</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Long</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">rank of the current row without gaps</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">percentRank()</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.math.BigDecimal</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">relative rank of the current row: (rank - 1) / (total rows - 1)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">cumeDist()</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.math.BigDecimal</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">relative rank of the current row: (number of rows preceding or peer with current row) / (total rows)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ntile(<em>expression</em>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Long</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Long</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">bucket index ranging from <code>0</code> to <code>expression - 1</code>, dividing the partition as equally as possible</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">lead(<em>expression</em> [, <em>offset</em> [, <em>default</em>]])</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">any [, java.lang.Long [, same as <em>expression</em> type]]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">same as <em>expression</em> type</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">returns <em>expression</em> evaluated at the row that is <em>offset</em> rows after the current row within the partition; if there is no such row, instead return <em>default</em> (which must be of the same type as <em>expression</em>). Both <em>offset</em> and <em>default</em> are evaluated with respect to the current row. If omitted, <em>offset</em> defaults to <code>1</code> and <em>default</em> to <code>null</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">lag(<em>expression</em> [, <em>offset</em> [, <em>default</em>]])</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">any [, java.lang.Long [, same as <em>expression</em> type]]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">same as <em>expression</em> type</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">returns <em>expression</em> evaluated at the row that is <em>offset</em> rows before the current row within the partition; if there is no such row, instead return <em>default</em> (which must be of the same type as <em>expression</em>). Both <em>offset</em> and <em>default</em> are evaluated with respect to the current row. If omitted, <em>offset</em> defaults to <code>1</code> and <em>default</em> to <code>null</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">firstValue(<em>expression</em>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">any</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">same type as <em>expression</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">returns <em>expression</em> evaluated at the row that is the first row of the window frame</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">lastValue(<em>expression</em>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">any</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">same type as <em>expression</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">returns <em>expression</em> evaluated at the row that is the last row of the window frame</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">nthValue(<em>expression</em>, <em>n</em>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">any, java.lang.Long</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">same type as <em>expression</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">returns <em>expression</em> evaluated at the row that is the <em>nth</em> row of the window frame</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">count()</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Long</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">number of rows, similar to <code>count(*)</code> in SQL</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">count(<em>expression</em>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">any</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Long</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">number of rows for which the value of <em>expression</em> is not <code>null</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">min(<em>expression</em>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Comparable</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">same as argument type</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">minimum value of expression across all non-null values</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">max(<em>expression</em>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Comparable</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">same as argument type</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">maximum value of expression across all non-null values</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">sum(<em>expression</em>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Number</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.math.BigDecimal</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">sum of expression across all non-null values</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">avg(<em>expression</em>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Number</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.math.BigDecimal</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">the average (arithmetic mean) of all non-null values</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">median(<em>expression</em>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Number</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.math.BigDecimal</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">value such that the number of non-null values above and below it is the same ("middle" value, not necessarily same as average or mean)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">stdev(<em>expression</em>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Number</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.math.BigDecimal</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">the statistical standard deviation of all non-null values</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">stdevp(<em>expression</em>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Number</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.math.BigDecimal</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">the statistical standard deviation for the population for all non-null values</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">var(<em>expression</em>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Number</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.math.BigDecimal</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">the statistical variance of all non-null values</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">varp(<em>expression</em>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Number</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.math.BigDecimal</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">the statistical variance for the population for all non-null values</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">agg(<em>expression</em>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">any</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">any</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>INCUBATING</strong>: customizes the aggregation logic in <em>expression</em> and returns single value</p></td>
+</tr>
+</tbody>
+</table>
+<div class="sect4">
+<h5 id="_rownumber"><a class="anchor" href="#_rownumber"></a><a class="link" href="#_rownumber"><code>rowNumber</code></a></h5>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="groovy">assert [[2, 1, 1, 1], [1, 0, 0, 2], [null, 3, 3, 3], [3, 2, 2, 0]] == GQ {
+    from n in [2, 1, null, 3]
+    select n, (rowNumber() over(orderby n)),
+              (rowNumber() over(orderby n in asc)),
+              (rowNumber() over(orderby n in desc))
+}.toList()</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="groovy">assert [[1, 0, 1, 2, 3], [2, 1, 2, 1, 2], [null, 3, 0, 3, 0], [3, 2, 3, 0, 1]] == GQ {
+    from n in [1, 2, null, 3]
+    select n, (rowNumber() over(orderby n in asc(nullslast))),
+              (rowNumber() over(orderby n in asc(nullsfirst))),
+              (rowNumber() over(orderby n in desc(nullslast))),
+              (rowNumber() over(orderby n in desc(nullsfirst)))
+}.toList()</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The parentheses around the window function is required.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_rank_denserank_percentrank_cumedist_and_ntile"><a class="anchor" href="#_rank_denserank_percentrank_cumedist_and_ntile"></a><a class="link" href="#_rank_denserank_percentrank_cumedist_and_ntile"><code>rank</code>, <code>denseRank</code>, <code>percentRank</code>, <code>cumeDist</code> and <code>ntile</code></a></h5>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="groovy">assert [['a', 1, 1], ['b', 2, 2], ['b', 2, 2],
+        ['c', 4, 3], ['c', 4, 3], ['d', 6, 4],
+        ['e', 7, 5]] == GQ {
+    from s in ['a', 'b', 'b', 'c', 'c', 'd', 'e']
+    select s,
+        (rank() over(orderby s)),
+        (denseRank() over(orderby s))
+}.toList()</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="groovy">assert [[60, 0, 0.4], [60, 0, 0.4], [80, 0.5, 0.8], [80, 0.5, 0.8], [100, 1, 1]] == GQ {
+    from n in [60, 60, 80, 80, 100]
+    select n,
+        (percentRank() over(orderby n)),
+        (cumeDist() over(orderby n))
+}.toList()</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="groovy">assert [[1, 0], [2, 0], [3, 0],
+        [4, 1], [5, 1],
+        [6, 2], [7, 2],[8, 2],
+        [9, 3], [10, 3]] == GQ {
+    from n in 1..10
+    select n, (ntile(4) over(orderby n))
+}.toList()</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_lead_and_lag"><a class="anchor" href="#_lead_and_lag"></a><a class="link" href="#_lead_and_lag"><code>lead</code> and <code>lag</code></a></h5>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="groovy">assert [[2, 3], [1, 2], [3, null]] == GQ {
+    from n in [2, 1, 3]
+    select n, (lead(n) over(orderby n))
+}.toList()</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="groovy">assert [[2, 3], [1, 2], [3, null]] == GQ {
+    from n in [2, 1, 3]
+    select n, (lead(n) over(orderby n in asc))
+}.toList()</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="groovy">assert [['a', 'bc'], ['ab', null], ['b', 'a'], ['bc', 'ab']] == GQ {
+    from s in ['a', 'ab', 'b', 'bc']
+    select s, (lead(s) over(orderby s.length(), s in desc))
+}.toList()</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="groovy">assert [['a', null], ['ab', null], ['b', 'a'], ['bc', 'ab']] == GQ {
+    from s in ['a', 'ab', 'b', 'bc']
+    select s, (lead(s) over(partitionby s.length() orderby s.length(), s in desc))
+}.toList()</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="groovy">assert [[2, 1], [1, null], [3, 2]] == GQ {
+    from n in [2, 1, 3]
+    select n, (lag(n) over(orderby n))
+}.toList()</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="groovy">assert [[2, 3], [1, 2], [3, null]] == GQ {
+    from n in [2, 1, 3]
+    select n, (lag(n) over(orderby n in desc))
+}.toList()</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="groovy">assert [['a', null], ['b', 'a'], ['aa', null], ['bb', 'aa']] == GQ {
+    from s in ['a', 'b', 'aa', 'bb']
+    select s, (lag(s) over(partitionby s.length() orderby s))
+}.toList()</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="groovy">assert [[2, 3, 1], [1, 2, null], [3, null, 2]] == GQ {
+    from n in [2, 1, 3]
+    select n, (lead(n) over(orderby n)), (lag(n) over(orderby n))
+}.toList()</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The offset can be specified other than the default offset <code>1</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="groovy">assert [[2, null, null], [1, 3, null], [3, null, 1]] == GQ {
+    from n in [2, 1, 3]
+    select n, (lead(n, 2) over(orderby n)), (lag(n, 2) over(orderby n))
+}.toList()</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The default value can be returned when the index specified by offset is out of window, e.g. <code>'NONE'</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="groovy">assert [[2, 'NONE', 'NONE'], [1, 3, 'NONE'], [3, 'NONE', 1]] == GQ {
+    from n in [2, 1, 3]
+    select n, (lead(n, 2, 'NONE') over(orderby n)), (lag(n, 2, 'NONE') over(orderby n))
+}.toList()</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_firstvalue_lastvalue_and_nthvalue"><a class="anchor" href="#_firstvalue_lastvalue_and_nthvalue"></a><a class="link" href="#_firstvalue_lastvalue_and_nthvalue"><code>firstValue</code>, <code>lastValue</code> and <code>nthValue</code></a></h5>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="groovy">assert [[2, 1], [1, 1], [3, 2]] == GQ {
+    from n in [2, 1, 3]
+    select n, (firstValue(n) over(orderby n rows -1, 1))
+}.toList()</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="groovy">assert [[2, 3], [1, 2], [3, 3]] == GQ {
+    from n in [2, 1, 3]
+    select n, (lastValue(n) over(orderby n rows -1, 1))
+}.toList()</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="groovy">assert [[2, 2], [1, 1], [3, 3]] == GQ {
+    from n in [2, 1, 3]
+    select n, (firstValue(n) over(orderby n rows 0, 1))
+}.toList()</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="groovy">assert [[2, 1], [1, null], [3, 1]] == GQ {
+    from n in [2, 1, 3]
+    select n, (firstValue(n) over(orderby n rows -2, -1))
+}.toList()</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="groovy">assert [[2, 1], [1, null], [3, 2]] == GQ {
+    from n in [2, 1, 3]
+    select n, (lastValue(n) over(orderby n rows -2, -1))
+}.toList()</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="groovy">assert [[2, 3], [1, 3], [3, null]] == GQ {
+    from n in [2, 1, 3]
+    select n, (lastValue(n) over(orderby n rows 1, 2))
+}.toList()</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="groovy">assert [[2, 3], [1, 2], [3, null]] == GQ {
+    from n in [2, 1, 3]
+    select n, (firstValue(n) over(orderby n rows 1, 2))
+}.toList()</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="groovy">assert [[2, 2], [1, 1], [3, 3]] == GQ {
+    from n in [2, 1, 3]
+    select n, (lastValue(n) over(orderby n rows -1, 0))
+}.toList()</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="groovy">assert [[2, 1], [1, 1], [3, 1]] == GQ {
+    from n in [2, 1, 3]
+    select n, (firstValue(n) over(orderby n rows null, 1))
+}.toList()</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="groovy">assert [[2, 3], [1, 3], [3, 3]] == GQ {
+    from n in [2, 1, 3]
+    select n, (lastValue(n) over(orderby n rows -1, null))
+}.toList()</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="groovy">assert [['a', 'a', 'b'], ['aa', 'aa', 'bb'], ['b', 'a', 'b'], ['bb', 'aa', 'bb']] == GQ {
+    from s in ['a', 'aa', 'b', 'bb']
+    select s, (firstValue(s) over(partitionby s.length() orderby s)),
+            (lastValue(s) over(partitionby s.length() orderby s))
+}.toList()</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="groovy">assert [[1, 1, 2, 3, null], [2, 1, 2, 3, null], [3, 1, 2, 3, null]] == GQ {
+    from n in 1..3
+    select n, (nthValue(n, 0) over(orderby n)),
+              (nthValue(n, 1) over(orderby n)),
+              (nthValue(n, 2) over(orderby n)),
+              (nthValue(n, 3) over(orderby n))
+}.toList()</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_min_max_count_sum_avg_median_stdev_stdevp_var_varp_and_agg"><a class="anchor" href="#_min_max_count_sum_avg_median_stdev_stdevp_var_varp_and_agg"></a><a class="link" href="#_min_max_count_sum_avg_median_stdev_stdevp_var_varp_and_agg"><code>min</code>, <code>max</code>, <code>count</code>, <code>sum</code>, <code>avg</code>, <code>median</code>, <code>stdev</code>, <code>stdevp</code>, <code>var</code> ,<code>varp</code> and <code>agg</code></a></h5>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="groovy">assert [['a', 'a', 'b'], ['b', 'a', 'b'], ['aa', 'aa', 'bb'], ['bb', 'aa', 'bb']] == GQ {
+    from s in ['a', 'b', 'aa', 'bb']
+    select s, (min(s) over(partitionby s.length())), (max(s) over(partitionby s.length()))
+}.toList()</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="groovy">assert [[1, 2, 2, 2, 1, 1], [1, 2, 2, 2, 1, 1],
+        [2, 2, 2, 4, 2, 2], [2, 2, 2, 4, 2, 2],
+        [3, 2, 2, 6, 3, 3], [3, 2, 2, 6, 3, 3]] == GQ {
+    from n in [1, 1, 2, 2, 3, 3]
+    select n, (count() over(partitionby n)),
+              (count(n) over(partitionby n)),
+              (sum(n) over(partitionby n)),
+              (avg(n) over(partitionby n)),
+              (median(n) over(partitionby n))
+}.toList()</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="groovy">assert [[2, 6, 3, 1, 3, 4], [1, 6, 3, 1, 3, 4],
+        [3, 6, 3, 1, 3, 4], [null, 6, 3, 1, 3, 4]] == GQ {
+    from n in [2, 1, 3, null]
+    select n, (sum(n) over()),
+              (max(n) over()),
+              (min(n) over()),
+              (count(n) over()),
+              (count() over())
+}.toList()</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="groovy">assert [[1, 1, 1], [2, 2, 3], [5, 2, 10], [5, 2, 10]] == GQ {
+    from n in [1, 2, 5, 5]
+    select n, (count() over(orderby n range -2, 0)),
+              (sum(n) over(orderby n range -2, 0))
+}.toList()</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="groovy">assert [[1, 2, 3], [2, 1, 2], [5, 2, 10], [5, 2, 10]] == GQ {
+    from n in [1, 2, 5, 5]
+    select n, (count() over(orderby n range 0, 1)),
+              (sum(n) over(orderby n range 0, 1))
+}.toList()</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="groovy">assert [[1, 2, 3], [2, 2, 3], [5, 2, 10], [5, 2, 10]] == GQ {
+    from n in [1, 2, 5, 5]
+    select n, (count() over(orderby n range -1, 1)),
+              (sum(n) over(orderby n range -1, 1))
+}.toList()</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="groovy">assert [[1, 1, 2], [2, 0, 0], [5, 0, 0], [5, 0, 0]] == GQ {
+    from n in [1, 2, 5, 5]
+    select n, (count() over(orderby n in desc range 1, 2)),
+              (sum(n) over(orderby n in desc range 1, 2))
+}.toList()</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="groovy">assert [[1, 0, 0], [2, 1, 1], [5, 0, 0], [5, 0, 0]] == GQ {
+    from n in [1, 2, 5, 5]
+    select n, (count() over(orderby n in desc range -2, -1)),
+              (sum(n) over(orderby n in desc range -2, -1))
+}.toList()</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="groovy">assert [[1, 3, 12], [2, 2, 10], [5, 0, 0], [5, 0, 0]] == GQ {
+    from n in [1, 2, 5, 5]
+    select n, (count() over(orderby n range 1, null)),
+              (sum(n) over(orderby n range 1, null))
+}.toList()</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="groovy">assert [[1, 2, 3], [2, 2, 3], [5, 4, 13], [5, 4, 13]] == GQ {
+    from n in [1, 2, 5, 5]
+    select n, (count() over(orderby n range null, 1)),
+              (sum(n) over(orderby n range null, 1))
+}.toList()</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="groovy">assert [[1, 0.816496580927726],
+        [2, 0.816496580927726],
+        [3, 0.816496580927726]] == GQ {
+    from n in [1, 2, 3]
+    select n, (stdev(n) over())
+}.toList()</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="groovy">assert [[1, 1], [2, 1], [3, 1]] == GQ {
+    from n in [1, 2, 3]
+    select n, (stdevp(n) over())
+}.toList()</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="groovy">assert [[1, 0.6666666666666667],
+        [2, 0.6666666666666667],
+        [3, 0.6666666666666667]] == GQ {
+    from n in [1, 2, 3]
+    select n, (var(n) over())
+}.toList()</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="groovy">assert [[1, 1], [2, 1], [3, 1]] == GQ {
+    from n in [1, 2, 3]
+    select n, (varp(n) over())
+}.toList()</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="groovy">assert [[1, 4], [2, 2], [3, 4]] == GQ {
+    from n in [1, 2, 3]
+    select n,
+           (agg(_g.stream().map(r -&gt; r.n).reduce(BigDecimal.ZERO, BigDecimal::add)) over(partitionby n % 2))
+}.toList()</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_ginq_tips"><a class="anchor" href="#_ginq_tips"></a><a class="link" href="#_ginq_tips">1.2. GINQ Tips</a></h3>
+<div class="sect3">
+<h4 id="_row_number"><a class="anchor" href="#_row_number"></a><a class="link" href="#_row_number">1.2.1. Row Number</a></h4>
+<div class="paragraph">
+<p><code>_rn</code> is the implicit variable representing row number for each record in the result set. It starts with <code>0</code></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="sql">from n in [1, 2, 3]
+select _rn, n</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_list_comprehension"><a class="anchor" href="#_list_comprehension"></a><a class="link" href="#_list_comprehension">1.2.2. List Comprehension</a></h4>
+<div class="paragraph">
+<p>List comprehension is an elegant way to define and create lists based on existing lists:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="groovy">assert [4, 16, 36, 64, 100] == GQ {from n in 1..&lt;11 where n % 2 == 0 select n ** 2}.toList()</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="groovy">assert [4, 16, 36, 64, 100] == GQ {from n in 1..&lt;11 where n % 2 == 0 select n ** 2} as List</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="groovy">assert [4, 16, 36, 64, 100] == GQL {from n in 1..&lt;11 where n % 2 == 0 select n ** 2}</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<code>GQL {&#8230;&#8203;}</code> is the abbreviation of <code>GQ {&#8230;&#8203;}.toList()</code>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>GINQ could be used as list comprehension in the loops directly:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="groovy">def result = []
+for (def x : GQ {from n in 1..&lt;11 where n % 2 == 0 select n ** 2}) {
+    result &lt;&lt; x
+}
+assert [4, 16, 36, 64, 100] == result</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_query_update"><a class="anchor" href="#_query_update"></a><a class="link" href="#_query_update">1.2.3. Query &amp; Update</a></h4>
+<div class="paragraph">
+<p>This is like <code>update</code> statement in SQL</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="groovy">import groovy.transform.*
+@TupleConstructor
+@EqualsAndHashCode
+@ToString
+class Person {
+    String name
+    String nickname
+}
+
+def linda = new Person('Linda', null)
+def david = new Person('David', null)
+def persons = [new Person('Daniel', 'ShanFengXiaoZi'), linda, david]
+def result = GQ {
+    from p in persons
+    where p.nickname == null
+    select p
+}.stream()
+    .peek(p -&gt; { p.nickname = 'Unknown' }) // update `nickname`
+    .toList()
+
+def expected = [new Person('Linda', 'Unknown'), new Person('David', 'Unknown')]
+assert expected == result
+assert ['Unknown', 'Unknown'] == [linda, david]*.nickname // ensure the original objects are updated</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_alternative_for_with_clause"><a class="anchor" href="#_alternative_for_with_clause"></a><a class="link" href="#_alternative_for_with_clause">1.2.4. Alternative for <code>with</code> clause</a></h4>
+<div class="paragraph">
+<p>GINQ does not support <code>with</code> clause for now, but we could define a temporary variable to workaround:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="groovy">def v = GQ { from n in [1, 2, 3] where n &lt; 3 select n }
+def result = GQ {
+    from n in v
+    where n &gt; 1
+    select n
+}
+assert [2] == result.toList()</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_alternative_for_case_when"><a class="anchor" href="#_alternative_for_case_when"></a><a class="link" href="#_alternative_for_case_when">1.2.5. Alternative for <code>case-when</code></a></h4>
+<div class="paragraph">
+<p><code>case-when</code> of SQL could be replaced with switch expression:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="groovy">assert ['a', 'b', 'c', 'c'] == GQ {
+    from n in [1, 2, 3, 4]
+    select switch (n) {
+        case 1 -&gt; 'a'
+        case 2 -&gt; 'b'
+        default -&gt; 'c'
+    }
+}.toList()</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_query_json"><a class="anchor" href="#_query_json"></a><a class="link" href="#_query_json">1.2.6. Query JSON</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="groovy">import groovy.json.JsonSlurper
+def json = new JsonSlurper().parseText('''
+    {
+        "fruits": [
+            {"name": "Orange", "price": 11},
+            {"name": "Apple", "price": 6},
+            {"name": "Banana", "price": 4},
+            {"name": "Mongo", "price": 29},
+            {"name": "Durian", "price": 32}
+        ]
+    }
+''')
+
+def expected = [['Mongo', 29], ['Orange', 11], ['Apple', 6], ['Banana', 4]]
+assert expected == GQ {
+    from f in json.fruits
+    where f.price &lt; 32
+    orderby f.price in desc
+    select f.name, f.price
+}.toList()</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_parallel_querying"><a class="anchor" href="#_parallel_querying"></a><a class="link" href="#_parallel_querying">1.2.7. Parallel Querying</a></h4>
+<div class="paragraph">
+<p>Parallel querying is especially efficient when querying big data sources. It is disabled by default, but we could enable it by hand:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="groovy">assert [[1, 1], [2, 2], [3, 3]] == GQ(parallel: true) {
+    from n1 in 1..1000
+    join n2 in 1..10000 on n2 == n1
+    where n1 &lt;= 3 &amp;&amp; n2 &lt;= 5
+    select n1, n2
+}.toList()</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>As parallel querying will use a shared thread pool, the following code can release resources after all GINQ statements execution are completed, and it will wait util all tasks of threads are completed.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="groovy">GQ {
+    shutdown
+}</code></pre>
+</div>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+Once <code>shutdown</code> is issued, parallel querying can not work anymore.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The following code is equivalent to the above code, in other words, <code>immediate</code> is optional:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="groovy">GQ {
+    shutdown immediate
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Shutdown without waiting tasks to complete:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="groovy">GQ {
+    shutdown abort
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_customize_ginq"><a class="anchor" href="#_customize_ginq"></a><a class="link" href="#_customize_ginq">1.2.8. Customize GINQ</a></h4>
+<div class="paragraph">
+<p>For advanced users, you could customize GINQ behaviour by specifying your own target code generator.
+For example, we could specify the qualified class name <code>org.apache.groovy.ginq.provider.collection.GinqAstWalker</code> as the target code generator to generate GINQ method calls for querying collections,
+which is the default behaviour of GINQ:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="groovy">assert [0, 1, 2] == GQ(astWalker: 'org.apache.groovy.ginq.provider.collection.GinqAstWalker') {
+    from n in [0, 1, 2]
+    select n
+}.toList()</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_optimize_ginq"><a class="anchor" href="#_optimize_ginq"></a><a class="link" href="#_optimize_ginq">1.2.9. Optimize GINQ</a></h4>
+<div class="paragraph">
+<p>GINQ optimizer is enabled by default for better performance. It will transform the GINQ AST to achieve better execution plan.
+We could disable it by hand:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="groovy">assert [[2, 2]] == GQ(optimize: false) {
+    from n1 in [1, 2, 3]
+    join n2 in [1, 2, 3] on n1 == n2
+    where n1 &gt; 1 &amp;&amp;  n2 &lt; 3
+    select n1, n2
+}.toList()</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_ginq_examples"><a class="anchor" href="#_ginq_examples"></a><a class="link" href="#_ginq_examples">1.3. GINQ Examples</a></h3>
+<div class="sect3">
+<h4 id="_generate_multiplication_table"><a class="anchor" href="#_generate_multiplication_table"></a><a class="link" href="#_generate_multiplication_table">1.3.1. Generate Multiplication Table</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="sql">from v in (
+    from a in 1..9
+    join b in 1..9 on a &lt;= b
+    select a as f, b as s, "$a * $b = ${a * b}".toString() as r
+)
+groupby v.s
+select max(v.f == 1 ? v.r : '') as v1,
+       max(v.f == 2 ? v.r : '') as v2,
+       max(v.f == 3 ? v.r : '') as v3,
+       max(v.f == 4 ? v.r : '') as v4,
+       max(v.f == 5 ? v.r : '') as v5,
+       max(v.f == 6 ? v.r : '') as v6,
+       max(v.f == 7 ? v.r : '') as v7,
+       max(v.f == 8 ? v.r : '') as v8,
+       max(v.f == 9 ? v.r : '') as v9</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_more_examples"><a class="anchor" href="#_more_examples"></a><a class="link" href="#_more_examples">1.3.2. More examples</a></h4>
+<div class="paragraph">
+<p>link: the latest <a href="https://github.com/apache/groovy/blob/master/subprojects/groovy-ginq/src/spec/test/org/apache/groovy/ginq/GinqTest.groovy">GINQ examples</a></p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Some examples in the above link require the latest SNAPSHOT version of Groovy to run.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Version 4.0.12<br>
+Last updated 2023-05-05 15:43:14 +1000
+</div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/run_prettify.min.js"></script>
+</body>
+</html>

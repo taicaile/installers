@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+<!-- creator-code-syntax.qdoc -->
+  <title>Check code syntax | Qt Creator Manual</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");
+    // loading style sheet breaks anchors that were jumped to before
+    // so force jumping to anchor again
+    setTimeout(function() {
+        var anchor = location.hash;
+        // need to jump to different anchor first (e.g. none)
+        location.hash = "#";
+        setTimeout(function() {
+            location.hash = anchor;
+        }, 0);
+    }, 0);
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+    <div class="main">
+    <div class="main-rounded">
+        <div class="navigationbar">
+        <ul>
+<li><a href="index.html" translate="no">Qt Creator Manual</a></li>
+<li>Check code syntax</li>
+<li id="buildversion"><a href="index.html" translate="no">Qt Creator Manual 13.0.1</a></li>
+    </ul>
+    </div>
+</div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+  <link rel="prev" href="creator-how-tos.html" />
+<p class="naviNextPrevious headerNavi">
+<a class="prevPage" href="creator-how-tos.html">How To</a>
+</p>
+<div class="sidebar">
+<div class="toc">
+<h3 id="toc">Contents</h3>
+<ul>
+<li class="level1"><a href="#examples-of-c-code-errors">Examples of C++ code errors</a></li>
+<li class="level1"><a href="#check-qml-or-javascript-syntax">Check QML or JavaScript syntax</a></li>
+<li class="level1"><a href="#manage-messages">Manage messages</a></li>
+<li class="level1"><a href="#set-line-annotation-positions">Set line annotation positions</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">Check code syntax</h1>
+<!-- $$$creator-checking-code-syntax.html-description -->
+<div class="descr" id="details">
+<p>As you write code, Qt Creator checks code syntax. When Qt Creator spots a syntax error in your code, it underlines it, displays an icon, and shows error details when you move the mouse pointer over the error or the icon. To apply an available fix, select <img src="images/refactormarker.png" alt="" />.</p>
+<p>Similarly, when you are working on an instance of a JavaScript object notation (JSON) entity, Qt Creator underlines errors in the JSON data structure.</p>
+<h2 id="examples-of-c-code-errors">Examples of C++ code errors</h2>
+<p>Qt Creator annotates an error because a semicolon is missing at the end of the line:</p>
+<p class="centerAlign"><img src="images/qtcreator-syntaxerror.png" alt="{Syntax error in the Edit mode}" /></p><p>Qt Creator issues a warning because the variable is not used:</p>
+<p class="centerAlign"><img src="images/qtcreator-semanticerror.png" alt="" /></p><p>A Qt class name has a typo:</p>
+<p class="centerAlign"><img src="images/qtcreator-typo-clang.png" alt="{Annotation tooltip in the Edit mode}" /></p><h2 id="check-qml-or-javascript-syntax">Check QML or JavaScript syntax</h2>
+<p>When writing QML or JavaScript code, the annotations may have error codes listed in <a href="creator-reference-js-and-qml-error-codes.html#javascript-and-qml-error-codes" translate="no">JavaScript and QML Error Codes</a>.</p>
+<p class="centerAlign"><img src="images/qml-syntax-check.png" alt="" /></p><h2 id="manage-messages">Manage messages</h2>
+<p>Use the icons in the tooltip popup to copy the error or warning message to the clipboard, to hide messages of a particular type, or to change the diagnostics settings.</p>
+<p>To modify the colors used for underlining errors and warnings:</p>
+<ol class="1" type="1"><li>Go to <a href="creator-how-to-find-preferences.html" translate="no">Preferences</a> &gt; <b translate="no">Text Editor</b> &gt; <b translate="no">Font &amp; Colors</b> &gt; <b translate="no">Copy</b></li>
+<li>Select new colors for <b translate="no">Error</b> and <b translate="no">Warning</b>.</li>
+</ol>
+<h2 id="set-line-annotation-positions">Set line annotation positions</h2>
+<p>To specify the position where the annotations are displayed, go to <a href="creator-how-to-find-preferences.html" translate="no">Preferences</a> &gt; <b translate="no">Text Editor</b> &gt; <b translate="no">Display</b> &gt; <b translate="no">Line annotations</b>, and then select whether to display the annotations directly next to the code, aligned to the right of the code, or in the right margin. Showing annotations between lines can be useful if there is usually not enough space to display annotations next to the text.</p>
+<p class="centerAlign"><img src="images/qtcreator-options-text-editor-display.png" alt="{Text Editor Display preferences}" /></p><p>If you hide the annotations, you can move the mouse pointer over an icon to view them.</p>
+</div>
+<p><b>See also </b><a href="creator-clang-tools.html" translate="no">Analyze code with Clang-Tidy and Clazy</a> and <a href="creator-reference-js-and-qml-error-codes.html" translate="no">JavaScript and QML Checks</a>.</p>
+<!-- @@@creator-checking-code-syntax.html -->
+<p class="naviNextPrevious footerNavi">
+<a class="prevPage" href="creator-how-tos.html">How To</a>
+</p>
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2024 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

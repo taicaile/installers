@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+<!-- creator-locator.qdoc -->
+  <title>Navigate with locator | Qt Creator Manual</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");
+    // loading style sheet breaks anchors that were jumped to before
+    // so force jumping to anchor again
+    setTimeout(function() {
+        var anchor = location.hash;
+        // need to jump to different anchor first (e.g. none)
+        location.hash = "#";
+        setTimeout(function() {
+            location.hash = anchor;
+        }, 0);
+    }, 0);
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+    <div class="main">
+    <div class="main-rounded">
+        <div class="navigationbar">
+        <ul>
+<li><a href="index.html" translate="no">Qt Creator Manual</a></li>
+<li>Navigate with locator</li>
+<li id="buildversion"><a href="index.html" translate="no">Qt Creator Manual 13.0.1</a></li>
+    </ul>
+    </div>
+</div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+  <link rel="prev" href="creator-how-tos.html" />
+<p class="naviNextPrevious headerNavi">
+<a class="prevPage" href="creator-how-tos.html">How To</a>
+</p>
+<div class="sidebar">
+<div class="toc">
+<h3 id="toc">Contents</h3>
+<ul>
+<li class="level1"><a href="#go-to-the-locator">Go to the locator</a></li>
+<li class="level1"><a href="#use-locator-filters">Use locator filters</a></li>
+<li class="level2"><a href="#use-wildcard-characters-in-search-strings">Use wildcard characters in search strings</a></li>
+<li class="level1"><a href="#omit-default-filters">Omit default filters</a></li>
+<li class="level1"><a href="#locate-lines-and-columns">Locate lines and columns</a></li>
+<li class="level1"><a href="#search-the-web">Search the web</a></li>
+<li class="level1"><a href="#create-files-and-directories-from-the-locator">Create files and directories from the locator</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">Navigate with locator</h1>
+<!-- $$$creator-editor-locator.html-description -->
+<div class="descr" id="details">
+<p>Locate not only files, but any items defined by <i>locator filters</i>, as well as trigger global actions and perform other tasks, such as build projects or run external tools.</p>
+<p class="centerAlign"><img src="images/qtcreator-locator.webp" alt="{List of locator filters}" /></p><h2 id="go-to-the-locator">Go to the locator</h2>
+<p>To activate the locator:</p>
+<ul>
+<li>Press <b>Ctrl+K</b> (<b>Cmd+K</b> on macOS).</li>
+<li>Go to <b translate="no">Tools</b>, and then select <b translate="no">Locate</b>.</li>
+<li>Go to <b translate="no">Edit</b>, and then select <b translate="no">Go to Line</b>.</li>
+<li>Click the line and column indicator on the <a href="creator-coding-navigating.html" translate="no">editor toolbar</a>.</li>
+</ul>
+<p>By default, you can find the locator in the bottom left of the Qt Creator window. To open it as a centered popup, select <img src="images/magnifier.png" alt="" />, and then select <b translate="no">Open as Centered Popup</b>.</p>
+<h2 id="use-locator-filters">Use locator filters</h2>
+<p>The filters that are available depend on the current document and project. If the locator field is empty, a list of available filters is shown. A list of filters is also shown when selecting <img src="images/magnifier.png" alt="" />. For more information about what a particular locator filter does, see the tooltips that appear when you hover over a filter.</p>
+<p>To use a locator filter:</p>
+<ul>
+<li>Type the locator filter prefix followed by <b>Space</b>. The prefix is usually short, from one to three characters. Then type the search string (for example, a filename or class name) or the command to execute.</li>
+<li>Select a locator filter in the filter list to use it. Press the up and down arrow keys or press <b>Ctrl+P</b> and <b>Ctrl+N</b> to move up and down the list, and then press <b>Enter</b> to use the selected filter.</li>
+</ul>
+<p>As you type a search string, the locator shows the occurrences of that string regardless of where in the name of an object it appears. Some locator filters, such as colon, <code translate="no">m</code>, and <code translate="no">t</code>, support <i>fuzzy</i> matching, which means that you can enter the uppercase letters to locate a symbol when using camel case or the letters after the underscore when using snake case.</p>
+<h3 id="use-wildcard-characters-in-search-strings">Use wildcard characters in search strings</h3>
+<p>To narrow down the search results, use the following wildcard characters:</p>
+<ul>
+<li>To match any number of any or no characters, enter <code translate="no">*</code>.</li>
+<li>To match a single instance of any character, enter <code translate="no">?</code>.</li>
+</ul>
+<h2 id="omit-default-filters">Omit default filters</h2>
+<p>By default, you can use the following preset locator filters without a prefix:</p>
+<ul>
+<li>Going to a line and column in the current file (<code translate="no">l</code>).</li>
+<li>Going to an open file (<code translate="no">o</code>).</li>
+<li>Going to a file in any open project (<code translate="no">a</code>).</li>
+</ul>
+<h2 id="locate-lines-and-columns">Locate lines and columns</h2>
+<p>To move directly to a particular line and column in the document when you open the document, append the line and column number to the file name in the locator, separated by plus signs (+) or colons (:).</p>
+<p>For example, to open <i>HelloWorld.qml</i> to line 41 and column 2, enter:</p>
+<pre class="cpp" translate="no">
+ HelloWorld<span class="operator">.</span>qml:<span class="number">41</span>:<span class="number">2</span>
+</pre>
+<h2 id="search-the-web">Search the web</h2>
+<p>Use the <b translate="no">Web Search (r)</b> locator filter to perform web searches.</p>
+<p>URLs and search commands for Bing, Google, Yahoo! Search, cplusplus.com, and Wikipedia are configured by default. Add search commands for other web search engines in the locator preferences.</p>
+<h2 id="create-files-and-directories-from-the-locator">Create files and directories from the locator</h2>
+<p>To create a new file and open it in the editor:</p>
+<ol class="1" type="1"><li>Type <code translate="no">f</code> followed by <b>Space</b>, followed by path and file name</li>
+<li>Press <b>Enter</b> or select <b translate="no">Create and Open File</b>.</li>
+</ol>
+<p>To create a directory, select <b translate="no">Create Directory</b>.</p>
+</div>
+<p><b>See also </b><a href="creator-how-tos.html#search" translate="no">How To: Search</a>, <a href="creator-project-managing-sessions.html" translate="no">Manage sessions</a>, <a href="creator-how-to-perform-calculations.html" translate="no">Perform calculations</a>, and <a href="creator-preferences-locator.html" translate="no">Locator</a>.</p>
+<!-- @@@creator-editor-locator.html -->
+<p class="naviNextPrevious footerNavi">
+<a class="prevPage" href="creator-how-tos.html">How To</a>
+</p>
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2024 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

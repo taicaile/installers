@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+<!-- creator-mcu-dev.qdoc -->
+  <meta name="description" content="Connect MCU devices to the computer to run and debug applications on them.">
+  <title>Developing for MCUs | Qt Creator Manual</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");
+    // loading style sheet breaks anchors that were jumped to before
+    // so force jumping to anchor again
+    setTimeout(function() {
+        var anchor = location.hash;
+        // need to jump to different anchor first (e.g. none)
+        location.hash = "#";
+        setTimeout(function() {
+            location.hash = anchor;
+        }, 0);
+    }, 0);
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+    <div class="main">
+    <div class="main-rounded">
+        <div class="navigationbar">
+        <ul>
+<li><a href="index.html" translate="no">Qt Creator Manual</a></li>
+<li>Developing for MCUs</li>
+<li id="buildversion"><a href="index.html" translate="no">Qt Creator Manual 13.0.1</a></li>
+    </ul>
+    </div>
+</div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+  <link rel="prev" href="creator-reference.html" />
+<p class="naviNextPrevious headerNavi">
+<a class="prevPage" href="creator-reference.html">Reference</a>
+</p>
+<div class="sidebar">
+<div class="toc">
+<h3 id="toc">Contents</h3>
+<ul>
+<li class="level1"><a href="#requirements">Requirements</a></li>
+<li class="level1"><a href="#qt-for-mcus-sdks">Qt for MCUs SDKs</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">Developing for MCUs</h1>
+<!-- $$$creator-developing-mcu.html-description -->
+<div class="descr" id="details">
+<div class="admonition note">
+<p><b>Note: </b>Enable the McuSupport plugin to develop for MCUs.</p>
+</div>
+<p>Use subsets of QML and Qt Quick Controls to create user interfaces for devices that are powered by microcontroller units (MCU). Qt for MCUs has a new graphics rendering engine with a low memory footprint and optimization for MCUs and other resource-constrained devices.</p>
+<p>Connect MCU boards to a computer to build applications for them. Deploy the applications on MCUs to run and debug them.</p>
+<p>For a list of Qt for MCUs reference implementations, see <a href="https://doc.qt.io/QtForMCUs/qtul-supported-platforms.html" translate="no">Qt for MCUs - Supported Target Platforms</a>.</p>
+<h2 id="requirements">Requirements</h2>
+<p>To use Qt Creator to develop QML applications for MCUs, you need the following:</p>
+<ul>
+<li>Qt for MCUs SDK (only available for Windows and Linux)</li>
+<li><a href="https://doc.qt.io/QtForMCUs/qtul-prerequisites.html" translate="no">Suitable toolchain</a></li>
+</ul>
+<p>The toolchains are available for cross-compilation on Microsoft Windows, Linux, and macOS. However, the Qt for Qt for MCUs SDK is currently only available for Windows and Linux.</p>
+<p>The hardware-specific requirements vary depending on the hardware platform you are developing for. For more information see:</p>
+<ul>
+<li><a href="https://doc.qt.io/QtForMCUs/qtul-getting-started-on-nxp.html" translate="no">Getting Started on NXP</a></li>
+<li><a href="https://doc.qt.io/QtForMCUs/qtul-getting-started-on-stm.html" translate="no">Getting Started on STM</a></li>
+<li><a href="https://doc.qt.io/QtForMCUs/qtul-getting-started-renesas.html" translate="no">Getting Started on Renesas</a></li>
+<li><a href="https://doc.qt.io/QtForMCUs/qtul-getting-started-on-infineon.html" translate="no">Getting Started on Infineon</a></li>
+</ul>
+<h2 id="qt-for-mcus-sdks">Qt for MCUs SDKs</h2>
+<p>While you can use the latest Qt Creator version to develop with any Qt for MCUs SDK, the following combinations have been tested to work well.</p>
+<div class="table"><table class="generic">
+ <thead><tr class="qt-style"><th >Qt Creator version</th><th >Qt for MCUs SDK version</th></tr></thead>
+<tr valign="top" class="odd"><td >12.0.2 or later</td><td >2.7 or later</td></tr>
+<tr valign="top" class="even"><td >11.0.3</td><td >2.6</td></tr>
+<tr valign="top" class="odd"><td >10.0.2</td><td >2.5</td></tr>
+<tr valign="top" class="even"><td >10.0.0</td><td >2.4</td></tr>
+<tr valign="top" class="odd"><td >9.0.0</td><td >2.3</td></tr>
+<tr valign="top" class="even"><td >7.0.0 up to 8.0.2</td><td >2.0 up to 2.2</td></tr>
+<tr valign="top" class="odd"><td >6.0.x</td><td >1.3 up to 2.2</td></tr>
+<tr valign="top" class="even"><td >4.12.4 up to 5.0.3</td><td >1.3 up to 1.9</td></tr>
+<tr valign="top" class="odd"><td >4.12.2 or 4.12.3</td><td >1.2</td></tr>
+<tr valign="top" class="even"><td >4.12.0 or 4.12.1</td><td >1.1</td></tr>
+<tr valign="top" class="odd"><td >4.11.x</td><td >1.0</td></tr>
+</table></div>
+</div>
+<p><b>See also </b><a href="creator-how-to-enable-plugins.html" translate="no">Enable and disable plugins</a> and <a href="creator-how-tos.html#mcus" translate="no">How To: Develop for MCUs</a>.</p>
+<!-- @@@creator-developing-mcu.html -->
+<p class="naviNextPrevious footerNavi">
+<a class="prevPage" href="creator-reference.html">Reference</a>
+</p>
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2024 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+<!-- creator-code-completion.qdoc -->
+  <title>Complete code | Qt Creator Manual</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");
+    // loading style sheet breaks anchors that were jumped to before
+    // so force jumping to anchor again
+    setTimeout(function() {
+        var anchor = location.hash;
+        // need to jump to different anchor first (e.g. none)
+        location.hash = "#";
+        setTimeout(function() {
+            location.hash = anchor;
+        }, 0);
+    }, 0);
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+    <div class="main">
+    <div class="main-rounded">
+        <div class="navigationbar">
+        <ul>
+<li><a href="index.html" translate="no">Qt Creator Manual</a></li>
+<li>Complete code</li>
+<li id="buildversion"><a href="index.html" translate="no">Qt Creator Manual 13.0.1</a></li>
+    </ul>
+    </div>
+</div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+  <link rel="prev" href="creator-how-tos.html" />
+<p class="naviNextPrevious headerNavi">
+<a class="prevPage" href="creator-how-tos.html">How To</a>
+</p>
+<div class="sidebar">
+<div class="toc">
+<h3 id="toc">Contents</h3>
+<ul>
+<li class="level1"><a href="#summary-of-available-types">Summary of Available Types</a></li>
+<li class="level1"><a href="#complete-code-snippets">Complete code snippets</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">Complete code</h1>
+<!-- $$$creator-completing-code.html-description -->
+<div class="descr" id="details">
+<p>As you write code, Qt Creator suggests properties, IDs, and code snippets to complete the code. It shows a list of suggestions to the statement currently under your cursor.</p>
+<p>Press <b>Tab</b> or <b>Enter</b> to accept the selected suggestion and complete the code.</p>
+<p class="centerAlign"><img src="images/qtcreator-codecompletion.png" alt="" /></p><p class="figCaption">Suggestions for completing C++ code.</p>
+<p class="centerAlign"><img src="images/qml-code-completion.png" alt="" /></p><p class="figCaption">Suggestions for completing QML code.</p>
+<p>To open the list of suggestions at any time, press <b>Ctrl+Space</b>. If only one option is available, Qt Creator inserts it automatically.</p>
+<h2 id="summary-of-available-types">Summary of Available Types</h2>
+<p>The following table lists available types for code completion and icon used for each.</p>
+<div class="table"><table class="generic">
+ <thead><tr class="qt-style"><th >Icon</th><th >Description</th></tr></thead>
+<tr valign="top" class="odd"><td ><img src="images/class.png" alt="" /></td><td >A class</td></tr>
+<tr valign="top" class="even"><td ><img src="images/enum.png" alt="" /></td><td >An enum</td></tr>
+<tr valign="top" class="odd"><td ><img src="images/enumerator.png" alt="" /></td><td >An enumerator (value of an enum)</td></tr>
+<tr valign="top" class="even"><td ><img src="images/func.png" alt="" /></td><td >A function</td></tr>
+<tr valign="top" class="odd"><td ><img src="images/func_priv.png" alt="" /></td><td >A private function</td></tr>
+<tr valign="top" class="even"><td ><img src="images/func_prot.png" alt="" /></td><td >A protected function</td></tr>
+<tr valign="top" class="odd"><td ><img src="images/var.png" alt="" /></td><td >A variable</td></tr>
+<tr valign="top" class="even"><td ><img src="images/var_priv.png" alt="" /></td><td >A private variable</td></tr>
+<tr valign="top" class="odd"><td ><img src="images/var_prot.png" alt="" /></td><td >A protected variable</td></tr>
+<tr valign="top" class="even"><td ><img src="images/signal.png" alt="" /></td><td >A signal</td></tr>
+<tr valign="top" class="odd"><td ><img src="images/slot.png" alt="" /></td><td >A slot</td></tr>
+<tr valign="top" class="even"><td ><img src="images/slot_priv.png" alt="" /></td><td >A private slot</td></tr>
+<tr valign="top" class="odd"><td ><img src="images/slot_prot.png" alt="" /></td><td >A protected slot</td></tr>
+<tr valign="top" class="even"><td ><img src="images/keyword.png" alt="" /></td><td >A C++ keyword</td></tr>
+<tr valign="top" class="odd"><td ><img src="images/snippet.png" alt="" /></td><td >A C++ code snippet</td></tr>
+<tr valign="top" class="even"><td ><img src="images/element.png" alt="" /></td><td >A QML type</td></tr>
+<tr valign="top" class="odd"><td ><img src="images/qmlsnippet.png" alt="" /></td><td >A QML code snippet</td></tr>
+<tr valign="top" class="even"><td ><img src="images/macro.png" alt="" /></td><td >A macro</td></tr>
+<tr valign="top" class="odd"><td ><img src="images/namespace.png" alt="" /></td><td >A namespace</td></tr>
+</table></div>
+<h2 id="complete-code-snippets">Complete code snippets</h2>
+<p>Code snippets can consist of multiple variables that you specify values for. Select an item in the list and press <b>Tab</b> or <b>Enter</b> to complete the code. Press <b>Tab</b> to move between the variables and specify values for them. When you specify a value for a variable, all instances of the variable within the snippet are renamed.</p>
+<p class="centerAlign"><img src="images/qmldesigner-code-completion.png" alt="&quot;Completing C++ code&quot;" /></p><p class="figCaption">C++ code snippet.</p>
+<p class="centerAlign"><img src="images/qml-code-snippet.png" alt="" /></p><p class="figCaption">QML code snippet.</p>
+</div>
+<p><b>See also </b><a href="creator-how-to-complete-cmake-code.html" translate="no">Complete CMake code</a>, <a href="creator-preferences-nim.html" translate="no">Nim</a>, <a href="creator-how-to-add-code-snippets.html" translate="no">Add code snippets to the auto-complete menu</a>, <a href="creator-preferences-text-editor-completion.html" translate="no">Completion</a>, and <a href="creator-preferences-text-editor-shippets.html" translate="no">Snippets</a>.</p>
+<!-- @@@creator-completing-code.html -->
+<p class="naviNextPrevious footerNavi">
+<a class="prevPage" href="creator-how-tos.html">How To</a>
+</p>
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2024 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

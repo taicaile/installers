@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+<!-- creator-mcu-dev.qdoc -->
+  <title>Connect MCU devices | Qt Creator Manual</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");
+    // loading style sheet breaks anchors that were jumped to before
+    // so force jumping to anchor again
+    setTimeout(function() {
+        var anchor = location.hash;
+        // need to jump to different anchor first (e.g. none)
+        location.hash = "#";
+        setTimeout(function() {
+            location.hash = anchor;
+        }, 0);
+    }, 0);
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+    <div class="main">
+    <div class="main-rounded">
+        <div class="navigationbar">
+        <ul>
+<li><a href="index.html" translate="no">Qt Creator Manual</a></li>
+<li>Connect MCU devices</li>
+<li id="buildversion"><a href="index.html" translate="no">Qt Creator Manual 13.0.1</a></li>
+    </ul>
+    </div>
+</div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+  <link rel="prev" href="creator-how-tos.html" />
+<p class="naviNextPrevious headerNavi">
+<a class="prevPage" href="creator-how-tos.html">How To</a>
+</p>
+<div class="sidebar">
+<div class="toc">
+<h3 id="toc">Contents</h3>
+<ul>
+<li class="level1"><a href="#add-mcu-devices">Add MCU devices</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">Connect MCU devices</h1>
+<!-- $$$creator-how-to-create-mcu-kits.html-description -->
+<div class="descr" id="details">
+<div class="admonition note">
+<p><b>Note: </b>Enable the McuSupport plugin to develop for MCUs.</p>
+</div>
+<p>To configure a connection between Qt Creator and your MCU board:</p>
+<ol class="1" type="1"><li>Go to <a href="creator-how-to-find-preferences.html" translate="no">Preferences</a> &gt; <b translate="no">Devices</b> &gt; <b translate="no">MCU</b>.</li>
+<li>In <b translate="no">Qt for MCUs SDK</b>, specify the path to the directory where you installed Qt for MCUs SDK.<p class="centerAlign"><img src="images/qtcreator-preferences-mcu.webp" alt="{MCU preferences}" /></p></li>
+<li>In <b translate="no">Targets supported by the Qt for MCUs SDK</b>, select your MCU board.</li>
+<li>In <b translate="no">Requirements</b>, check that the platform-specific requirements are met. This depends on the target:<ul>
+<li>For STM32 targets:<ul>
+<li>The <b translate="no">GNU ARM Embedded Toolchain</b> or <b translate="no">IAR ARM Compiler</b> path.</li>
+<li>The <b translate="no">STM32CubeProgrammer</b> install path.</li>
+<li>The <b translate="no">Board SDK</b> for the chosen target.</li>
+<li>The <b translate="no">FreeRTOS Sources</b> for the chosen target.</li>
+</ul>
+</li>
+<li>For NXP targets:<ul>
+<li>The <b translate="no">GNU ARM Embedded Toolchain</b> or <b translate="no">IAR ARM Compiler</b> path.</li>
+<li>The <b translate="no">MCUXpresso IDE</b> install path.</li>
+<li>The <b translate="no">Board SDK</b> for the chosen target.</li>
+<li>The <b translate="no">FreeRTOS Sources</b> for the chosen target.</li>
+</ul>
+</li>
+<li>For Renesas targets:<ul>
+<li>The <b translate="no">Green Hills Compiler</b> path.</li>
+<li>The <b translate="no">Renesas Graphics Library</b> path.</li>
+</ul>
+</li>
+<li>For Infineon targets:<ul>
+<li>The <b translate="no">Green Hills Compiler for ARM</b> path.</li>
+<li>The <b translate="no">Graphics Driver for Traveo II Cluster Series</b> path.</li>
+<li>The <b translate="no">Infineon Auto Flash Utility</b> path.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Select <b translate="no">Automatically create kits for all available targets on start</b> to create kits automatically the next time Qt Creator starts.<div class="admonition note">
+<p><b>Note: </b>Select <b translate="no">Create Kit</b> to manually create kits for the target.</p>
+</div>
+</li>
+<li>Select <b translate="no">Apply</b> to save the preferences.</li>
+</ol>
+<h2 id="add-mcu-devices">Add MCU devices</h2>
+<p>Qt Creator automatically adds a default MCU device when you select <b translate="no">Apply</b> in the <b translate="no">MCU</b> tab after configuring the MCU tool chain.</p>
+<p class="centerAlign"><img src="images/qtcreator-mcu-device.png" alt="{MCU devices}" /></p><p>To add MCU devices, select <a href="creator-how-to-find-preferences.html" translate="no">Preferences</a> &gt; <b translate="no">Devices</b> &gt; <b translate="no">Add</b> &gt; <b translate="no">MCU Device</b> &gt; <b translate="no">Start Wizard</b>:</p>
+<ol class="1" type="1"><li>In <b translate="no">Name</b>, give the device a name.</li>
+<li>In <b translate="no">Type</b>, select the board type.</li>
+<li>Select <b translate="no">Apply</b> to add the device.</li>
+</ol>
+</div>
+<p><b>See also </b><a href="creator-how-to-enable-plugins.html" translate="no">Enable and disable plugins</a>, <a href="creator-how-tos.html#mcus" translate="no">How To: Develop for MCUs</a>, and <a href="creator-developing-mcu.html" translate="no">Developing for MCUs</a>.</p>
+<!-- @@@creator-how-to-create-mcu-kits.html -->
+<p class="naviNextPrevious footerNavi">
+<a class="prevPage" href="creator-how-tos.html">How To</a>
+</p>
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2024 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

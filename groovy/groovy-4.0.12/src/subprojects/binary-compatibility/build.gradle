@@ -1,0 +1,68 @@
+/*
+ *  Licensed to the Apache Software Foundation (ASF) under one
+ *  or more contributor license agreements.  See the NOTICE file
+ *  distributed with this work for additional information
+ *  regarding copyright ownership.  The ASF licenses this file
+ *  to you under the Apache License, Version 2.0 (the
+ *  "License"); you may not use this file except in compliance
+ *  with the License.  You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing,
+ *  software distributed under the License is distributed on an
+ *  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ *  KIND, either express or implied.  See the License for the
+ *  specific language governing permissions and limitations
+ *  under the License.
+ */
+import me.champeau.gradle.japicmp.JapicmpTask
+
+plugins {
+    id "me.champeau.gradle.japicmp" version "0.4.1"
+    id 'org.apache.groovy-aggregating-project'
+    id 'org.apache.groovy-common'
+}
+
+def checkBinaryCompatibility = tasks.register("checkBinaryCompatibility") {
+    description = "Generates binary compatibility reports"
+}
+
+tasks.register("check") {
+    dependsOn checkBinaryCompatibility
+}
+
+def thisProject = project
+
+rootProject.allprojects {
+    pluginManager.withPlugin('org.apache.groovy-base') {
+        if (groovyLibrary.checkBinaryCompatibility.get()) {
+            def taskName = "japicmp${project.name.split('-').collect{ it.capitalize() }.join()}"
+            def baselineCoords = "org.codehaus.groovy:${project.name}:${sharedConfiguration.binaryCompatibilityBaselineVersion.get()}@jar"
+            def baseline = thisProject.configurations.create("${taskName}Baseline") {
+                dependencies.add(thisProject.dependencies.create(baselineCoords))
+            }
+            baseline.resolutionStrategy.disableDependencyVerification()
+            def singleProjectCheck = thisProject.tasks.register(taskName, JapicmpTask) {
+                oldArchives.from(baseline)
+                newArchives.from(files(tasks.named("jarjar")))
+                oldClasspath.from(files())
+                newClasspath.from(files())
+                accessModifier = "protected"
+                onlyModified = true
+                failOnModification = false
+                ignoreMissingClasses = true
+                classExcludes = ["**_closure**", "org.codehaus.groovy.runtime.dgm\$**"]
+                packageExcludes = ["**internal**", "groovyjarjar**"]
+                htmlOutputFile = file("${thisProject.buildDir}/reports/${taskName}.html")
+            }
+            checkBinaryCompatibility.configure {
+                dependsOn(singleProjectCheck)
+            }
+        }
+    }
+}
+
+sonarqube {
+    skipProject = true
+}

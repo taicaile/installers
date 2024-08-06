@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+<!-- creator-projects-building.qdoc -->
+  <title>Build for many platforms | Qt Creator Manual</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");
+    // loading style sheet breaks anchors that were jumped to before
+    // so force jumping to anchor again
+    setTimeout(function() {
+        var anchor = location.hash;
+        // need to jump to different anchor first (e.g. none)
+        location.hash = "#";
+        setTimeout(function() {
+            location.hash = anchor;
+        }, 0);
+    }, 0);
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+    <div class="main">
+    <div class="main-rounded">
+        <div class="navigationbar">
+        <ul>
+<li><a href="index.html" translate="no">Qt Creator Manual</a></li>
+<li>Build for many platforms</li>
+<li id="buildversion"><a href="index.html" translate="no">Qt Creator Manual 13.0.1</a></li>
+    </ul>
+    </div>
+</div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+  <link rel="prev" href="creator-how-tos.html" />
+<p class="naviNextPrevious headerNavi">
+<a class="prevPage" href="creator-how-tos.html">How To</a>
+</p>
+<div class="sidebar">
+<div class="toc">
+<h3 id="toc">Contents</h3>
+<ul>
+<li class="level1"><a href="#build-an-application">Build an application</a></li>
+<li class="level1"><a href="#cancel-builds">Cancel builds</a></li>
+<li class="level1"><a href="#build-projects-in-several-configurations">Build projects in several configurations</a></li>
+<li class="level1"><a href="#build-files-or-subprojects">Build files or subprojects</a></li>
+<li class="level1"><a href="#remove-build-artifacts">Remove build artifacts</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">Build for many platforms</h1>
+<!-- $$$creator-building-targets.html-description -->
+<div class="descr" id="details">
+<p>You can build applications for many target platforms, or using different compilers, debuggers or Qt versions. <a href="creator-glossary.html#glossary-buildandrun-kit" translate="no">Kits</a> define the tools, <a href="creator-glossary.html#glossary-device" translate="no">device</a> type, and other settings to use.</p>
+<p>By default, when you run the application, you automatically build and deploy it first. However, you can also perform each operation separately.</p>
+<p>To check that the application code can be compiled and linked for a device, build the project. You can see build errors and warnings in <a href="creator-reference-issues-view.html" translate="no">Issues</a> and more details in <a href="creator-reference-compile-output-view.html" translate="no">Compile Output</a>.</p>
+<h2 id="build-an-application">Build an application</h2>
+<p>To build an application:</p>
+<ol class="1" type="1"><li>Select the <b translate="no">Build and Run Kit Selector</b> icon or go to <b translate="no">Build</b> &gt; <b translate="no">Open Build and Run Kit Selector</b> to select the build and run <a href="creator-glossary.html#glossary-buildandrun-kit" translate="no">kit</a> or an <a href="creator-developing-android.html#managing-android-virtual-devices-avd" translate="no">Android device</a>.<p class="centerAlign"><img src="images/qtcreator-kit-selector.webp" alt="{Kit selector}" /></p></li>
+<li>Select <b translate="no">Build</b> &gt; <b translate="no">Build Project</b> or press <b>Ctrl+B</b>.<p>Or, select <img src="images/run_small.png" alt="" /> (<b translate="no">Run</b>) to deploy and run the application after building it.</p>
+</li>
+</ol>
+<h2 id="cancel-builds">Cancel builds</h2>
+<p>While the application is being built, the <img src="images/build.png" alt="" /> (<b translate="no">Build</b>) button changes to a <img src="images/cancel-build.png" alt="" /> (<b translate="no">Cancel Build</b>) button. To cancel the build:</p>
+<ul>
+<li>Select <img src="images/cancel-build.png" alt="" />.</li>
+<li>Press <b>Alt+Backspace</b>.</li>
+<li>Go to <b translate="no">Build</b> &gt; <b translate="no">Cancel Build</b>.</li>
+</ul>
+<p>If you selected a build command and now would also like to run the application, select the <b translate="no">Run</b> button to schedule running the project after building is done.</p>
+<h2 id="build-projects-in-several-configurations">Build projects in several configurations</h2>
+<p>Go to <b translate="no">Build</b> to build, rebuild, and clean projects.</p>
+<p>To build the current project in all its configurations, that is, for all build configurations in all enabled kits, select <b translate="no">Build Project for All Configurations</b>.</p>
+<p>To build all open projects, select <b translate="no">Build All Projects</b>. If building one application fails, Qt Creator displays an error message and continues building the other applications.</p>
+<p>To build all open projects in all their configurations, select <b translate="no">Build All Projects for All Configurations</b>.</p>
+<h2 id="build-files-or-subprojects">Build files or subprojects</h2>
+<p>To quickly check the compile output for changes that you made in one file or subproject, use the <b translate="no">Build</b> menu commands to build it. The available build menu commands depend on the build system you selected for the project: CMake, qmake, or Qbs.</p>
+<p>Select <b translate="no">Build for Run Configuration</b> to build the executable that corresponds to the selected run configuration. You can also use the <code translate="no">cm</code> filter in the <a href="creator-editor-locator.html" translate="no">locator</a>.</p>
+<h2 id="remove-build-artifacts">Remove build artifacts</h2>
+<p>To remove all build artifacts, go to <b translate="no">Build</b> &gt; <b translate="no">Clean</b>.</p>
+<p>To clean the build directory and then build the project, select <b translate="no">Rebuild</b>.</p>
+<p>To build and clean projects without dependencies, select the <b translate="no">Build Without Dependencies</b>, <b translate="no">Rebuild Without Dependencies</b>, and <b translate="no">Clean Without Dependencies</b> options in the context menu in the <b translate="no">Projects</b> view.</p>
+</div>
+<p><b>See also </b><a href="creator-build-settings.html" translate="no">Configure projects for building</a>, <a href="creator-how-tos.html#build-and-run" translate="no">How To: Build and Run</a>, <a href="creator-adding-docker-devices.html" translate="no">Adding Docker Devices</a>, and <a href="creator-configuring-projects.html#specifying-build-settings" translate="no">Specifying Build Settings</a>.</p>
+<!-- @@@creator-building-targets.html -->
+<p class="naviNextPrevious footerNavi">
+<a class="prevPage" href="creator-how-tos.html">How To</a>
+</p>
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2024 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

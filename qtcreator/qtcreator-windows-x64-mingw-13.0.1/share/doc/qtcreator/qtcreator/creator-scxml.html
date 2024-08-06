@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+<!-- creator-scxml.qdoc -->
+  <meta name="description" content="Edit state chart (.scxml) files.">
+  <title>SCXML Editor | Qt Creator Manual</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");
+    // loading style sheet breaks anchors that were jumped to before
+    // so force jumping to anchor again
+    setTimeout(function() {
+        var anchor = location.hash;
+        // need to jump to different anchor first (e.g. none)
+        location.hash = "#";
+        setTimeout(function() {
+            location.hash = anchor;
+        }, 0);
+    }, 0);
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+    <div class="main">
+    <div class="main-rounded">
+        <div class="navigationbar">
+        <ul>
+<li><a href="index.html" translate="no">Qt Creator Manual</a></li>
+<li>SCXML Editor</li>
+<li id="buildversion"><a href="index.html" translate="no">Qt Creator Manual 13.0.1</a></li>
+    </ul>
+    </div>
+</div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+  <link rel="prev" href="creator-reference.html" />
+<p class="naviNextPrevious headerNavi">
+<a class="prevPage" href="creator-reference.html">Reference</a>
+</p>
+<div class="sidebar">
+<div class="toc">
+<h3 id="toc">Contents</h3>
+<ul>
+<li class="level1"><a href="#navigating-state-charts">Navigating State Charts</a></li>
+<li class="level1"><a href="#states">States</a></li>
+<li class="level1"><a href="#adding-states">Adding States</a></li>
+<li class="level1"><a href="#aligning-and-editing-states">Aligning and Editing States</a></li>
+<li class="level1"><a href="#viewing-state-tree-structure">Viewing State Tree Structure</a></li>
+<li class="level1"><a href="#managing-transitions">Managing Transitions</a></li>
+<li class="level1"><a href="#adding-executable-content">Adding Executable Content</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">SCXML Editor</h1>
+<!-- $$$creator-scxml.html-description -->
+<div class="descr" id="details">
+<p>State charts are a graphical way of modeling how a system reacts to stimuli. They define the <i>states</i> that the system can be in, and how the system can move from one state to another (<i>transitions</i> between states). The behavior of event-driven systems (such as Qt applications) often depends not only on the last or current <i>event</i>, but also on earlier events. With state charts, you can easily share this information.</p>
+<p>With the Qt Creator file wizard, you can add <a href="https://www.w3.org/TR/scxml/" translate="no">State Chart XML (SCXML)</a> files with boilerplate code to projects. Edit the state charts with the SCXML editor to add states and transitions to the files. Then, use the classes in the Qt SCXML module to embed the state machines created from the files in Qt applications.</p>
+<p>When you open an .scxml file, it opens in the SCXML editor:</p>
+<p class="centerAlign"><img src="images/qtcreator-scxml-editor.webp" alt="{SCXML editor}" /></p><p>Drag states from the <b translate="no">Common States</b> view (1) to the state editor (2). Select a state in the state editor and use the tool buttons (3) to create a transition (4) and its <i>target state</i>.</p>
+<p>View the state chart structure in the <b translate="no">Structure</b> view (5) and specify attributes for the selected state or transition in the <b translate="no">Attributes</b> view (6).</p>
+<h2 id="navigating-state-charts">Navigating State Charts</h2>
+<p>Use the toolbar buttons to execute functions such as editing, zooming, magnifying, navigating, and panning state charts, as well as taking screenshots and viewing statistics.</p>
+<div class="table"><table class="generic">
+ <thead><tr class="qt-style"><th >Button</th><th >Name</th><th >Description</th></tr></thead>
+<tr valign="top" class="odd"><td ><img src="images/snapshot.png" alt="" /></td><td ><b translate="no">Save Screenshot</b></td><td >Saves the currently visible part of the state chart as an image.</td></tr>
+<tr valign="top" class="even"><td ><img src="images/icon-export-canvas.png" alt="" /></td><td ><b translate="no">Export Canvas to Image</b></td><td >Saves the whole state chart as an image.</td></tr>
+<tr valign="top" class="odd"><td ><img src="images/zoom-in.png" alt="" /><p><img src="images/zoom-out.png" alt="" /></p>
+</td><td ><b translate="no">Zoom In</b><p><b translate="no">Zoom Out</b></p>
+</td><td >Zooms into or out of the whole state chart in the state editor.<p>You can also press <b>Ctrl</b> and use the mouse wheel.</p>
+</td></tr>
+<tr valign="top" class="even"><td ><img src="images/pan.png" alt="" /></td><td ><b translate="no">Panning</b></td><td >Pans the state chart. To increase the pace of panning, press down the <b>Shift</b> key.</td></tr>
+<tr valign="top" class="odd"><td ><img src="images/fittoview.png" alt="" /></td><td ><b translate="no">Fit to View</b></td><td >Makes the whole state chart visible in the state editor at a time.</td></tr>
+<tr valign="top" class="even"><td ><img src="images/zoom.png" alt="" /></td><td ><b translate="no">Magnifier Tool</b></td><td >Zooms into a part of the state chart. To move the magnifier tool faster, press down the <b>Alt</b> key.</td></tr>
+<tr valign="top" class="odd"><td ><img src="images/navigator.png" alt="" /></td><td ><b translate="no">Navigator</b></td><td >Shows a particular part of a large state chart in the state editor. Move the navigator frame on the part you want to view.</td></tr>
+<tr valign="top" class="even"><td ><img src="images/statistics.png" alt="" /></td><td ><b translate="no">View Statistics</b></td><td >Shows statistics about the numbers of states and transitions in the state chart.</td></tr>
+</table></div>
+<p>To search in the state chart, select <b translate="no">Search</b> and start typing in the <b translate="no">Filter</b> field. The search checks the whole SCXML tree for attributes that match the search criteria.</p>
+<h2 id="states">States</h2>
+<p>When the state machine enters a state in response to an event, the state that it entered becomes the <i>active state</i>.</p>
+<p>State charts are hierarchical, and therefore you can nest states inside other states to create compound states.</p>
+<p>You can create the following types of states:</p>
+<div class="table"><table class="generic">
+ <thead><tr class="qt-style"><th >Button</th><th >Name</th><th >Description</th></tr></thead>
+<tr valign="top" class="odd"><td ><img src="images/recordfill.png" alt="" /></td><td ><b translate="no">Initial</b></td><td >The state that the state machine enters when it starts.</td></tr>
+<tr valign="top" class="even"><td ><img src="images/state.png" alt="" /></td><td ><b translate="no">State</b></td><td >The basic state.</td></tr>
+<tr valign="top" class="odd"><td ><img src="images/parallel.png" alt="" /></td><td ><b translate="no">Parallel</b></td><td >Has child states that execute in parallel and are all active simultaneously. Each child state processes events independently, and the events may trigger different transitions for each child.</td></tr>
+<tr valign="top" class="even"><td ><img src="images/final.png" alt="" /></td><td ><b translate="no">Final</b></td><td >Lets a state machine finish. When the state machine enters a top-level final state, it emits the finished signal and halts. You can create final states in compound states to hide the internal details of a compound state. The outside world can only enter the state and get a notification when the state has finished. A parallel state finishes when all its child states reach final states.</td></tr>
+<tr valign="top" class="odd"><td ><img src="images/history.png" alt="" /></td><td ><b translate="no">History</b></td><td >A pseudo-state that represents the child state the parent state was in the last time the parent state was exited.<p>Create a history state as a child of the state for which you want to record the current child state. When the state machine detects the presence of such a state at runtime, it automatically records the current (real) child state when the parent state is exited. A transition to the history state is in fact a transition to the child state that the state machine previously saved. The state machine automatically forwards the transition to the real child state.</p>
+</td></tr>
+</table></div>
+<p>To create transitions between states, select <img src="images/transition.png" alt="" />.</p>
+<h2 id="adding-states">Adding States</h2>
+<p>You can add new states to the state chart in the following ways:</p>
+<ul>
+<li>Drag states from the <b translate="no">Common States</b> view to the state editor.</li>
+<li>Select a state in the state editor, and then select the <b translate="no">State</b> tool button to create a transition and its target state.</li>
+<li>Copy and paste states within the SCXML editor or between the SCXML editor and the <b translate="no">Edit</b> mode.</li>
+</ul>
+<p>Drag states on top of other states to create compound states. You can also drag child states out of their parent state. To move child states within their parent, press down the <b>Ctrl</b> key while dragging them.</p>
+<h2 id="aligning-and-editing-states">Aligning and Editing States</h2>
+<p>Use the toolbar buttons to align states in the state editor, to adjust their size, color, and fonts, and to change the default color scheme.</p>
+<p class="centerAlign"><img src="images/qtcreator-scxml-editor-state-toolbar.webp" alt="{Buttons for editing states}" /></p><p>Overlapping states are marked in red color.</p>
+<h2 id="viewing-state-tree-structure">Viewing State Tree Structure</h2>
+<p>To expand or collapse the state tree structure in the <b translate="no">Structure</b> view, double-click a state.</p>
+<p>To view a child state of a nested state in more detail in the state editor, select <b translate="no">Zoom to State</b>.</p>
+<p>To ensure that the state ids are unique within a compound state machine, select <img src="images/namespace.png" alt="" /> (<b translate="no">Toggle Full Namespace</b>). The name of the parent state is added to the names of the child states, separated by two colons (::). For example:</p>
+<pre class="cpp plain" translate="no">
+ &lt;state id=&quot;broken&quot;&gt;
+ ...
+     &lt;state id=&quot;broken::blinking&quot;&gt;
+     ...
+     &lt;/state&gt;
+     &lt;state id=&quot;broken::unblinking&quot;&gt;
+     ...
+     &lt;/state&gt;
+ &lt;/state&gt;
+</pre>
+<h2 id="managing-transitions">Managing Transitions</h2>
+<p>Transitions define how a state reacts to <i>events</i> that either the state machine or external entities generate. When events occur, the state machine checks for a matching transition in the active state and moves to its target state.</p>
+<p>To create a transition from the selected state to a new state, drag and release the mouse at the location where you want to add the target state. When you draw a transition to the center of another state, it points to the center of the state, but you can also draw a transition to the edge of the state.</p>
+<p>The editor center-aligns transition labels, but you can drag them to other positions.</p>
+<p>To add edge points to transitions, select a transition line. You can add only two edge points for each line. The editor automatically removes unnecessary edge points. To remove the selected edge point, select <b translate="no">Remove Point</b> in the context menu.</p>
+<p>To add new edge points with a mouse click, select <img src="images/transition.png" alt="" />.</p>
+<p>To remove the selected transition, select <b translate="no">Remove</b> in the context menu.</p>
+<h2 id="adding-executable-content">Adding Executable Content</h2>
+<p>Add <i>executable content</i> to a state chart to enable the state machine to change its data model and to interact with external entities.</p>
+<p>Use the context menu commands to add executable content to the <code translate="no">&lt;onentry&gt;</code> and <code translate="no">&lt;onexit&gt;</code> elements or to transitions:</p>
+<ul>
+<li><code translate="no">&lt;raise&gt;</code> to raise events</li>
+<li><code translate="no">&lt;send&gt;</code> to communicate with external entities</li>
+<li><code translate="no">&lt;script&gt;</code> to run scripts</li>
+<li><code translate="no">&lt;assign&gt;</code> to change the data model</li>
+<li><code translate="no">&lt;cancel&gt;</code> to cancel action execution</li>
+<li><code translate="no">&lt;log&gt;</code> to record information in a log</li>
+<li><code translate="no">&lt;if&gt;</code> to execute actions conditionally</li>
+<li><code translate="no">&lt;foreach&gt;</code> to iterate over the items in a collection and execute an action for each of them</li>
+</ul>
+<p>During a transition, the state machine executes the content that you specify for the <code translate="no">&lt;onexit&gt;</code> element in the state it is leaving, then the content in the transition, and then the content for the <code translate="no">&lt;onentry&gt;</code> element in the state it is entering.</p>
+<p>You can add attributes for the selected executable content in the <b translate="no">Attributes</b> view.</p>
+</div>
+<p><b>See also </b><a href="creator-how-to-create-state-charts.html" translate="no">Create state charts</a>.</p>
+<!-- @@@creator-scxml.html -->
+<p class="naviNextPrevious footerNavi">
+<a class="prevPage" href="creator-reference.html">Reference</a>
+</p>
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2024 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

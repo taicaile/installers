@@ -1,0 +1,63 @@
+/*
+ *  Licensed to the Apache Software Foundation (ASF) under one
+ *  or more contributor license agreements.  See the NOTICE file
+ *  distributed with this work for additional information
+ *  regarding copyright ownership.  The ASF licenses this file
+ *  to you under the Apache License, Version 2.0 (the
+ *  "License"); you may not use this file except in compliance
+ *  with the License.  You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing,
+ *  software distributed under the License is distributed on an
+ *  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ *  KIND, either express or implied.  See the License for the
+ *  specific language governing permissions and limitations
+ *  under the License.
+ */
+import org.apache.groovy.gradle.Versions
+import org.apache.groovy.gradle.SharedConfiguration
+
+/**
+ * This is the base plugin for all modules in the Groovy build.
+ * Here you should ONLY apply thing which make sense on ALL projects.
+ * For example it doesn't make sense to apply the `java` plugin because
+ * not all projects are using it.
+ *
+ * Currently limited to repositories, shared extensions and license checks
+ */
+
+plugins {
+    id 'org.apache.groovy-bad-practices-detection'
+    id 'org.nosphere.apache.rat'
+}
+
+if (project == rootProject) {
+    def sharedConfiguration = project.extensions.create('sharedConfiguration', SharedConfiguration, project.objects, rootProject.layout, project.providers, rootProject.buildDir, rootProject.logger, gradle.startParameter)
+    project.extensions.create('versions', Versions, sharedConfiguration, project.providers, project.layout)
+}
+
+group = 'org.apache.groovy'
+version = sharedConfiguration.groovyVersion.get()
+
+tasks.named('rat') {
+    inputDir = projectDir
+    excludes = ['subprojects/**', // covered above
+                'benchmark/**', // benchmarking files excluded from src zip
+                '.asf.yaml', // ASF metadata for github integration excluded from src zip
+                'config/**',
+                'src/install/**', // CI file excluded from src zip
+                'src/test/org/codehaus/groovy/ast/LineColumnCheck.txt', // test file
+                '**/.gradle/**', '**/wrapper/**', 'gradlew*',  // gradle wrapper files excluded from src zip
+                'artifactory.properties',  // potential file on CI server
+                'gradle.properties',  // artifactory release plugin removes header when bumping version
+                '**/build/**', '**/target/**', 'licenses/**', 'notices/**',
+                'out/**', '*.ipr', '**/*.iml', '*.iws', '.idea/**', // Intellij files
+                '**/style.css', // MIT license as per NOTICE/LICENSE files
+                '**/jquery-2.1.1.min.js', // MIT license as per NOTICE/LICENSE files
+                '.classpath', '.project', '.settings/**', 'bin/**', // Eclipse files
+                'bootstrap/settings.gradle', // empty file
+                '.jqwik-database'
+    ]
+}

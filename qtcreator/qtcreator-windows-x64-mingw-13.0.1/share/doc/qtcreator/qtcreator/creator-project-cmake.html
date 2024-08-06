@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+<!-- creator-projects-cmake.qdoc -->
+  <meta name="description" content="CMake is an alternative to qmake for automating the generation of build systems.">
+  <title>CMake | Qt Creator Manual</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");
+    // loading style sheet breaks anchors that were jumped to before
+    // so force jumping to anchor again
+    setTimeout(function() {
+        var anchor = location.hash;
+        // need to jump to different anchor first (e.g. none)
+        location.hash = "#";
+        setTimeout(function() {
+            location.hash = anchor;
+        }, 0);
+    }, 0);
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+    <div class="main">
+    <div class="main-rounded">
+        <div class="navigationbar">
+        <ul>
+<li><a href="index.html" translate="no">Qt Creator Manual</a></li>
+<li>CMake</li>
+<li id="buildversion"><a href="index.html" translate="no">Qt Creator Manual 13.0.1</a></li>
+    </ul>
+    </div>
+</div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+  <link rel="prev" href="creator-reference.html" />
+<p class="naviNextPrevious headerNavi">
+<a class="prevPage" href="creator-reference.html">Reference</a>
+</p>
+<div class="sidebar">
+<div class="toc">
+<h3 id="toc">Contents</h3>
+<ul>
+<li class="level1"><a href="#supported-cmake-versions">Supported CMake Versions</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">CMake</h1>
+<!-- $$$creator-project-cmake.html-description -->
+<div class="descr" id="details">
+<p><a href="https://cmake.org/" translate="no">CMake</a> automates the configuration of build systems. It controls the software compilation process by using simple configuration files, called <code translate="no">CMakeLists.txt</code> files. CMake generates native build configurations and workspaces that you can use in the compiler environment of your choice.</p>
+<p>You can use CMake from Qt Creator to build applications for the desktop, as well as mobile and embedded devices. Or, build single files to test your changes.</p>
+<h2 id="supported-cmake-versions">Supported CMake Versions</h2>
+<p>Qt Creator requires CMake's <a href="https://cmake.org/cmake/help/latest/manual/cmake-file-api.7.html" translate="no">file-based API</a>, and therefore you'll need CMake version 3.14, or later.</p>
+<p>For systems with older versions of CMake, only workarounds are available:</p>
+<ul>
+<li>For CMake version 3.5 or later, generate a <a href="https://cmake.org/cmake/help/latest/variable/CMAKE_EXPORT_COMPILE_COMMANDS.html" translate="no">compilation database</a> and open that in Qt Creator, as described in <a href="creator-how-to-use-compilation-databases.html" translate="no">Use compilation databases</a>.</li>
+<li>Create an ad-hoc project file for a qmake build using <code translate="no">qmake -project</code> and <a href="creator-project-opening.html" translate="no">open</a> that in Qt Creator. Typically, you cannot compile such projects without manual changes.</li>
+<li>Manually create an ad-hoc project file for a <a href="creator-project-generic.html" translate="no">generic project</a> and open that in Qt Creator. Typically, you cannot compile such projects without manual changes.</li>
+</ul>
+</div>
+<p><b>See also </b><a href="creator-build-settings.html" translate="no">Configure projects for building</a>, <a href="creator-run-settings.html" translate="no">Configure projects for running</a>, <a href="creator-how-tos.html#build-with-cmake" translate="no">How To: Build with CMake</a>, <a href="creator-build-settings-cmake.html" translate="no">CMake Build Configuration</a>, <a href="creator-how-to-debug-cmake-files.html" translate="no">Debug CMake project files</a>, <a href="creator-deployment-embedded-linux.html" translate="no">Deploying to Remote Linux</a>, <a href="creator-project-opening.html" translate="no">Open projects</a>, and <a href="creator-how-to-use-compilation-databases.html" translate="no">Use compilation databases</a>.</p>
+<!-- @@@creator-project-cmake.html -->
+<p class="naviNextPrevious footerNavi">
+<a class="prevPage" href="creator-reference.html">Reference</a>
+</p>
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2024 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

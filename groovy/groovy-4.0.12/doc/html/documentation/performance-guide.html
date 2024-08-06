@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.18">
+<title>Tune parsing performance of Parrot parser</title>
+<link rel="stylesheet" href="./assets/css/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.css">
+<link rel="stylesheet" href="assets/css/view-example.css">
+<script src='assets/js/jquery-min-2.1.1.js'></script>
+<script src='assets/js/view-example.js'></script></head>
+<body class="book">
+<div id="header">
+<h1>Tune parsing performance of Parrot parser</h1>
+<div class="details">
+<span id="revnumber">version 4.0.12</span>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>The Parrot parser is based on antlr4 and introduced since Groovy 3.0.0. It provides the following options to tune parsing performance:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Option</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Default</th>
+<th class="tableblock halign-left valign-top">Version</th>
+<th class="tableblock halign-left valign-top">Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">groovy.parallel.parse</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Parsing groovy source files in parallel.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>false</code> util Groovy 4.0.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3.0.5+</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-Dgroovy.parallel.parse=true</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">groovy.antlr4.cache.threshold</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">antlr4 relies on DFA cache heavily for better performance, so antlr4 will not clear DFA cache, thus OutOfMemoryError will probably occur. Groovy trades off parsing performance and memory usage, when the count of Groovy source files parsed hits the cache threshold, the DFA cache will be cleared. <strong>Note:</strong> <code>0</code> means never clearing DFA cache, so requiring bigger JVM heap size. Or set a greater value, e.g. 200 to clear DFA cache if threshold hits. <strong>Note: </strong> the threshold specified is the count of groovy source files</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>64</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3.0.5+</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-Dgroovy.antlr4.cache.threshold=200</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">groovy.antlr4.sll.threshold</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Parrot parser will try SLL mode and then try LL mode if SLL failed. But the more tokens to parse, the more likely SLL will fail. If SLL threshold hits, SLL will be skipped. Setting the threshold to <code>0</code> means never trying SLL mode, which is not recommended at most cases because SLL is the fastest mode though SLL is less powerful than LL. <strong>Note: </strong> the threshold specified is the token count</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>-1</code> (disabled by default)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3.0.9+</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-Dgroovy.antlr4.sll.threshold=1000</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">groovy.antlr4.clear.lexer.dfa.cache</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Clear the DFA cache for lexer. The DFA cache for lexer is always small and important for parsing performance, so it&#8217;s strongly recommended to leave it as it is until OutOfMemoryError will truly occur</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>false</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3.0.9+</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-Dgroovy.antlr4.clear.lexer.dfa.cache=true</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Version 4.0.12<br>
+Last updated 2023-05-05 15:43:20 +1000
+</div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/run_prettify.min.js"></script>
+</body>
+</html>

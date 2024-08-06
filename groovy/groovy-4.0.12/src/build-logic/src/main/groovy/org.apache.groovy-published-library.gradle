@@ -1,0 +1,858 @@
+import groovy.swing.SwingBuilder
+
+plugins {
+    id 'maven-publish'
+    id 'signing'
+    id 'org.apache.groovy-publish-validation'
+    id 'org.apache.groovy-artifactory'
+}
+
+def componentName
+if (pluginManager.hasPlugin('java-platform')) {
+    componentName = 'javaPlatform'
+} else if (pluginManager.hasPlugin('org.apache.groovy-distribution')) {
+    componentName = 'groovyDistribution'
+} else {
+    componentName = 'groovyLibrary'
+}
+
+publishing {
+    repositories {
+        maven {
+            name "LocalFile"
+            url "${rootProject.buildDir}/repo"
+        }
+        maven {
+            name "Apache"
+            url  findProperty('groovyVersion').contains('SNAPSHOT')
+                    ? 'https://repository.apache.org/content/repositories/snapshots'
+                    : 'https://repository.apache.org/service/local/staging/deploy/maven2'
+            credentials {
+                username findProperty('groovyVersion').contains('SNAPSHOT') ? findProperty('asfNexusUsername') : findProperty('apacheUser')
+                password findProperty('groovyVersion').contains('SNAPSHOT') ? findProperty('asfNexusPassword') : findProperty('apachePassword')
+            }
+        }
+    }
+    publications {
+        maven(MavenPublication) {
+            from components[componentName]
+            suppressAllPomMetadataWarnings()
+            pom {
+                name = 'Apache Groovy'
+                description = 'Groovy: A powerful multi-faceted language for the JVM'
+                url = 'https://groovy-lang.org'
+                inceptionYear = '2003'
+                organization {
+                    name = 'Apache Software Foundation'
+                    url = 'https://apache.org'
+                }
+                developers {
+                    developer {
+                        id = 'glaforge'
+                        name = 'Guillaume Laforge'
+                        organization = 'Google'
+                        roles.add 'Developer'
+                    }
+                    developer {
+                        id = 'bob'
+                        name = 'bob mcwhirter'
+                        email = 'bob@werken.com'
+                        organization = 'The Werken Company'
+                        roles.add 'Founder'
+                    }
+                    developer {
+                        id = 'jstrachan'
+                        name = 'James Strachan'
+                        email = 'james@coredevelopers.com'
+                        organization = 'Core Developers Network'
+                        roles.add 'Founder'
+                    }
+                    developer {
+                        id = 'joe'
+                        name = 'Joe Walnes'
+                        organization = 'ThoughtWorks'
+                        roles.add 'Developer Emeritus'
+                    }
+                    developer {
+                        id = 'skizz'
+                        name = 'Chris Stevenson'
+                        organization = 'ThoughtWorks'
+                        roles.add 'Developer Emeritus'
+                    }
+                    developer {
+                        id = 'jamiemc'
+                        name = 'Jamie McCrindle'
+                        organization = 'Three'
+                        roles.add 'Developer Emeritus'
+                    }
+                    developer {
+                        id = 'mattf'
+                        name = 'Matt Foemmel'
+                        organization = 'ThoughtWorks'
+                        roles.add 'Developer Emeritus'
+                    }
+                    developer {
+                        id = 'alextkachman'
+                        name = 'Alex Tkachman'
+                        roles.add 'Developer Emeritus'
+                    }
+                    developer {
+                        id = 'roshandawrani'
+                        name = 'Roshan Dawrani'
+                        roles.add 'Developer Emeritus'
+                    }
+                    developer {
+                        id = 'spullara'
+                        name = 'Sam Pullara'
+                        email = 'sam@sampullara.com'
+                        roles.add 'Developer Emeritus'
+                    }
+                    developer {
+                        id = 'kasper'
+                        name = 'Kasper Nielsen'
+                        roles.add 'Developer Emeritus'
+                    }
+                    developer {
+                        id = 'travis'
+                        name = 'Travis Kay'
+                        roles.add 'Developer Emeritus'
+                    }
+                    developer {
+                        id = 'zohar'
+                        name = 'Zohar Melamed'
+                        roles.add 'Developer Emeritus'
+                    }
+                    developer {
+                        id = 'jwilson'
+                        name = 'John Wilson'
+                        email = 'tug@wilson.co.uk'
+                        organization = 'The Wilson Partnership'
+                        roles.add 'Developer Emeritus'
+                    }
+                    developer {
+                        id = 'cpoirier'
+                        name = 'Chris Poirier'
+                        email = 'cpoirier@dreaming.org'
+                        roles.add 'Developer Emeritus'
+                    }
+                    developer {
+                        id = 'ckl'
+                        name = 'Christiaan ten Klooster'
+                        email = 'ckl@dacelo.nl'
+                        organization = 'Dacelo WebDevelopment'
+                        roles.add 'Developer Emeritus'
+                    }
+                    developer {
+                        id = 'goetze'
+                        name = 'Steve Goetze'
+                        email = 'goetze@dovetail.com'
+                        organization = 'Dovetailed Technologies, LLC'
+                        roles.add 'Developer Emeritus'
+                    }
+                    developer {
+                        id = 'bran'
+                        name = 'Bing Ran'
+                        email = 'b55r@sina.com'
+                        organization = 'Leadingcare'
+                        roles.add 'Developer Emeritus'
+                    }
+                    developer {
+                        id = 'jez'
+                        name = 'Jeremy Rayner'
+                        email = 'jeremy.rayner@gmail.com'
+                        organization = 'javanicus'
+                        roles.add 'Developer Emeritus'
+                    }
+                    developer {
+                        id = 'jstump'
+                        name = 'John Stump'
+                        email = 'johnstump2@yahoo.com'
+                        roles.add 'Developer Emeritus'
+                    }
+                    developer {
+                        id = 'blackdrag'
+                        name = 'Jochen Theodorou'
+                        email = 'blackdrag@gmx.org'
+                        roles.add 'Developer'
+                    }
+                    developer {
+                        id = 'russel'
+                        name = 'Russel Winder'
+                        email = 'russel@winder.org.uk'
+                        organization = 'Concertant LLP & It\'z Interactive Ltd'
+                        roles.add 'Developer'
+                        roles.add 'Founder of Gant'
+                    }
+                    developer {
+                        id = 'phk'
+                        name = 'Pilho Kim'
+                        email = 'phkim@cluecom.co.kr'
+                        roles.add 'Developer Emeritus'
+                    }
+                    developer {
+                        id = 'cstein'
+                        name = 'Christian Stein'
+                        email = 'sormuras@gmx.de'
+                        organization = 'CTSR.de'
+                        roles.add 'Developer Emeritus'
+                    }
+                    developer {
+                        id = 'mittie'
+                        name = 'Dierk Koenig'
+                        organization = 'Karakun AG'
+                        roles.add 'Developer'
+                    }
+                    developer {
+                        id = 'paulk'
+                        name = 'Paul King'
+                        email = 'paulk@asert.com.au'
+                        organization = 'OCI, Australia'
+                        roles.add 'Project Manager'
+                        roles.add 'Developer'
+                    }
+                    developer {
+                        id = 'galleon'
+                        name = 'Guillaume Alleon'
+                        email = 'guillaume.alleon@gmail.com'
+                        roles.add 'Developer Emeritus'
+                    }
+                    developer {
+                        id = 'user57'
+                        name = 'Jason Dillon'
+                        email = 'jason@planet57.com'
+                        roles.add 'Developer Emeritus'
+                    }
+                    developer {
+                        id = 'shemnon'
+                        name = 'Danno Ferrin'
+                        roles.add 'Developer Emeritus'
+                    }
+                    developer {
+                        id = 'jwill'
+                        name = 'James Williams'
+                        roles.add 'Developer Emeritus'
+                    }
+                    developer {
+                        id = 'timyates'
+                        name = 'Tim Yates'
+                        roles.add 'Developer'
+                    }
+                    developer {
+                        id = 'aalmiray'
+                        name = 'Andres Almiray'
+                        email = 'aalmiray@users.sourceforge.net'
+                        roles.add 'Developer'
+                    }
+                    developer {
+                        id = 'mguillem'
+                        name = 'Marc Guillemot'
+                        email = 'mguillemot@yahoo.fr'
+                        roles.add 'Developer Emeritus'
+                    }
+                    developer {
+                        id = 'jimwhite'
+                        name = 'Jim White'
+                        email = 'jim@pagesmiths.com'
+                        organization = 'IFCX.org'
+                        roles.add 'Developer'
+                    }
+                    developer {
+                        id = 'pniederw'
+                        name = 'Peter Niederwieser'
+                        email = 'pniederw@gmail.com'
+                        roles.add 'Developer Emeritus'
+                    }
+                    developer {
+                        id = 'andresteingress'
+                        name = 'Andre Steingress'
+                        roles.add 'Developer'
+                    }
+                    developer {
+                        id = 'hamletdrc'
+                        name = 'Hamlet D\'Arcy'
+                        email = 'hamletdrc@gmail.com'
+                        roles.add 'Developer Emeritus'
+                    }
+                    developer {
+                        id = 'melix'
+                        name = 'Cedric Champeau'
+                        email = 'cedric.champeau@gmail.com'
+                        roles.add 'Developer'
+                    }
+                    developer {
+                        id = 'pascalschumacher'
+                        name = 'Pascal Schumacher'
+                        roles.add 'Developer'
+                    }
+                    developer {
+                        id = 'sunlan'
+                        name = 'Daniel Sun'
+                        roles.add 'Developer'
+                    }
+                    developer {
+                        id = 'rpopma'
+                        name = 'Remko Popma'
+                        roles.add 'Developer'
+                    }
+                    developer {
+                        id = 'grocher'
+                        name = 'Graeme Rocher'
+                        roles.add 'Developer'
+                    }
+                    developer {
+                        id = 'emilles'
+                        name = 'Eric Milles'
+                        organization = 'Thomson Reuters'
+                        roles.add 'Developer'
+                    }
+                }
+                contributors {
+                    contributor {
+                        name = 'Joern Eyrich'
+                    }
+                    contributor {
+                        name = 'Robert Kuzelj'
+                    }
+                    contributor {
+                        name = 'Rod Cope'
+                    }
+                    contributor {
+                        name = 'Yuri Schimke'
+                    }
+                    contributor {
+                        name = 'James Birchfield'
+                    }
+                    contributor {
+                        name = 'Robert Fuller'
+                    }
+                    contributor {
+                        name = 'Sergey Udovenko'
+                    }
+                    contributor {
+                        name = 'Hallvard Traetteberg'
+                    }
+                    contributor {
+                        name = 'Peter Reilly'
+                    }
+                    contributor {
+                        name = 'Brian McCallister'
+                    }
+                    contributor {
+                        name = 'Richard Monson-Haefel'
+                    }
+                    contributor {
+                        name = 'Brian Larson'
+                    }
+                    contributor {
+                        name = 'Artur Biesiadowski'
+                        email = 'abies@pg.gda.pl'
+                    }
+                    contributor {
+                        name = 'Ivan Z. Ganza'
+                    }
+                    contributor {
+                        name = 'Larry Jacobson'
+                    }
+                    contributor {
+                        name = 'Jake Gage'
+                    }
+                    contributor {
+                        name = 'Arjun Nayyar'
+                    }
+                    contributor {
+                        name = 'Masato Nagai'
+                    }
+                    contributor {
+                        name = 'Mark Chu-Carroll'
+                    }
+                    contributor {
+                        name = 'Mark Turansky'
+                    }
+                    contributor {
+                        name = 'Jean-Louis Berliet'
+                    }
+                    contributor {
+                        name = 'Graham Miller'
+                    }
+                    contributor {
+                        name = 'Marc Palmer'
+                    }
+                    contributor {
+                        name = 'Tugdual Grall'
+                    }
+                    contributor {
+                        name = 'Edwin Tellman'
+                    }
+                    contributor {
+                        name = 'Evan "Hippy" Slatis'
+                    }
+                    contributor {
+                        name = 'Mike Dillon'
+                    }
+                    contributor {
+                        name = 'Bernhard Huber'
+                    }
+                    contributor {
+                        name = 'Yasuharu Nakano'
+                    }
+                    contributor {
+                        name = 'Marc DeXeT'
+                    }
+                    contributor {
+                        name = 'Dejan Bosanac'
+                        email = 'dejan@nighttale.net'
+                    }
+                    contributor {
+                        name = 'Denver Dino'
+                    }
+                    contributor {
+                        name = 'Ted Naleid'
+                    }
+                    contributor {
+                        name = 'Ted Leung'
+                    }
+                    contributor {
+                        name = 'Merrick Schincariol'
+                    }
+                    contributor {
+                        name = 'Chanwit Kaewkasi'
+                    }
+                    contributor {
+                        name = 'Stefan Matthias Aust'
+                    }
+                    contributor {
+                        name = 'Andy Dwelly'
+                    }
+                    contributor {
+                        name = 'Philip Milne'
+                    }
+                    contributor {
+                        name = 'Tiago Fernandez'
+                    }
+                    contributor {
+                        name = 'Steve Button'
+                    }
+                    contributor {
+                        name = 'Joachim Baumann'
+                    }
+                    contributor {
+                        name = 'Jochen Eddel+'
+                    }
+                    contributor {
+                        name = 'Ilinca V. Hallberg'
+                    }
+                    contributor {
+                        name = 'Björn Westlin'
+                    }
+                    contributor {
+                        name = 'Andrew Glover'
+                    }
+                    contributor {
+                        name = 'Brad Long'
+                    }
+                    contributor {
+                        name = 'John Bito'
+                    }
+                    contributor {
+                        name = 'Jim Jagielski'
+                    }
+                    contributor {
+                        name = 'Rodolfo Velasco'
+                    }
+                    contributor {
+                        name = 'John Hurst'
+                    }
+                    contributor {
+                        name = 'Merlyn Albery-Speyer'
+                    }
+                    contributor {
+                        name = 'jeremi Joslin'
+                    }
+                    contributor {
+                        name = 'UEHARA Junji'
+                    }
+                    contributor {
+                        name = 'NAKANO Yasuharu'
+                    }
+                    contributor {
+                        name = 'Dinko Srkoc'
+                    }
+                    contributor {
+                        name = 'Raffaele Cigni'
+                    }
+                    contributor {
+                        name = 'Alberto Vilches Raton'
+                    }
+                    contributor {
+                        name = 'Paulo Poiati'
+                    }
+                    contributor {
+                        name = 'Alexander Klein'
+                    }
+                    contributor {
+                        name = 'Adam Murdoch'
+                    }
+                    contributor {
+                        name = 'David Durham'
+                    }
+                    contributor {
+                        name = 'Daniel Henrique Alves Lima'
+                    }
+                    contributor {
+                        name = 'John Wagenleitner'
+                    }
+                    contributor {
+                        name = 'Colin Harrington'
+                    }
+                    contributor {
+                        name = 'Brian Alexander'
+                    }
+                    contributor {
+                        name = 'Jan Weitz'
+                    }
+                    contributor {
+                        name = 'Chris K Wensel'
+                    }
+                    contributor {
+                        name = 'David Sutherland'
+                    }
+                    contributor {
+                        name = 'Mattias Reichel'
+                    }
+                    contributor {
+                        name = 'David Lee'
+                    }
+                    contributor {
+                        name = 'Sergei Egorov'
+                    }
+                    contributor {
+                        name = 'Hein Meling'
+                    }
+                    contributor {
+                        name = 'Michael Baehr'
+                    }
+                    contributor {
+                        name = 'Craig Andrews'
+                    }
+                    contributor {
+                        name = 'Peter Ledbrook'
+                    }
+                    contributor {
+                        name = 'Scott Stirling'
+                    }
+                    contributor {
+                        name = 'Thibault Kruse'
+                    }
+                    contributor {
+                        name = 'Tim Tiemens'
+                    }
+                    contributor {
+                        name = 'Mike Spille'
+                    }
+                    contributor {
+                        name = 'Nikolay Chugunov'
+                    }
+                    contributor {
+                        name = 'Francesco Durbin'
+                    }
+                    contributor {
+                        name = 'Paolo Di Tommaso'
+                    }
+                    contributor {
+                        name = 'Rene Scheibe'
+                    }
+                    contributor {
+                        name = 'Matias Bjarland'
+                    }
+                    contributor {
+                        name = 'Tomasz Bujok'
+                    }
+                    contributor {
+                        name = 'Richard Hightower'
+                    }
+                    contributor {
+                        name = 'Andrey Bloschetsov'
+                    }
+                    contributor {
+                        name = 'Yu Kobayashi'
+                    }
+                    contributor {
+                        name = 'Nick Grealy'
+                    }
+                    contributor {
+                        name = 'Vaclav Pech'
+                    }
+                    contributor {
+                        name = 'Chuck Tassoni'
+                    }
+                    contributor {
+                        name = 'Steven Devijver'
+                    }
+                    contributor {
+                        name = 'Ben Manes'
+                    }
+                    contributor {
+                        name = 'Troy Heninger'
+                    }
+                    contributor {
+                        name = 'Andrew Eisenberg'
+                    }
+                    contributor {
+                        name = 'Eric Milles'
+                    }
+                    contributor {
+                        name = 'Kohsuke Kawaguchi'
+                    }
+                    contributor {
+                        name = 'Scott Vlaminck'
+                    }
+                    contributor {
+                        name = 'Hjalmar Ekengren'
+                    }
+                    contributor {
+                        name = 'Rafael Luque'
+                    }
+                    contributor {
+                        name = 'Joachim Heldmann'
+                    }
+                    contributor {
+                        name = 'dgouyette'
+                    }
+                    contributor {
+                        name = 'Marcin Grzejszczak'
+                    }
+                    contributor {
+                        name = 'Pap Lőrinc'
+                    }
+                    contributor {
+                        name = 'Guillaume Balaine'
+                    }
+                    contributor {
+                        name = 'Santhosh Kumar T'
+                    }
+                    contributor {
+                        name = 'Alan Green'
+                    }
+                    contributor {
+                        name = 'Marty Saxton'
+                    }
+                    contributor {
+                        name = 'Marcel Overdijk'
+                    }
+                    contributor {
+                        name = 'Jonathan Carlson'
+                    }
+                    contributor {
+                        name = 'Thomas Heller'
+                    }
+                    contributor {
+                        name = 'John Stump'
+                    }
+                    contributor {
+                        name = 'Ivan Ganza'
+                    }
+                    contributor {
+                        name = 'Alex Popescu'
+                    }
+                    contributor {
+                        name = 'Martin Kempf'
+                    }
+                    contributor {
+                        name = 'Martin Ghados'
+                    }
+                    contributor {
+                        name = 'Martin Stockhammer'
+                    }
+                    contributor {
+                        name = 'Martin C. Martin'
+                    }
+                    contributor {
+                        name = 'Alexey Verkhovsky'
+                    }
+                    contributor {
+                        name = 'Alberto Mijares'
+                    }
+                    contributor {
+                        name = 'Matthias Cullmann'
+                    }
+                    contributor {
+                        name = 'Tomek Bujok'
+                    }
+                    contributor {
+                        name = 'Stephane Landelle'
+                    }
+                    contributor {
+                        name = 'Stephane Maldini'
+                    }
+                    contributor {
+                        name = 'Mark Volkmann'
+                    }
+                    contributor {
+                        name = 'Andrew Taylor'
+                    }
+                    contributor {
+                        name = 'Vladimir Vivien'
+                    }
+                    contributor {
+                        name = 'Vladimir Orany'
+                    }
+                    contributor {
+                        name = 'Joe Wolf'
+                    }
+                    contributor {
+                        name = 'Kent Inge Fagerland Simonsen'
+                    }
+                    contributor {
+                        name = 'Tom Nichols'
+                    }
+                    contributor {
+                        name = 'Ingo Hoffmann'
+                    }
+                    contributor {
+                        name = 'Sergii Bondarenko'
+                    }
+                    contributor {
+                        name = 'mgroovy'
+                    }
+                    contributor {
+                        name = 'Dominik Przybysz'
+                    }
+                    contributor {
+                        name = 'Jason Thomas'
+                    }
+                    contributor {
+                        name = 'Trygve Amundsens'
+                    }
+                    contributor {
+                        name = 'Morgan Hankins'
+                    }
+                    contributor {
+                        name = 'Shruti Gupta'
+                    }
+                    contributor {
+                        name = 'Ben Yu'
+                    }
+                    contributor {
+                        name = 'Dejan Bosanac'
+                    }
+                    contributor {
+                        name = 'Lidia Donajczyk-Lipinska'
+                    }
+                    contributor {
+                        name = 'Peter Gromov'
+                    }
+                    contributor {
+                        name = 'Johannes Link'
+                    }
+                    contributor {
+                        name = 'Chris Reeves'
+                    }
+                    contributor {
+                        name = 'Sean Timm'
+                    }
+                    contributor {
+                        name = 'Dmitry Vyazelenko'
+                    }
+                }
+                mailingLists {
+                    mailingList {
+                        name = 'Groovy Developer List'
+                        archive = 'https://mail-archives.apache.org/mod_mbox/groovy-dev/'
+                    }
+                    mailingList {
+                        name = 'Groovy User List'
+                        archive = 'https://mail-archives.apache.org/mod_mbox/groovy-users/'
+                    }
+                }
+                licenses {
+                    license {
+                        name = 'The Apache Software License, Version 2.0'
+                        url = 'https://www.apache.org/licenses/LICENSE-2.0.txt'
+                        distribution = 'repo'
+                    }
+                }
+                issueManagement {
+                    system = 'jira'
+                    url = 'https://issues.apache.org/jira/browse/GROOVY'
+                }
+                scm {
+                    connection = 'scm:git:https://github.com/apache/groovy.git'
+                    developerConnection = 'scm:git:https://github.com/apache/groovy.git'
+                    url = 'https://github.com/apache/groovy.git'
+                }
+            }
+        }
+    }
+}
+
+signing {
+    required {
+        sharedConfiguration.signing.shouldSign(gradle.taskGraph)
+    }
+    sign publishing.publications.maven
+    if (sharedConfiguration.signing.useGpgCmd.get()) {
+        useGpgCmd()
+    }
+}
+
+gradle.taskGraph.whenReady { taskGraph ->
+    if (sharedConfiguration.signing.shouldSign(gradle.taskGraph)) {
+        // Use Java 6's console or Swing to read input (not suitable for CI)
+        if (!sharedConfiguration.signing.hasAllKeyDetails()) {
+            printf "\n\nWe have to sign some things in this build." +
+                    "\n\nPlease enter your signing details.\n\n"
+            System.out.flush()
+
+            if (!sharedConfiguration.signing.keyId.present) {
+                sharedConfiguration.signing.keyId.set promptUser('PGP Key Id')
+            }
+            if (!sharedConfiguration.signing.secretKeyRingFile.present) {
+                sharedConfiguration.signing.secretKeyRingFile.set promptUser('PGP Secret Key Ring File (absolute path)')
+            }
+            if (!sharedConfiguration.signing.password.present) {
+                sharedConfiguration.signing.password.set promptUser('PGP Private Key Password')
+            }
+
+            allprojects {
+                project.properties.put("signing.keyId", sharedConfiguration.signing.keyId.get())
+                project.properties.put("signing.secretKeyRingFile", sharedConfiguration.signing.secretKeyRingFile.get())
+                project.properties.put("signing.password", sharedConfiguration.signing.password.get())
+            }
+
+            printf "\nThanks.\n\n"
+            System.out.flush()
+        }
+    }
+}
+
+def promptUser(String prompt) {
+    def response = ''
+    if (System.console() == null) {
+        new SwingBuilder().edt {
+            dialog(modal: true, // pause build
+                    title: 'Response required', // dialog title
+                    alwaysOnTop: true,
+                    resizable: false,
+                    locationRelativeTo: null, // centered on screen
+                    pack: true,
+                    show: true
+            ) {
+                vbox {
+                    label(text: "$prompt:")
+                    input = passwordField()
+                    button(defaultButton: true, text: 'OK', actionPerformed: {
+                        response = new String(input.password)
+                        dispose()
+                    })
+                }
+            }
+        }
+    } else {
+        response = new String(System.console().readPassword("\n$prompt: "))
+    }
+
+    if (!response) {
+        throw new InvalidUserDataException("Null response detected!")
+    }
+    response
+}

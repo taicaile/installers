@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+<!-- creator-clang-static-analyzer.qdoc -->
+  <title>Analyze code with Clang-Tidy and Clazy | Qt Creator Manual</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");
+    // loading style sheet breaks anchors that were jumped to before
+    // so force jumping to anchor again
+    setTimeout(function() {
+        var anchor = location.hash;
+        // need to jump to different anchor first (e.g. none)
+        location.hash = "#";
+        setTimeout(function() {
+            location.hash = anchor;
+        }, 0);
+    }, 0);
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+    <div class="main">
+    <div class="main-rounded">
+        <div class="navigationbar">
+        <ul>
+<li><a href="index.html" translate="no">Qt Creator Manual</a></li>
+<li>Analyze code with Clang-Tidy and Clazy</li>
+<li id="buildversion"><a href="index.html" translate="no">Qt Creator Manual 13.0.1</a></li>
+    </ul>
+    </div>
+</div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+  <link rel="prev" href="creator-how-tos.html" />
+<p class="naviNextPrevious headerNavi">
+<a class="prevPage" href="creator-how-tos.html">How To</a>
+</p>
+<div class="sidebar">
+<div class="toc">
+<h3 id="toc">Contents</h3>
+<ul>
+<li class="level1"><a href="#analyze-the-current-file">Analyze the current file</a></li>
+<li class="level1"><a href="#analyze-an-open-project">Analyze an open project</a></li>
+<li class="level1"><a href="#view-diagnostics">View diagnostics</a></li>
+<li class="level1"><a href="#disable-checks">Disable checks</a></li>
+<li class="level1"><a href="#load-diagnostics-from-yaml-files">Load diagnostics from YAML files</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">Analyze code with Clang-Tidy and Clazy</h1>
+<!-- $$$creator-clang-tools.html-description -->
+<div class="descr" id="details">
+<p>Qt Creator comes with the following Clang tools for finding problems in C, C++, and Objective-C source code by using static analysis:</p>
+<ul>
+<li><a href="https://clang.llvm.org/extra/clang-tidy/" translate="no">Clang-Tidy</a>, which has diagnostics and fixes for typical programming errors, such as style violations or interface misuse.</li>
+<li><a href="https://github.com/KDE/clazy/blob/master/README.md" translate="no">Clazy</a>, which helps Clang understand Qt semantics. It displays Qt related compiler warnings, ranging from unnecessary memory allocation to misuse of API and has refactoring actions for fixing some of the issues.</li>
+</ul>
+<div class="admonition note">
+<p><b>Note: </b>The Clang static analyzer checks are a part of Clang-Tidy. To use the checks, you must create a custom configuration for the Clang tools and enable them for Clang-Tidy.</p>
+</div>
+<h2 id="analyze-the-current-file">Analyze the current file</h2>
+<p>To run Clang-Tidy or Clazy to analyze the currently open file:</p>
+<ul>
+<li>Select the <img src="images/debugger_singleinstructionmode.png" alt="" /> (<b translate="no">Analyze File</b>) button on the editor toolbar, and then select the tool: <b translate="no">Clang-Tidy</b> or <b translate="no">Clazy</b>.</li>
+<li>Select <b translate="no">Tools</b> &gt; <b translate="no">C++</b> &gt; <b translate="no">Analyze Current File with Clang-Tidy</b> or <b translate="no">Analyze Current File with Clazy</b>.</li>
+</ul>
+<h2 id="analyze-an-open-project">Analyze an open project</h2>
+<p>To run Clang-Tidy or Clazy to analyze an open project:</p>
+<ol class="1" type="1"><li>Select <b translate="no">Analyze</b> &gt; <b translate="no">Clang-Tidy</b> or <b translate="no">Clazy</b>.</li>
+<li>Select the files to apply the checks to.<p class="centerAlign"><img src="images/qtcreator-files-to-analyze.webp" alt="{Files to Analyze dialog}" /></p></li>
+<li>Select <b translate="no">Analyze</b> to start the checks.</li>
+</ol>
+<h2 id="view-diagnostics">View diagnostics</h2>
+<p>The <b translate="no">Clang-Tidy</b> or <b translate="no">Clazy</b> view shows the issues:</p>
+<p class="centerAlign"><img src="images/qtcreator-clang-tidy-view.webp" alt="{Clang-Tidy view}" /></p><p class="figCaption">Diagnostics in the Clang-Tidy view.</p>
+<div class="admonition note">
+<p><b>Note: </b>If you select <b translate="no">Debug</b> in the mode selector to open the <b translate="no">Debug</b> mode and then select <b translate="no">Clang-Tidy</b> or <b translate="no">Clazy</b>, you must select the <img src="images/qtcreator-analyze-start-button.png" alt="" /> (<b translate="no">Start</b>) button to open the <b translate="no">Files to Analyze</b> dialog.</p>
+</div>
+<p>Double-click an issue to move to the location where the issue appears in the code editor.</p>
+<p>If a fixit exists for an issue, you can select the check box next to the issue to schedule it for fixing. Select the <b translate="no">Select Fixits</b> check box to select all fixits. To see the status of an issue, hover the mouse pointer over the icon next to the check box.</p>
+<p>To see more information about an issue that is marked with the <img src="images/refactormarker.png" alt="" /> icon, hover the mouse pointer over the line.</p>
+<p>Select the <img src="images/settings.png" alt="" /> button to customize diagnostics for the current project.</p>
+<h2 id="disable-checks">Disable checks</h2>
+<p>To disable checks of a particular type either globally or for a particular project, select <b translate="no">Disable This Check</b> or <b translate="no">Disable These Checks</b> in the context menu.</p>
+<h2 id="load-diagnostics-from-yaml-files">Load diagnostics from YAML files</h2>
+<p>In addition to running the tools to collect diagnostics, you can select <img src="images/open.png" alt="" /> to load diagnostics from <a href="https://yaml.org/" translate="no">YAML</a> files that you exported using the <code translate="no">-export fixes</code> option.</p>
+</div>
+<p><b>See also </b><a href="creator-checking-code-syntax.html" translate="no">Check code syntax</a>, <a href="creator-how-to-configure-clang-diagnostics.html" translate="no">Configure Clang Diagnostics</a>, <a href="creator-how-to-override-clang-tools-preferences.html" translate="no">Specify Clang tools settings</a>, and <a href="creator-preferences-analyzer-clang-tools.html" translate="no">Clang Tools</a>.</p>
+<!-- @@@creator-clang-tools.html -->
+<p class="naviNextPrevious footerNavi">
+<a class="prevPage" href="creator-how-tos.html">How To</a>
+</p>
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2024 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

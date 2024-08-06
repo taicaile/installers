@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+<!-- qtdesigner-plugins.qdoc -->
+  <meta name="description" content="Adding widgets to Qt Designer by creating plugins that extend Qt applications.">
+  <title>Adding Qt Designer Plugins | Qt Creator Manual</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");
+    // loading style sheet breaks anchors that were jumped to before
+    // so force jumping to anchor again
+    setTimeout(function() {
+        var anchor = location.hash;
+        // need to jump to different anchor first (e.g. none)
+        location.hash = "#";
+        setTimeout(function() {
+            location.hash = anchor;
+        }, 0);
+    }, 0);
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+    <div class="main">
+    <div class="main-rounded">
+        <div class="navigationbar">
+        <ul>
+<li><a href="index.html" translate="no">Qt Creator Manual</a></li>
+<li>Adding Qt Designer Plugins</li>
+<li id="buildversion"><a href="index.html" translate="no">Qt Creator Manual 13.0.1</a></li>
+    </ul>
+    </div>
+</div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+  <link rel="prev" href="creator-reference.html" />
+<p class="naviNextPrevious headerNavi">
+<a class="prevPage" href="creator-reference.html">Reference</a>
+</p>
+<div class="sidebar">
+<div class="toc">
+<h3 id="toc">Contents</h3>
+<ul>
+<li class="level1"><a href="#locating-qt-designer-plugins">Locating Qt Designer Plugins</a></li>
+<li class="level1"><a href="#matching-build-keys">Matching Build Keys</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">Adding Qt Designer Plugins</h1>
+<!-- $$$adding-plugins.html-description -->
+<div class="descr" id="details">
+<p>You can create plugins to add your own widgets to Qt Designer. To include a plugin with an application, compile it into a dynamic library that you ship separately, and that the application detects and loads at runtime.</p>
+<p>The applications can detect plugins in the standard plugin subdirectories. For more information on how to create and locate plugins and to change the default plugin path, see How to Create Qt Plugins.</p>
+<p>For more information about how to create plugins for Qt Designer, see Using Custom Widgets with Qt Designer.</p>
+<h2 id="locating-qt-designer-plugins">Locating Qt Designer Plugins</h2>
+<p>Qt Designer fetches plugins from the standard locations and loads the plugins that match its build key. Qt Designer is delivered both as a standalone application and integrated into Qt Creator. The correct folder to place the plugins depends on whether you use the standalone Qt Designer or the integrated Qt Designer.</p>
+<p>The integrated Qt Designer fetches plugins from the Qt Creator installation directory. Designer plugins are loaded from <code translate="no">&lt;QtCreator&gt;\bin\plugins\designer</code> on Windows, <code translate="no">&lt;QtCreator&gt;/lib/Qt/plugins/designer</code> on Linux, and <code translate="no">Qt Creator.app/Contents/PlugIns/designer</code> on macOS.</p>
+<p>To check which plugins were loaded successfully and which failed, choose <b translate="no">Tools</b> &gt; <b translate="no">Form Editor</b> &gt; <b translate="no">About Qt Designer Plugins</b>.</p>
+<p>The standalone Qt Designer is part of the Qt library used for building projects, located in <code translate="no">&lt;Qt_version&gt;\&lt;compiler&gt;\bin</code> in the Qt installation directory. It fetches plugins from the <code translate="no">\plugins\designer</code> subdirectory of <code translate="no">bin</code>. To check which plugins were loaded successfully and which failed, choose <b translate="no">Help</b> &gt; <b translate="no">About Plugins</b> on Linux and Windows (or <b translate="no">Qt Creator</b> &gt; <b translate="no">About Plugins</b> on macOS).</p>
+<h2 id="matching-build-keys">Matching Build Keys</h2>
+<p>The Qt Creator that is included in pre-built Qt packages on Windows is built with the Microsoft Visual Studio compiler. If you install a Qt version that was built with the MinGW/g++ compiler, Qt Creator cannot load plugins built with the Windows version because the build-keys do not match.</p>
+<p>The same is true if you use a Qt version that is newer than the Qt version that Qt Creator was built with, or that is otherwise incompatible. The plugins can then only be used in the standalone version of Qt Designer. Choose <b translate="no">Help</b> &gt; <b translate="no">About Qt Creator</b> to check the Qt version and compiler that Qt Creator was built with.</p>
+<p>To use Qt Designer plugins that were built for the shipped Qt version, make sure that Qt Creator is built with the same compiler by either recompiling Qt Creator using MinGW or installing a Qt version that was built with Microsoft Visual Studio, depending on which configuration you want to use for your applications.</p>
+</div>
+<p><b>See also </b><a href="creator-writing-program.html" translate="no">Creating a Qt Widget Based Application</a> and <a href="creator-using-qt-designer.html" translate="no">Qt Designer</a>.</p>
+<!-- @@@adding-plugins.html -->
+<p class="naviNextPrevious footerNavi">
+<a class="prevPage" href="creator-reference.html">Reference</a>
+</p>
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2024 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

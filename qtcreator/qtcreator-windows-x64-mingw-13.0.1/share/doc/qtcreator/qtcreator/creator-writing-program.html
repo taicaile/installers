@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+<!-- qtdesigner-app-tutorial.qdoc -->
+  <meta name="description" content="How to use the integrated Qt Designer to create a Qt widget based application for the desktop.">
+  <title>Creating a Qt Widget Based Application | Qt Creator Manual</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");
+    // loading style sheet breaks anchors that were jumped to before
+    // so force jumping to anchor again
+    setTimeout(function() {
+        var anchor = location.hash;
+        // need to jump to different anchor first (e.g. none)
+        location.hash = "#";
+        setTimeout(function() {
+            location.hash = anchor;
+        }, 0);
+    }, 0);
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+    <div class="main">
+    <div class="main-rounded">
+        <div class="navigationbar">
+        <ul>
+<li><a href="index.html" translate="no">Qt Creator Manual</a></li>
+<li>Creating a Qt Widget Based Application</li>
+<li id="buildversion"><a href="index.html" translate="no">Qt Creator Manual 13.0.1</a></li>
+    </ul>
+    </div>
+</div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+  <link rel="prev" href="creator-tutorials.html" />
+  <link rel="next" href="creator-how-tos.html" />
+<p class="naviNextPrevious headerNavi">
+<a class="prevPage" href="creator-tutorials.html">Tutorials</a>
+<span class="naviSeparator">  &#9702;  </span>
+<a class="nextPage" href="creator-how-tos.html">How To</a>
+</p>
+<div class="sidebar">
+<div class="toc">
+<h3 id="toc">Contents</h3>
+<ul>
+<li class="level1"><a href="#creating-the-text-finder-project">Creating the Text Finder Project</a></li>
+<li class="level1"><a href="#filling-in-the-missing-pieces">Filling in the Missing Pieces</a></li>
+<li class="level2"><a href="#designing-the-user-interface">Designing the User Interface</a></li>
+<li class="level2"><a href="#completing-the-header-file">Completing the Header File</a></li>
+<li class="level2"><a href="#completing-the-source-file">Completing the Source File</a></li>
+<li class="level2"><a href="#creating-a-resource-file">Creating a Resource File</a></li>
+<li class="level1"><a href="#adding-resources-to-project-file">Adding Resources to Project File</a></li>
+<li class="level1"><a href="#compiling-and-running-your-application">Compiling and Running Your Application</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">Creating a Qt Widget Based Application</h1>
+<!-- $$$creator-writing-program.html-description -->
+<div class="descr" id="details">
+<p>This tutorial describes how to use Qt Creator to create a small Qt application, Text Finder. It is a simplified version of the Qt UI Tools Text Finder example. You'll use Qt Designer to construct the application user interface from Qt widgets and the code editor to write the application logic in C++.</p>
+<p class="centerAlign"><img src="images/qtcreator-textfinder-screenshot.png" alt="" /></p><h2 id="creating-the-text-finder-project">Creating the Text Finder Project</h2>
+<ol class="1" type="1"><li>Select <b translate="no">File</b> &gt; <b translate="no">New Project</b> &gt; <b translate="no">Application (Qt)</b> &gt; <b translate="no">Qt Widgets Application</b> &gt; <b translate="no">Choose</b>.<p class="centerAlign"><img src="images/qtcreator-new-qt-gui-application.png" alt="{New Project dialog}" /></p><p>The <b translate="no">Project Location</b> dialog opens.</p>
+<p class="centerAlign"><img src="images/qtcreator-intro-and-location-qt-gui.png" alt="{Project Location dialog}" /></p></li>
+<li>In the <b translate="no">Name</b> field, type <b>TextFinder</b>.</li>
+<li>In the <b translate="no">Create in</b> field, enter the path for the project files. For example, <code translate="no">C:\Qt\examples</code>.</li>
+<li>Select <b translate="no">Next</b> (on Windows and Linux) or <b translate="no">Continue</b> (on macOS) to open the <b translate="no">Define Build System</b> dialog.<p class="centerAlign"><img src="images/qtcreator-new-project-build-system-qt-gui.png" alt="{Define Build System dialog}" /></p></li>
+<li>In the <b translate="no">Build system</b> field, select <a href="creator-project-cmake.html" translate="no">CMake</a> as the build system to use for building the project.</li>
+<li>Select <b translate="no">Next</b> or <b translate="no">Continue</b> to open the <b translate="no">Class Information</b> dialog.<p class="centerAlign"><img src="images/qtcreator-class-info-qt-gui.png" alt="{Class Information dialog}" /></p></li>
+<li>In the <b translate="no">Class name</b> field, type <b>TextFinder</b> as the class name.</li>
+<li>In the <b translate="no">Base class</b> list, select <b>QWidget</b> as the base class type.<div class="admonition note">
+<p><b>Note: </b>The <b translate="no">Header file</b>, <b translate="no">Source file</b> and <b translate="no">Form file</b> fields are automatically updated to match the name of the class.</p>
+</div>
+</li>
+<li>Select <b translate="no">Next</b> or <b translate="no">Continue</b> to open the <b translate="no">Translation File</b> dialog.<p class="centerAlign"><img src="images/qtcreator-new-qt-gui-application-translationfile.png" alt="{Translation File dialog}" /></p></li>
+<li>In the <b translate="no">Language</b> field, you can select a language that you plan to <a href="creator-how-to-use-qtlinguist.html" translate="no">translate</a> the application to. This sets up localization support for the application. You can add other languages later by editing the project file.</li>
+<li>Select <b translate="no">Next</b> or <b translate="no">Continue</b> to open the <b translate="no">Kit Selection</b> dialog.<p class="centerAlign"><img src="images/qtcreator-new-project-qt-versions-qt-gui.png" alt="{Kit Selection dialog}" /></p></li>
+<li>Select build and run <a href="creator-glossary.html#glossary-buildandrun-kit" translate="no">kits</a> for your project.</li>
+<li>Select <b translate="no">Next</b> or <b translate="no">Continue</b> to open the <b translate="no">Project Management</b> dialog.<p class="centerAlign"><img src="images/qtcreator-new-project-summary-qt-gui.png" alt="{Project Management dialog}" /></p></li>
+<li>Review the project settings, and select <b translate="no">Finish</b> (on Windows and Linux) or <b translate="no">Done</b> (on macOS) to create the project.</li>
+</ol>
+<div class="admonition note">
+<p><b>Note: </b>The project opens in the <b translate="no">Edit</b> mode, which hides these instructions. To return to these instructions, open the <b translate="no">Help</b> mode.</p>
+</div>
+<p>The TextFinder project now has the following files:</p>
+<ul>
+<li>main.cpp</li>
+<li>textfinder.h</li>
+<li>textfinder.cpp</li>
+<li>textfinder.ui</li>
+<li>CMakeLists.txt</li>
+</ul>
+<p class="centerAlign"><img src="images/qtcreator-textfinder-contents.png" alt="{TextFinder project contents}" /></p><p>The .h and .cpp files come with the necessary boiler plate code.</p>
+<p>If you selected CMake as the build system, Qt Creator created a CMakeLists.txt project file for you.</p>
+<h2 id="filling-in-the-missing-pieces">Filling in the Missing Pieces</h2>
+<p>Begin by designing the user interface and then move on to filling in the missing code. Finally, add the find functionality.</p>
+<h3 id="designing-the-user-interface">Designing the User Interface</h3>
+<p class="centerAlign"><img src="images/qtcreator-textfinder-ui.png" alt="{Text Finder UI}" /></p><ol class="1" type="1"><li>In the <b translate="no">Editor</b> mode, double-click the textfinder.ui file in the <b translate="no">Projects</b> view to launch the integrated Qt Designer.</li>
+<li>Drag the following widgets to the form:<ul>
+<li><b translate="no">Label</b> (QLabel)</li>
+<li><b translate="no">Line Edit</b> (QLineEdit)</li>
+<li><b translate="no">Push Button</b> (QPushButton)</li>
+</ul>
+<p class="centerAlign"><img src="images/qtcreator-textfinder-ui-widgets.png" alt="{Adding widgets to Text Finder UI}" /></p><div class="admonition note">
+<p><b>Note: </b>To easily locate the widgets, use the search box at the top of the <b translate="no">Sidebar</b>. For example, to find the <b translate="no">Label</b> widget, start typing the word <b>label</b>.</p>
+</div>
+<p class="centerAlign"><img src="images/qtcreator-textfinder-filter.png" alt="{Filter field}" /></p></li>
+<li>Double-click the <b translate="no">Label</b> widget and enter the text <b>Keyword</b>.</li>
+<li>Double-click the <b translate="no">Push Button</b> widget and enter the text <b>Find</b>.</li>
+<li>In the <b translate="no">Properties</b> view, change the <b translate="no">objectName</b> to <b>findButton</b>.<p class="centerAlign"><img src="images/qtcreator-textfinder-objectname.png" alt="{Changing object names}" /></p></li>
+<li>Press <b>Ctrl+A</b> (or <b>Cmd+A</b>) to select the widgets and select <b translate="no">Lay out Horizontally</b> (or press <b>Ctrl+H</b> on Linux or Windows or <b>Ctrl+Shift+H</b> on macOS) to apply a horizontal layout (QHBoxLayout).<p class="centerAlign"><img src="images/qtcreator-textfinder-ui-horizontal-layout.png" alt="{Applying horizontal layout}" /></p></li>
+<li>Drag a <b translate="no">Text Edit</b> widget (QTextEdit) to the form.</li>
+<li>Select the screen area, and then select <b translate="no">Lay out Vertically</b> (or press <b>Ctrl+L</b>) to apply a vertical layout (QVBoxLayout).<p class="centerAlign"><img src="images/qtcreator-textfinder-ui.png" alt="{Text Finder UI}" /></p><p>Applying the horizontal and vertical layouts ensures that the application UI scales to different screen sizes.</p>
+</li>
+<li>To call a find function when users select the <b translate="no">Find</b> button, you use the Qt signals and slots mechanism. A signal is emitted when a particular event occurs and a slot is a function that is called in response to a particular signal. Qt widgets have predefined signals and slots that you can use directly from Qt Designer. To add a slot for the find function:<ul>
+<li>Right-click the <b translate="no">Find</b> button to open a context-menu.</li>
+<li>Select <b translate="no">Go to Slot</b> &gt; <b translate="no">clicked()</b>, and then select <b translate="no">OK</b>.<p>This adds a private slot, <code translate="no">on_findButton_clicked()</code>, to the header file, textfinder.h and a private function, <code translate="no">TextFinder::on_findButton_clicked()</code>, to the source file, textfinder.cpp.</p>
+</li>
+</ul>
+</li>
+<li>Press <b>Ctrl+S</b> (or <b>Cmd+S</b>) to save your changes.</li>
+</ol>
+<p>For more information about designing forms with Qt Designer, see the Qt Designer Manual.</p>
+<h3 id="completing-the-header-file">Completing the Header File</h3>
+<p>The textfinder.h file already has the necessary #includes, a constructor, a destructor, and the <code translate="no">Ui</code> object. You need to add a private function, <code translate="no">loadTextFile()</code>, to read and display the contents of the input text file in the QTextEdit.</p>
+<ol class="1" type="1"><li>In the <b translate="no">Projects</b> view in the <b translate="no">Edit view</b>, double-click the <code translate="no">textfinder.h</code> file to open it for editing.</li>
+<li>Add a private function to the <code translate="no">private</code> section, after the <code translate="no">Ui::TextFinder</code> pointer:<pre class="cpp" translate="no">
+ <span class="keyword">private</span> <span class="keyword">slots</span>:
+     <span class="type">void</span> on_findButton_clicked();
+
+ <span class="keyword">private</span>:
+     Ui<span class="operator">::</span>TextFinder <span class="operator">*</span>ui;
+     <span class="type">void</span> loadTextFile();
+</pre>
+</li>
+</ol>
+<h3 id="completing-the-source-file">Completing the Source File</h3>
+<p>Now that the header file is complete, move on to the source file, textfinder.cpp.</p>
+<ol class="1" type="1"><li>In the <b translate="no">Projects</b> view in the <b translate="no">Edit</b> view, double-click the textfinder.cpp file to open it for editing.</li>
+<li>Add code to load a text file using QFile, read it with QTextStream, and then display it on <code translate="no">textEdit</code> with QTextEdit::setPlainText():<pre class="cpp" translate="no">
+ <span class="type">void</span> TextFinder<span class="operator">::</span>loadTextFile()
+ {
+     <span class="type">QFile</span> inputFile(<span class="string">&quot;:/input.txt&quot;</span>);
+     inputFile<span class="operator">.</span>open(<span class="type">QIODevice</span><span class="operator">::</span>ReadOnly);
+
+     <span class="type">QTextStream</span> in(<span class="operator">&amp;</span>inputFile);
+     <span class="type">QString</span> line <span class="operator">=</span> in<span class="operator">.</span>readAll();
+     inputFile<span class="operator">.</span>close();
+
+     ui<span class="operator">-</span><span class="operator">&gt;</span>textEdit<span class="operator">-</span><span class="operator">&gt;</span>setPlainText(line);
+     <span class="type">QTextCursor</span> cursor <span class="operator">=</span> ui<span class="operator">-</span><span class="operator">&gt;</span>textEdit<span class="operator">-</span><span class="operator">&gt;</span>textCursor();
+     cursor<span class="operator">.</span>movePosition(<span class="type">QTextCursor</span><span class="operator">::</span>Start<span class="operator">,</span> <span class="type">QTextCursor</span><span class="operator">::</span>MoveAnchor<span class="operator">,</span> <span class="number">1</span>);
+ }
+</pre>
+</li>
+<li>To use QFile and QTextStream, add the following #includes to textfinder.cpp:<pre class="cpp" translate="no">
+ <span class="preprocessor">#include &quot;./ui_textfinder.h&quot;</span>
+ <span class="preprocessor">#include &lt;QFile&gt;</span>
+ <span class="preprocessor">#include &lt;QTextStream&gt;</span>
+</pre>
+</li>
+<li>For the <code translate="no">on_findButton_clicked()</code> slot, add code to extract the search string and use the QTextEdit::find() function to look for the search string within the text file:<pre class="cpp" translate="no">
+ <span class="type">void</span> TextFinder<span class="operator">::</span>on_findButton_clicked()
+ {
+     <span class="type">QString</span> searchString <span class="operator">=</span> ui<span class="operator">-</span><span class="operator">&gt;</span>lineEdit<span class="operator">-</span><span class="operator">&gt;</span>text();
+     ui<span class="operator">-</span><span class="operator">&gt;</span>textEdit<span class="operator">-</span><span class="operator">&gt;</span>find(searchString<span class="operator">,</span> <span class="type">QTextDocument</span><span class="operator">::</span>FindWholeWords);
+ }
+</pre>
+</li>
+<li>Add a line to call <code translate="no">loadTextFile()</code> in the constructor:<pre class="cpp" translate="no">
+ TextFinder<span class="operator">::</span>TextFinder(<span class="type">QWidget</span> <span class="operator">*</span>parent)
+     : <span class="type">QWidget</span>(parent)
+     <span class="operator">,</span> ui(<span class="keyword">new</span> Ui<span class="operator">::</span>TextFinder)
+ {
+     ui<span class="operator">-</span><span class="operator">&gt;</span>setupUi(<span class="keyword">this</span>);
+     loadTextFile();
+ }
+</pre>
+</li>
+</ol>
+<p>The following line of code automatically calls the <code translate="no">on_findButton_clicked()</code> slot in the uic generated ui_textfinder.h file:</p>
+<pre class="cpp" translate="no">
+ <span class="type">QMetaObject</span><span class="operator">::</span>connectSlotsByName(TextFinder);
+</pre>
+<h3 id="creating-a-resource-file">Creating a Resource File</h3>
+<p>You need a resource file (.qrc) within which you embed the input text file. The input file can be any .txt file with a paragraph of text. Create a text file called input.txt and store it in the textfinder folder.</p>
+<p>To add a resource file:</p>
+<ol class="1" type="1"><li>Select <b translate="no">File</b> &gt; <b translate="no">New File</b> &gt; <b translate="no">Qt</b> &gt; <b translate="no">Qt Resource File</b> &gt; <b translate="no">Choose</b>.<p class="centerAlign"><img src="images/qtcreator-add-resource-wizard.png" alt="{New File dialog}" /></p><p>The <b translate="no">Choose the Location</b> dialog opens.</p>
+<p class="centerAlign"><img src="images/qtcreator-add-resource-wizard2.png" alt="{Choose the Location dialog}" /></p></li>
+<li>In the <b translate="no">Name</b> field, enter <b>textfinder</b>.</li>
+<li>In the <b translate="no">Path</b> field, enter the path to the project, and select <b translate="no">Next</b> or <b translate="no">Continue</b>.<p>The <b translate="no">Project Management</b> dialog opens.</p>
+<p class="centerAlign"><img src="images/qtcreator-add-resource-wizard3.png" alt="{Project Management dialog}" /></p></li>
+<li>In the <b translate="no">Add to project</b> field, select <b>TextFinder</b> and select <b translate="no">Finish</b> or <b translate="no">Done</b> to open the file in the code editor.</li>
+<li>Select <b translate="no">Add</b> &gt; <b translate="no">Add Prefix</b>.</li>
+<li>In the <b translate="no">Prefix</b> field, replace the default prefix with a slash (/).</li>
+<li>Select <b translate="no">Add</b> &gt; <b translate="no">Add Files</b>, to locate and add input.txt.<p class="centerAlign"><img src="images/qtcreator-add-resource.png" alt="{Editing resource files}" /></p></li>
+</ol>
+<h2 id="adding-resources-to-project-file">Adding Resources to Project File</h2>
+<p>For the text file to appear when you run the application, you must specify the resource file as a source file in the <i>CMakeLists.txt</i> file that the wizard created for you:</p>
+<pre class="cpp" translate="no">
+ set(PROJECT_SOURCES
+         main.cpp
+         textfinder.cpp
+         textfinder.h
+         textfinder.ui
+         ${TS_FILES}
+         textfinder.qrc
+ )
+</pre>
+<h2 id="compiling-and-running-your-application">Compiling and Running Your Application</h2>
+<p>Now that you have all the necessary files, select the <img src="images/run_small.png" alt="" /> button to compile and run your application.</p>
+</div>
+<!-- @@@creator-writing-program.html -->
+<p class="naviNextPrevious footerNavi">
+<a class="prevPage" href="creator-tutorials.html">Tutorials</a>
+<span class="naviSeparator">  &#9702;  </span>
+<a class="nextPage" href="creator-how-tos.html">How To</a>
+</p>
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2024 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

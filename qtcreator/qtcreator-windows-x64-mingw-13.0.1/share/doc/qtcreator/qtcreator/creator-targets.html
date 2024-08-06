@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+<!-- creator-projects-kits.qdoc -->
+  <title>Add kits | Qt Creator Manual</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");
+    // loading style sheet breaks anchors that were jumped to before
+    // so force jumping to anchor again
+    setTimeout(function() {
+        var anchor = location.hash;
+        // need to jump to different anchor first (e.g. none)
+        location.hash = "#";
+        setTimeout(function() {
+            location.hash = anchor;
+        }, 0);
+    }, 0);
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+    <div class="main">
+    <div class="main-rounded">
+        <div class="navigationbar">
+        <ul>
+<li><a href="index.html" translate="no">Qt Creator Manual</a></li>
+<li>Add kits</li>
+<li id="buildversion"><a href="index.html" translate="no">Qt Creator Manual 13.0.1</a></li>
+    </ul>
+    </div>
+</div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+  <link rel="prev" href="creator-how-tos.html" />
+<p class="naviNextPrevious headerNavi">
+<a class="prevPage" href="creator-how-tos.html">How To</a>
+</p>
+<div class="sidebar">
+<div class="toc">
+<h3 id="toc">Contents</h3>
+<ul>
+<li class="level1"><a href="#set-the-default-kit">Set the default kit</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">Add kits</h1>
+<!-- $$$creator-targets.html-description -->
+<div class="descr" id="details">
+<p>Qt Creator groups settings used for building and running projects as <i>kits</i> to make cross-platform and cross-configuration development easier. Each kit consists of a set of values that define one environment, such as a <a href="creator-glossary.html#glossary-device" translate="no">device</a>, compiler, Qt version, and debugger command to use, and some metadata, such as an icon and a name for the kit. Once you have defined kits, you can select them to build and run projects.</p>
+<p>You can add kits for the desktop and for the following types of devices:</p>
+<ul>
+<li><a href="creator-developing-android.html" translate="no">Android</a></li>
+<li><a href="creator-developing-baremetal.html" translate="no">Bare Metal</a></li>
+<li><a href="https://doc.qt.io/Boot2Qt/index.html" translate="no">Boot2Q</a> (commercial only)</li>
+<li><a href="creator-adding-docker-devices.html" translate="no">Docker</a> (experimental)</li>
+<li><a href="creator-developing-ios.html" translate="no">iOS</a></li>
+<li>iOS Simulator</li>
+<li><a href="https://doc.qt.io/qtcreator/creator-developing-mcu.html" translate="no">MCU</a> (commercial only)</li>
+<li><a href="creator-developing-qnx.html" translate="no">QNX</a></li>
+<li><a href="creator-developing-generic-linux.html" translate="no">Remote Linux</a></li>
+<li><a href="creator-setup-webassembly.html" translate="no">WebAssembly Runtime</a></li>
+</ul>
+<p>To add kits:</p>
+<ol class="1" type="1"><li>Select <a href="creator-how-to-find-preferences.html" translate="no">Preferences</a> &gt; <b translate="no">Kits</b>.</li>
+<li>Select <b translate="no">Add</b> to start from an empty kit or <b translate="no">Clone</b> to clone the selected kit and edit its preferences.<p class="centerAlign"><img src="images/qtcreator-kits.png" alt="" /></p></li>
+<li>Set <a href="creator-preferences-kits.html#kits-tab" translate="no">kit preferences</a> according to the build system and device type.</li>
+<li>Select <b translate="no">OK</b> to create the kit.</li>
+</ol>
+<h2 id="set-the-default-kit">Set the default kit</h2>
+<p>Qt Creator uses the <i>default kit</i> if it does not have enough information to choose the kit to use. To set the selected kit as the default kit, select <b translate="no">Make Default</b>.</p>
+</div>
+<p><b>See also </b><a href="creator-how-to-activate-kits.html" translate="no">Activate kits for a project</a>, <a href="creator-debuggers.html" translate="no">Add debuggers</a>, <a href="creator-project-qmake.html" translate="no">Add Qt versions</a>, <a href="creator-project-opening.html" translate="no">Open projects</a>, <a href="creator-preferences-kits-compilers.html" translate="no">Compilers</a>, and <a href="creator-preferences-kits.html#kits-tab" translate="no">Kits</a>.</p>
+<!-- @@@creator-targets.html -->
+<p class="naviNextPrevious footerNavi">
+<a class="prevPage" href="creator-how-tos.html">How To</a>
+</p>
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2024 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

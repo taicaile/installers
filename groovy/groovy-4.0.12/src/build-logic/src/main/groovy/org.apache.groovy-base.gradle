@@ -1,0 +1,348 @@
+/*
+ *  Licensed to the Apache Software Foundation (ASF) under one
+ *  or more contributor license agreements.  See the NOTICE file
+ *  distributed with this work for additional information
+ *  regarding copyright ownership.  The ASF licenses this file
+ *  to you under the Apache License, Version 2.0 (the
+ *  "License"); you may not use this file except in compliance
+ *  with the License.  You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing,
+ *  software distributed under the License is distributed on an
+ *  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ *  KIND, either express or implied.  See the License for the
+ *  specific language governing permissions and limitations
+ *  under the License.
+ */
+
+import groovy.transform.CompileStatic
+import org.apache.groovy.gradle.GroovyLibraryExtension
+import org.apache.groovy.gradle.JarJarTask
+import org.apache.groovy.gradle.ReleaseInfoGenerator
+import org.gradle.api.attributes.java.TargetJvmVersion
+
+import com.github.spotbugs.snom.SpotBugsTask
+import org.apache.groovy.gradle.CheckstyleHtmlReport
+
+plugins {
+    id 'java-library'
+    id 'groovy'
+    id 'checkstyle'
+    id 'codenarc'
+    id 'com.github.spotbugs'
+    id 'org.apache.groovy-common'
+    id 'org.apache.groovy-internal'
+    id 'org.apache.groovy-tested'
+    id 'org.apache.groovy-asciidoctor'
+}
+
+/**
+ * This script defines a conventional plugin for all Groovy modules, be it
+ * Groovy core or any of its libraries.
+ */
+if (sharedConfiguration.hasCodeCoverage.get()) {
+    pluginManager.apply(JacocoPlugin)
+}
+
+def groovyLibrary = project.extensions.create("groovyLibrary", GroovyLibraryExtension, sharedConfiguration, java)
+
+java {
+    withSourcesJar()
+    withJavadocJar()
+}
+
+def generateReleaseInfo = tasks.register("generateReleaseInfo", ReleaseInfoGenerator)
+
+def groovydocJar = tasks.register("groovydocJar", Jar) {
+    from groovydoc
+    archiveClassifier = 'groovydoc'
+    group = 'build'
+    description = 'Assembles a jar archive containing the main groovydoc.'
+}
+
+configurations {
+    groovydocElements {
+        canBeConsumed = true
+        canBeResolved = false
+        attributes {
+            attribute(Category.CATEGORY_ATTRIBUTE, objects.named(Category, Category.DOCUMENTATION))
+            attribute(Bundling.BUNDLING_ATTRIBUTE, objects.named(Bundling, Bundling.EXTERNAL))
+            attribute(DocsType.DOCS_TYPE_ATTRIBUTE, objects.named(DocsType, "groovydoc"))
+            attribute(Usage.USAGE_ATTRIBUTE, objects.named(Usage, Usage.JAVA_RUNTIME))
+        }
+        outgoing {
+            artifact groovydocJar
+        }
+    }
+    sourcesForAggregation {
+        canBeConsumed = true
+        canBeResolved = false
+        extendsFrom implementation, runtimeOnly
+        attributes {
+            attribute(Category.CATEGORY_ATTRIBUTE, objects.named(Category, Category.DOCUMENTATION))
+            attribute(Bundling.BUNDLING_ATTRIBUTE, objects.named(Bundling, Bundling.EXTERNAL))
+            attribute(DocsType.DOCS_TYPE_ATTRIBUTE, objects.named(DocsType, DocsType.SOURCES))
+            attribute(Usage.USAGE_ATTRIBUTE, objects.named(Usage, "aggregation"))
+        }
+        outgoing {
+            sourceSets.main.java.srcDirs.each {
+                artifact(it)
+            }
+            sourceSets.main.groovy.srcDirs.each {
+                artifact(it)
+            }
+        }
+    }
+    javadocClasspath {
+        canBeConsumed = true
+        canBeResolved = false
+        extendsFrom implementation, runtimeOnly, compileOnly, compileOnlyApi
+        attributes {
+            attribute(Category.CATEGORY_ATTRIBUTE, objects.named(Category, Category.LIBRARY))
+            attribute(Bundling.BUNDLING_ATTRIBUTE, objects.named(Bundling, Bundling.EXTERNAL))
+            attribute(Usage.USAGE_ATTRIBUTE, objects.named(Usage, "javadocClasspath"))
+        }
+        outgoing {
+            artifact tasks.named('jar')
+        }
+    }
+    codenarc {
+        resolutionStrategy.dependencySubstitution {
+            substitute module("org.codehaus.groovy:groovy") using project(":")
+            substitute module("org.codehaus.groovy:groovy-ant") using project(":groovy-ant")
+            substitute module("org.codehaus.groovy:groovy-templates") using project(":groovy-templates")
+            substitute module("org.codehaus.groovy:groovy-xml") using project(":groovy-xml")
+            substitute module("org.codehaus.groovy:groovy-json") using project(":groovy-json")
+            substitute module("org.codehaus.groovy:groovy-groovydoc") using project(":groovy-groovydoc")
+        }
+
+        exclude module: 'groovy-all'
+    }
+}
+
+dependencies {
+    compileOnly providers.provider { "com.github.spotbugs:spotbugs-annotations:${versions.spotbugsAnnotations}" }
+
+    codenarc "org.codenarc:CodeNarc:${versions.codenarc}"
+    codenarc project(":groovy-templates")
+
+    checkstyle "com.puppycrawl.tools:checkstyle:${versions.checkstyle}"
+    spotbugs "com.github.spotbugs:spotbugs:${versions.spotbugs}"
+}
+
+def excludedFromManifest = [
+        'Ant-Version',
+        'Originally-Created-By',
+        'Bnd-LastModified',
+        'Created-By'
+]
+
+tasks.named('jar') {
+    archiveAppendix = 'raw'
+    groovyLibrary.configureManifest(manifest, excludedFromManifest)
+}
+
+tasks.withType(AbstractArchiveTask).configureEach {
+    preserveFileTimestamps = false
+    reproducibleFileOrder = true
+}
+
+tasks.withType(Jar).configureEach {jar ->
+    metaInf {
+        if (jar.name == 'sourcesJar') {
+            if (file("${projectDir}/LICENSE").exists()) {
+                from "${projectDir}/LICENSE"
+            } else {
+                from("${rootProject.projectDir}/licenses/LICENSE-BASE") {
+                    rename 'LICENSE-BASE', 'LICENSE'
+                }
+            }
+            if (file("${projectDir}/NOTICE").exists()) {
+                from "${projectDir}/NOTICE"
+            } else {
+                from("${rootProject.projectDir}/notices/NOTICE-BASE") {
+                    rename 'NOTICE-BASE', 'NOTICE'
+                }
+            }
+        }
+        from generateReleaseInfo
+    }
+}
+
+tasks.register("jarjar", JarJarTask) {
+    from = jar.archiveFile
+    repackagedLibraries.from configurations.runtimeClasspath.incoming.artifactView {
+        componentFilter { component ->
+            if (component instanceof ModuleComponentIdentifier) {
+                return component.module in groovyLibrary.repackagedDependencies.get()
+            }
+            return false
+        }
+    }.files
+    untouchedFiles = [
+            'groovy/cli/picocli/CliBuilder*.class',
+            'groovy/cli/picocli/OptionAccessor*.class'
+    ]
+    patterns = [
+            'org.antlr.**': 'groovyjarjarantlr4.@1', // antlr4
+            'org.objectweb.**': 'groovyjarjarasm.@1',
+            'picocli.**': 'groovyjarjarpicocli.@1'
+    ]
+    excludesPerLibrary = [
+            '*': ['META-INF/maven/**', 'META-INF/*', 'META-INF/services/javax.annotation.processing.Processor', '**/module-info.class']
+    ]
+    includesPerLibrary = [
+            'asm-util': ['org/objectweb/asm/util/Printer.class',
+                         'org/objectweb/asm/util/Textifier*',
+                         'org/objectweb/asm/util/ASMifier.class',
+                         'org/objectweb/asm/util/Trace*']
+    ]
+    outputFile = tasks.named('jar').flatMap { layout.buildDirectory.file("libs/${it.archiveBaseName.get()}-${it.archiveVersion.get()}${it.archiveClassifier.get() ? '-' + it.archiveClassifier.get() : ''}.jar") }
+
+    withManifest {
+        def extras = project.name == 'groovy' ? ['Main-Class': 'groovy.ui.GroovyMain'] : [:]
+        def moduleName = "org.apache.${project.name.replace('-', '.')}"
+        attributes('Automatic-Module-Name': moduleName, 'Bundle-Name': 'Groovy module: ' + project.name, *:extras)
+        groovyLibrary.configureManifest(it, excludedFromManifest)
+        classpath = configurations.runtimeClasspath
+    }
+}
+
+tasks.withType(AbstractCompile).configureEach {
+    sourceCompatibility(sharedConfiguration.targetJavaVersion.get())
+    targetCompatibility(sharedConfiguration.targetJavaVersion.get())
+}
+
+tasks.withType(Javadoc).configureEach {
+    options.source = sharedConfiguration.targetJavaVersion.get()
+}
+
+tasks.withType(CodeNarc).configureEach {
+    ignoreFailures = true
+    configFile = rootProject.file("config/codenarc/codenarc.groovy")
+}
+
+tasks.withType(SpotBugsTask).configureEach {
+    excludeFilter = rootProject.file("config/spotbugs/exclude.xml")
+    ignoreFailures = true
+    effort = 'max'
+    maxHeapSize = '2g'
+    reports {
+        xml.enabled = false
+        html {
+            enabled = true
+            stylesheet = 'fancy.xsl'
+        }
+    }
+}
+
+tasks.register("checkstyle") {
+    dependsOn tasks.withType(Checkstyle)
+}
+
+tasks.withType(Checkstyle).configureEach {
+    showViolations = false
+    ignoreFailures = true
+    configFile = rootProject.file("config/checkstyle/checkstyle.xml")
+    configProperties = ['rootProject.projectDir': rootProject.projectDir]
+    def reportFile = layout.buildDirectory.file("reports/checkstyle/${name}.xml")
+    reports {
+        include('**/*.java')
+        xml {
+            destination reportFile.get().asFile
+        }
+    }
+    def chk = it
+    finalizedBy {
+        // we use a closure here as a workaround, to preserve task configuration laziness
+        tasks.register("${name}Report", CheckstyleHtmlReport) {
+            dependsOn chk
+            source.from(chk.source)
+            configFile = rootProject.file("config/checkstyle/checkstyle-report.groovy")
+            checkstyleReportFile = reportFile
+            outputFile = layout.buildDirectory.file("reports/checkstyle/${chk.name}.html")
+        }
+    }
+}
+
+// Groovy doesn't publish the regular jars: it publishes
+// the repackaged jars, which is why we can't use the
+// default publication, and need to create our own
+def factory = objects.newInstance(Services).softwareComponentFactory
+def component = factory.adhoc('groovyLibrary')
+components.add(component)
+
+components.groovyLibrary {
+    addVariantsFromConfiguration(configurations.groovydocElements) {
+        mapToOptional()
+    }
+    addVariantsFromConfiguration(configurations.javadocElements) {
+        mapToOptional()
+    }
+    addVariantsFromConfiguration(configurations.sourcesElements) {
+        mapToOptional()
+    }
+}
+
+// By declaring a codehaus capability we can tell Gradle that the user has to
+// choose between "old" groovy and "new" groovy
+List<String> capabilities = [
+        "org.codehaus.groovy:${archivesBaseName}:${sharedConfiguration.groovyVersion.get()}",
+        "org.apache.groovy:${archivesBaseName}:${sharedConfiguration.groovyVersion.get()}"
+]
+int targetJvmVersion = Integer.valueOf(sharedConfiguration.targetJavaVersion.get())
+// First we create the "API" and "runtime" variants of Groovy for publication
+def shadowApi = createConsumableConfiguration(objects, tasks, configurations, 'groovyApiElements', Usage.JAVA_API, 'jarjar', capabilities, targetJvmVersion)
+def shadowRuntime = createConsumableConfiguration(objects, tasks, configurations, 'groovyRuntimeElements', Usage.JAVA_RUNTIME, 'jarjar', capabilities, targetJvmVersion)
+dependencies {
+    // All Groovy modules depend on the Groovy BOM which itself has constraints on all
+    // Groovy modules, which brings nice alignment features!
+    groovyApiElements platform(project(":groovy-bom"))
+    groovyRuntimeElements platform(project(":groovy-bom"))
+}
+component.addVariantsFromConfiguration(shadowApi) {
+
+}
+component.addVariantsFromConfiguration(shadowRuntime) {
+
+}
+afterEvaluate {
+    def repackaged = groovyLibrary.repackagedDependencies.get()
+    if (!repackaged) {
+        // only modules which do not repackage dependencies are going to inherit dependencies
+        shadowApi.extendsFrom(configurations.api)
+        shadowRuntime.extendsFrom(configurations.implementation)
+        shadowRuntime.extendsFrom(configurations.runtimeOnly)
+    }
+}
+
+@CompileStatic
+static Configuration createConsumableConfiguration(ObjectFactory objects,
+                                            TaskContainer tasks,
+                                            ConfigurationContainer container,
+                                            String name,
+                                            String usage,
+                                            String artifactTask,
+                                            List<String> capabilities,
+                                            int targetJvmVersion) {
+    container.create(name) { Configuration cnf ->
+        cnf.canBeConsumed = true
+        cnf.canBeResolved = false
+        cnf.attributes {
+            it.attribute(Category.CATEGORY_ATTRIBUTE, objects.named(Category, Category.LIBRARY))
+            it.attribute(LibraryElements.LIBRARY_ELEMENTS_ATTRIBUTE, objects.named(LibraryElements, LibraryElements.JAR))
+            it.attribute(Usage.USAGE_ATTRIBUTE, objects.named(Usage, usage))
+            // We use external because only Groovy core actually repackages dependencies
+            it.attribute(Bundling.BUNDLING_ATTRIBUTE, objects.named(Bundling, Bundling.EXTERNAL))
+            it.attribute(TargetJvmVersion.TARGET_JVM_VERSION_ATTRIBUTE, targetJvmVersion)
+        }
+        cnf.outgoing {
+            it.artifact tasks.named(artifactTask)
+            capabilities.each { capability ->
+                it.capability(capability)
+            }
+        }
+    }
+}
